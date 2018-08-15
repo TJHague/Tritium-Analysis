@@ -160,7 +160,8 @@ except mysql.connector.Error as err:
   else:
     print(err)
 
-cursor.execute(command_txt)
+print(command_txt)
+#cursor.execute(command_txt)
 
 #--------------------
 # fill HV table
@@ -168,32 +169,32 @@ cursor.execute(command_txt)
 # create table cerL( run_number int(10) unsigned not null,pmt_id smallint(6) not null,pedestal float(8,3) default null,gain float(8,3) default null,primary key (run_number,pmt_id));
 
 #create table R_PreShower ( run_number int(8) unsigned not null, id varchar(6) not null, hv float(10,3) not null default 1, primary key (run_number,id));
-def fill_hv(logentry,arm,detector):
-  index,set_hv,read_hv,current= log.get_hv(logentry, arm, detector)
-  hv_table = arm+"_"+detector
-  cursor.executemany("INSERT INTO `"+hv_table+ "` (`run_number`,`id`,`hv`) VALUES ('"+runnum+"',%s,%s)  ON DUPLICATE KEY UPDATE `hv`=values(`hv`)", [(x,y) for (x,y) in zip(index,read_hv)])
-  return -1
-
-
-if float(runnum)<90000:
-  arm='L'
-  print(log.get_hv(fend, arm, 'PRL1'))
-  fill_hv(fend,arm,'PRL1')
-  fill_hv(fend,arm,'PRL2')
-
-else:
-  arm='R'
-  fill_hv(fend,arm,'PreShower')
-  fill_hv(fend,arm,'Shower')
-
-
-fill_hv(fend,arm,'Cherenkov')
-fill_hv(fend,arm,'VDC')
-fill_hv(fend,arm,'S0')
-fill_hv(fend,arm,'S2m')
-
-
-cnx.commit()
+#def fill_hv(logentry,arm,detector):
+#  index,set_hv,read_hv,current= log.get_hv(logentry, arm, detector)
+#  hv_table = arm+"_"+detector
+#  cursor.executemany("INSERT INTO `"+hv_table+ "` (`run_number`,`id`,`hv`) VALUES ('"+runnum+"',%s,%s)  ON DUPLICATE KEY UPDATE `hv`=values(`hv`)", [(x,y) for (x,y) in zip(index,read_hv)])
+#  return -1
+#
+#
+#if float(runnum)<90000:
+#  arm='L'
+#  print(log.get_hv(fend, arm, 'PRL1'))
+#  fill_hv(fend,arm,'PRL1')
+#  fill_hv(fend,arm,'PRL2')
+#
+#else:
+#  arm='R'
+#  fill_hv(fend,arm,'PreShower')
+#  fill_hv(fend,arm,'Shower')
+#
+#
+#fill_hv(fend,arm,'Cherenkov')
+#fill_hv(fend,arm,'VDC')
+#fill_hv(fend,arm,'S0')
+#fill_hv(fend,arm,'S2m')
+#
+#
+#cnx.commit()
 cursor.close()
 cnx.close()
 

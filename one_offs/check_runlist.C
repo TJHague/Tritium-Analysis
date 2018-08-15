@@ -7,33 +7,33 @@ void check_runlist(TString runlist){
   TString list = gGet_InputFile_Var(runlist,2);
   
   TString target;
-  if(list_tar="H3"){
+  if(list_tar=="H3"){
     target="Tritium";
-  }else if(list_tar="He3"){
+  }else if(list_tar=="He3"){
     target="Helium-3";
-  }else if(list_tar="EM"){
+  }else if(list_tar=="EM"){
     target="Empty Cell";
-  }else if(list_tar="D2"){
+  }else if(list_tar=="D2"){
     target="Deuterium";
-  }else if(list_tar="H1"){
+  }else if(list_tar=="H1"){
     target="Hydrogen";
-  }else if(list_tar="Carbon"){
+  }else if(list_tar=="Carbon"){
     target="Carbon";
-  }else if(list_tar="Carbon_Hole"){
+  }else if(list_tar=="Carbon_Hole"){
     target="Carbon Hole";
-  }else if(list_tar="DM"){
+  }else if(list_tar=="DM"){
     target="25 cm Dummy";
-  }else if(list_tar="Optics")
+  }else if(list_tar=="Optics"){
     target="Optics";
-  }else if(list_tar="Raster_Target")
+  }else if(list_tar=="Raster_Target"){
     target="Raster Target";
-  }else if(list_tar="Titanium"){
+  }else if(list_tar=="Titanium"){
     target="Titanium";
-  }else if(list_tar="HOME"){
+  }else if(list_tar=="HOME"){
     target="Home (No Target)";
   }else{
     target="blank";
-  {
+  }
 
   vector<Int_t> runvec = gGet_RunNoChain(list);
 
@@ -51,7 +51,7 @@ void check_runlist(TString runlist){
     if(nrows==0){
       cout<< "Error: run "<< runvec[i] <<" does not exist in the runlist. Please add it." << endl;
       if(target!="blank"){
-        gSystem->Exec(Form("python ../headers/log2db.py %d %s", runvec[i], target));
+        gSystem->Exec(Form("python ../headers/log2db.py %d %s", runvec[i], target.Data()));
       }
     }
   }
