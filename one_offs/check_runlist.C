@@ -30,7 +30,7 @@ void check_runlist(TString runlist){
   }else if(list_tar=="Titanium"){
     target="Titanium";
   }else if(list_tar=="HOME"){
-    target="Home (No Target)";
+    target="Home";
   }else{
     target="blank";
   }

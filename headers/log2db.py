@@ -2,8 +2,8 @@ import urllib3, json
 import subprocess
 import sys
 import requests # python3 preferred
-import mysql.connector
-from mysql.connector import errorcode
+import MySQLdb
+#from MySQLdb import errorcode
 import t2log as log
 # -----------------
 #  please modify this.
@@ -39,9 +39,12 @@ end_time,fend      =log.read_log(runnum,'end'  )
 start_comment =  log.read_var(fstart,'comment_text',"=")
 end_comment   =  log.read_var(fend,'End of Run Comment')
 run_type      =  log.read_var(fstart,'Run_type',"=")
+target        =  ""
 for x in range(2,len(sys.argv)):
   target      += sys.argv[x] #log.read_var(fstart,'target_type',"=") # whatever shift worker selected
   target      += " "
+if target=="Home":
+  target += " (No Target)"
 Ebeam         =  log.read_var(fstart,'Tiefenbach 6GeV Beam energy')
 
 
@@ -141,27 +144,28 @@ update_entry   = ( "update `"+table+"` set "  \
 )
 
 try:
-    cnx = mysql.connector.connect(user=db_user,host=db_host,
+    cnx = MySQLdb.connect(user=db_user,host=db_host,
                                 database=db_name, password=db_pswd)
-    cursor = cnx.cursor(buffered=True)
+    cursor = cnx.cursor()
     cursor.execute("select * from "+table+" where run_number="+runnum)
     if cursor.rowcount == 0:
       print('run '+runnum+' is not in '+table + ', will create a new entry from logbook')
       command_txt = create_entry
     else:
       print('Will update run '+runnum)
-      command_txt = update_entry
+      print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+#      command_txt = update_entry
 
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
+except MySQLdb.Error as err:
+#  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+#    print("Something is wrong with your user name or password")
+#  elif err.errno == errorcode.ER_BAD_DB_ERROR:
+#    print("Database does not exist")
+#  else:
     print(err)
 
 print(command_txt)
-#cursor.execute(command_txt)
+cursor.execute(command_txt)
 
 #--------------------
 # fill HV table

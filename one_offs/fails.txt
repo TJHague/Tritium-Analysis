@@ -1,0 +1,51 @@
+Error: run 1441 does not exist in the runlist. Please add it.
+Traceback (most recent call last):
+  File "../headers/log2db.py", line 35, in <module>
+    start_time,fstart  =log.read_log(runnum,'start')
+  File "/w/halla-scifs17exp/triton/tjhague/Tritium-Analysis/headers/t2log.py", line 44, in read_log
+    print(flag+" of run log entry:", prefix+response['data']['entries'][0]['lognumber'])
+IndexError: list index out of range
+-----------No start
+
+Error: run 1869 does not exist in the runlist. Please add it.
+('start of run log entry:', u'https://logbooks.jlab.org/entry/3528655')
+Traceback (most recent call last):
+  File "../headers/log2db.py", line 36, in <module>
+    end_time,fend      =log.read_log(runnum,'end'  )
+  File "/w/halla-scifs17exp/triton/tjhague/Tritium-Analysis/headers/t2log.py", line 44, in read_log
+    print(flag+" of run log entry:", prefix+response['data']['entries'][0]['lognumber'])
+IndexError: list index out of range
+------------No End
+
+
+Error: run 1237 does not exist in the runlist. Please add it.
+('start of run log entry:', u'https://logbooks.jlab.org/entry/3513695')
+Traceback (most recent call last):
+  File "../headers/log2db.py", line 36, in <module>
+    end_time,fend      =log.read_log(runnum,'end'  )
+  File "/w/halla-scifs17exp/triton/tjhague/Tritium-Analysis/headers/t2log.py", line 44, in read_log
+    print(flag+" of run log entry:", prefix+response['data']['entries'][0]['lognumber'])
+IndexError: list index out of range
+-------------No end
+
+
+Error: run 1307 does not exist in the runlist. Please add it.
+('start of run log entry:', u'https://logbooks.jlab.org/entry/3514842')
+Traceback (most recent call last):
+  File "../headers/log2db.py", line 36, in <module>
+    end_time,fend      =log.read_log(runnum,'end'  )
+  File "/w/halla-scifs17exp/triton/tjhague/Tritium-Analysis/headers/t2log.py", line 44, in read_log
+    print(flag+" of run log entry:", prefix+response['data']['entries'][0]['lognumber'])
+IndexError: list index out of range
+------------No end
+
+
+Error: run 2362 does not exist in the runlist. Please add it.
+('start of run log entry:', u'https://logbooks.jlab.org/entry/3547331')
+Traceback (most recent call last):
+  File "../headers/log2db.py", line 36, in <module>
+    end_time,fend      =log.read_log(runnum,'end'  )
+  File "/w/halla-scifs17exp/triton/tjhague/Tritium-Analysis/headers/t2log.py", line 44, in read_log
+    print(flag+" of run log entry:", prefix+response['data']['entries'][0]['lognumber'])
+IndexError: list index out of range
+--------------No end

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #cd /work/halla/triton/mnycz/Marathon/Analysis/Data_Quality/All_Runs/
-for f in /work/halla/triton/mnycz/Marathon/Analysis/Data_Quality/All_Runs/[H]*.dat; do
+for f in /work/halla/triton/mnycz/Marathon/Analysis/Data_Quality/All_Runs/[CDEHORT]*.dat; do
   echo $f
   root -l 'check_runlist.C("'$f'")'
 done
