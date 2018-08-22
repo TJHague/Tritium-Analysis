@@ -22,9 +22,9 @@ void emc(Int_t kin, Int_t arm=0){
 
   Double_t He3charge = 0;
   Double_t D2charge  = 0;
-  TH1 *He3full = new TH1("He3full","Full Kinematic Helium-3 Yield" ,50,0,1);
-  TH1 *D2full  = new TH1("D2full" ,"Full Kinematic Deuterium Yield",50,0,1);
-  TH1 *EMCfull = new TH1("EMCfull","Full Kinematic EMC Ratio"      ,50,0,1);
+  TH1F *He3full = new TH1F("He3full","Full Kinematic Helium-3 Yield" ,50,0,1);
+  TH1F *D2full  = new TH1F("D2full" ,"Full Kinematic Deuterium Yield",50,0,1);
+  TH1F *EMCfull = new TH1F("EMCfull","Full Kinematic EMC Ratio"      ,50,0,1);
 
   /****************************************************************************
   * Here is where it needs to turn into a loop over each run.
@@ -35,7 +35,7 @@ void emc(Int_t kin, Int_t arm=0){
   for(Int_t i=0; i<He3vec.size(); i++){
     TChain* T = LoadRun(He3vec[i],"T");
 
-    TH1 *partHe3 = new TH1("partHe3","Partial Kinematic Helium-3 Yield",50,0,1);
+    TH1F *He3part = new TH1F("He3part","Partial Kinematic Helium-3 Yield",50,0,1);
     
     //Calculate charge and live time
     //Todo:
@@ -73,10 +73,10 @@ void emc(Int_t kin, Int_t arm=0){
   }
 
   //Deuterium Yield
-  for(Int_t i=0; i<D2ec.size(); i++){
+  for(Int_t i=0; i<D2vec.size(); i++){
     TChain* T = LoadRun(D2vec[i],"T");
 
-    TH1 *partD2  = new TH1("partD2","Partial Kinematic Deuterium Yield",50,0,1);
+    TH1F *D2part  = new TH1F("D2part","Partial Kinematic Deuterium Yield",50,0,1);
     
     //Calculate charge and live time
     //Todo:
@@ -119,8 +119,8 @@ void emc(Int_t kin, Int_t arm=0){
   ****************************************************************************/
 
   //Charge normalizing
-  He3full->Scale(chargeHe3);
-  D2full ->Scale(chargeD2);
+  He3full->Scale(He3charge);
+  D2full ->Scale(D2charge);
 
   //EMC is He3/D
   EMCfull->Add(He3full);
