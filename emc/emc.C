@@ -9,14 +9,17 @@
 #include "../headers/TRI_Tools.h"
 #include "../headers/rootalias.h"
 
+#include "../headers/cuts.h"
+
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
 void emc(Int_t kin, Int_t arm=0){
   //Load runs
-  TString He3dat = "~/work/replay_tritium/replay/scripts/Runlist/"; He3dat = "He3_kin"; He3dat += kin; He3dat += ".dat";
-  TString D2dat  = "~/work/replay_tritium/replay/scripts/Runlist/"; D2dat  = "D2_kin";  D2dat  += kin; D2dat  += ".dat";
+  TString He3dat = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; He3dat += "He3_kin"; He3dat += kin; He3dat += ".dat";
+  TString D2dat  = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; D2dat  += "D2_kin";  D2dat  += kin; D2dat  += ".dat";
   TString He3list = gGet_InputFile_Var(He3dat,2);
   TString D2list  = gGet_InputFile_Var(D2dat ,2);
+  cout << He3list << endl;
   vector<Int_t> He3vec = gGet_RunNoChain(He3list);
   vector<Int_t> D2vec  = gGet_RunNoChain(D2list);
 
@@ -33,6 +36,7 @@ void emc(Int_t kin, Int_t arm=0){
   
   //Helium-3 Yield
   for(Int_t i=0; i<He3vec.size(); i++){
+    cout << "on run " << He3vec[i] << endl;
     TChain* T = LoadRun(He3vec[i],"T");
 
     TH1F *He3part = new TH1F("He3part","Partial Kinematic Helium-3 Yield",50,0,1);
@@ -40,7 +44,8 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s;
+    Double_t Q, I, updated, T2, T2s, avgI=0;
+    Int_t Iev=0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
@@ -55,6 +60,8 @@ void emc(Int_t kin, Int_t arm=0){
       T->GetEntry(i);
       if(updated && I>0.){
         He3charge += Q;
+        avgI += I;
+        Iev++;
       }
       if(T2==1){
         trig_rec++;
@@ -64,8 +71,10 @@ void emc(Int_t kin, Int_t arm=0){
       }
     }
     Double_t lt = trig_rec/trig_scal;
-    T->Draw("ELKx.x_bj>>He3part",PID+ACC,"");
+    avgI /= Iev;
+    T->Draw("EKLx.x_bj>>He3part",PID()+ACC(),"");
     He3part->Scale(1./lt);
+    He3part->Scale(1./He3Nuclei(avgI));
     He3full->Add(He3part);
 
     delete T;
@@ -81,7 +90,8 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s;
+    Double_t Q, I, updated, T2, T2s, avgI = 0;
+    Int_t Iev = 0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
@@ -96,6 +106,8 @@ void emc(Int_t kin, Int_t arm=0){
       T->GetEntry(i);
       if(updated && I>0.){
         D2charge += Q;
+        avgI += I;
+        Iev++;
       }
       if(T2==1){
         trig_rec++;
@@ -105,8 +117,10 @@ void emc(Int_t kin, Int_t arm=0){
       }
     }
     Double_t lt = trig_rec/trig_scal;
-    T->Draw("ELKx.x_bj>>D2part",PID+ACC,"");
+    avgI /= Iev;
+    T->Draw("EKLx.x_bj>>D2part",PID()+ACC(),"");
     D2part->Scale(1./lt);
+    D2part->Scale(1./D2Nuclei(avgI));
     D2full->Add(D2part);
 
     delete T;
@@ -119,10 +133,29 @@ void emc(Int_t kin, Int_t arm=0){
   ****************************************************************************/
 
   //Charge normalizing
-  He3full->Scale(He3charge);
-  D2full ->Scale(D2charge);
+  He3full->Scale(1./He3charge);
+  D2full ->Scale(1./D2charge);
+
+  //Endcap Contamination
+  He3full->Scale((1.-He3ECC(kin)));
+  D2full ->Scale((1.-D2ECC(kin)));
+
+  //Bin by bin Positron Subtraction
+  for(Int_t i=1; i<He3full.GetNbinsX()+1; i++){
+    Double_t bin = He3full->GetBinContent(i);
+    bin *= (1. - He3Positron(He3full->GetBinCenter(i)));
+    He3full->SetBinContent(i, bin);
+  }
+  for(Int_t i=1; i<D2full.GetNbinsX()+1; i++){
+    Double_t bin = D2full->GetBinContent(i);
+    bin *= (1. - D2Positron(D2full->GetBinCenter(i)));
+    D2full->SetBinContent(i, bin);
+  }
 
   //EMC is He3/D
   EMCfull->Add(He3full);
   EMCfull->Divide(D2full);
+
+  TCanvas *EMC = new TCanvas("EMC","Helium-3 EMC");
+  EMCfull->Draw();
 }

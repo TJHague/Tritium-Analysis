@@ -73,6 +73,7 @@ const char* ROOTPATHS[] = {
   "/cache/halla/triton/prod/marathon/pass1/kin13/"
   "/cache/halla/triton/prod/marathon/pass1/kin15/",
   "/cache/halla/triton/prod/marathon/pass1/kin16/",
+  "/cache/halla/triton/prod/marathon/pass1/positron/",
   "./",
   0
 };
