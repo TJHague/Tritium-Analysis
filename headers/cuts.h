@@ -29,3 +29,23 @@ TCut PID(Int_t arm=0){
   }
   return PID;
 }
+
+TCut EC(Int_t arm=0){
+  TCut EC="";
+  if(arm==0){
+    EC += "TMath::Abs(L.tr.vz)<0.1";
+  }else{
+    EC += "TMath::Abs(R.tr.vz)<0.1";
+  }
+  return EC;
+}
+
+TCut Trig2(Int_t arm=0){
+  TCut T2="";
+  if(arm==0){
+    T2 += "DL.evtypebits>>2&1";
+  }else{
+    T2 += "DR.evtypebits>>5&1";
+  }
+  return T2;
+}

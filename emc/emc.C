@@ -10,6 +10,7 @@
 #include "../headers/rootalias.h"
 
 #include "../headers/cuts.h"
+#include "../headers/corrections.h"
 
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
@@ -72,7 +73,7 @@ void emc(Int_t kin, Int_t arm=0){
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    T->Draw("EKLx.x_bj>>He3part",PID()+ACC(),"");
+    T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     He3part->Scale(1./lt);
     He3part->Scale(1./He3Nuclei(avgI));
     He3full->Add(He3part);
@@ -118,7 +119,7 @@ void emc(Int_t kin, Int_t arm=0){
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    T->Draw("EKLx.x_bj>>D2part",PID()+ACC(),"");
+    T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     D2part->Scale(1./lt);
     D2part->Scale(1./D2Nuclei(avgI));
     D2full->Add(D2part);
@@ -141,14 +142,14 @@ void emc(Int_t kin, Int_t arm=0){
   D2full ->Scale((1.-D2ECC(kin)));
 
   //Bin by bin Positron Subtraction
-  for(Int_t i=1; i<He3full.GetNbinsX()+1; i++){
+  for(Int_t i=1; i<He3full->GetNbinsX()+1; i++){
     Double_t bin = He3full->GetBinContent(i);
-    bin *= (1. - He3Positron(He3full->GetBinCenter(i)));
+    bin *= (1. - He3Positrons(He3full->GetBinCenter(i)));
     He3full->SetBinContent(i, bin);
   }
-  for(Int_t i=1; i<D2full.GetNbinsX()+1; i++){
+  for(Int_t i=1; i<D2full->GetNbinsX()+1; i++){
     Double_t bin = D2full->GetBinContent(i);
-    bin *= (1. - D2Positron(D2full->GetBinCenter(i)));
+    bin *= (1. - D2Positrons(D2full->GetBinCenter(i)));
     D2full->SetBinContent(i, bin);
   }
 

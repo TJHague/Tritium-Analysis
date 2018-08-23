@@ -1,4 +1,4 @@
-const Double_t Na = 6.0221409e23; //Avogadro's Number
+//const Double_t Na = 6.0221409e23; //Avogadro's Number
 
 Double_t He3Positrons(Double_t x){
   return 0.1009*TMath::Exp(-1.*x*8.913);
@@ -62,6 +62,7 @@ Double_t D2Nuclei(Double_t I){
 
 Double_t H1Nuclei(Double_t I){
   return Na*H1Thickness(I)/1.00794;
+}
 
 Double_t He3ECC(Int_t kin){
   if(kin==1){
