@@ -1,4 +1,6 @@
 //0 is Left, else is Right
+//
+//Functions that return TCut are probably unnecessary now. Going to leave them for the time being in case I need them later. - Aug 24, 2018
 TCut ACC(Int_t arm=0){
   TCut ACC="";
   if(arm==0){
@@ -16,6 +18,27 @@ TCut ACC(Int_t arm=0){
   return ACC;
 }
 
+Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
+  if(arm==0){
+    if((TMath::Abs(ph)<0.03)){
+      if((th>-0.05)&&(th<0.06)){
+        if((TMath::Abs(dp)<0.04)){
+          return true;
+        }
+      }
+    }
+  }else{
+    if((ph>-0.03)&&(ph<0.02)){
+      if((th>-0.05)&&(th<0.055)){
+        if((TMath::Abs(dp)<0.04)){
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 TCut PID(Int_t arm=0){
   TCut PID="";
   if(arm==0){
@@ -30,6 +53,26 @@ TCut PID(Int_t arm=0){
   return PID;
 }
 
+Bool_t PID(Double_t cer, Double_t prl1, Double_t prl2, Double_t p, Int_t n, Int_t arm=0){
+  if(arm==0){
+    if(cer>2000.){
+      if((prl1+prl2)/p/1000.>0.75){
+        if(n==1){
+          return true;
+        }
+      }
+    }
+  }else{
+    if(cer>2000){
+      if((prl1+prl2)/p/1000.>0.8){
+        if(n==1)
+          return true;
+      }
+    }
+  }
+  return false;
+}
+
 TCut EC(Int_t arm=0){
   TCut EC="";
   if(arm==0){
@@ -38,6 +81,19 @@ TCut EC(Int_t arm=0){
     EC += "TMath::Abs(R.tr.vz)<0.1";
   }
   return EC;
+}
+
+Bool_t EC(Double_t z, Int_t arm=0){
+  if(arm==0){
+    if(TMath::Abs(z)<0.1){
+      return true;
+    }
+  }else{
+    if(TMath::Abs(z)<0.1){
+      return true;
+    }
+  }
+  return false;
 }
 
 TCut Trig2(Int_t arm=0){
@@ -49,3 +105,4 @@ TCut Trig2(Int_t arm=0){
   }
   return T2;
 }
+

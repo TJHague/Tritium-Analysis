@@ -45,28 +45,13 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj;
-    Int_t Iev=0, n;
+    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p;
+    Int_t Iev=0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
     T->SetBranchAddress("DL.bit2",&T2);
     T->SetBranchAddress("evLeftT2",&T2s);
-
-    //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
-
-    //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
-
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
@@ -81,9 +66,6 @@ void emc(Int_t kin, Int_t arm=0){
       }
       if(T2==1){
         trig_rec++;
-        if(PID(cer, prl1, prl2, p, n, arm)&&ACC(ph, th, dp, arm)&&EC(z, arm)){
-          He3part->Fill(x_bj);
-        }
       }
       if(i==(events-1)){
         trig_scal = T2s;
@@ -91,7 +73,7 @@ void emc(Int_t kin, Int_t arm=0){
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     He3part->Scale(1./lt);
     He3part->Scale(1./He3Nuclei(avgI));
     He3full->Add(He3part);
@@ -109,28 +91,13 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj;
-    Int_t Iev = 0, n;
+    Double_t Q, I, updated, T2, T2s, avgI = 0;
+    Int_t Iev = 0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
     T->SetBranchAddress("DL.bit2",&T2);
     T->SetBranchAddress("evLeftT2",&T2s);
-
-    //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
-
-    //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
-
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
@@ -145,9 +112,6 @@ void emc(Int_t kin, Int_t arm=0){
       }
       if(T2==1){
         trig_rec++;
-        if(PID(cer, prl1, prl2, p, n, arm)&&ACC(ph, th, dp, arm)&&EC(z, arm)){
-          D2part->Fill(x_bj);
-        }
       }
       if(i==(events-1)){
         trig_scal = T2s;
@@ -155,7 +119,7 @@ void emc(Int_t kin, Int_t arm=0){
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     D2part->Scale(1./lt);
     D2part->Scale(1./D2Nuclei(avgI));
     D2full->Add(D2part);
@@ -176,10 +140,6 @@ void emc(Int_t kin, Int_t arm=0){
   //Endcap Contamination
   He3full->Scale((1.-He3ECC(kin)));
   D2full ->Scale((1.-D2ECC(kin)));
-
-  //Scale per nucleon
-  He3full->Scale(1./3.);
-  D2full ->Scale(1./2.);
 
   //Bin by bin Positron Subtraction
   for(Int_t i=1; i<He3full->GetNbinsX()+1; i++){
