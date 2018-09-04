@@ -3,22 +3,29 @@ struct bin_info{
   Double_t xsum;
   Double_t Q2sum;
   Double_t scale;   //Scale new entries as they are added
-}
+};
 
 class yieldHistogram{
   vector<bin_info> bins;
-  Double_t bin_min, bin_max;
+  Double_t bin_min, bin_max, charge;
   Int_t nbins;
   bin_info underflow, overflow;
   TString title;
 
   public:
-  yieldHistogram(TString, Int_t, Double_t, Double_t;
+  yieldHistogram(TString, Int_t, Double_t, Double_t);
   yieldHistogram(Int_t, Double_t, Double_t);
+  yieldHistogram(TString);
   void scale(Double_t);
   void scaleBin(Int_t, Double_t);
   Int_t addCount(Double_t, Double_t);
+  vector<Double_t> getAvgx();
+  vector<Double_t> getAvgQ2();
+  vector<Double_t> getCounts();
+  void setCharge(Double_t);
+  Double_t getCharge();
   TH1D* getTH1();
   Int_t save(TString);
-}
+  Int_t add(yieldHistogram*);
+};
 

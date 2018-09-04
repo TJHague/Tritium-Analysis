@@ -12,6 +12,7 @@
 #include "../headers/cuts.h"
 #include "../headers/corrections.h"
 #include "../classes/yieldHistogram.h"
+#include "../classes/yieldHistogram.cpp"
 
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
@@ -25,11 +26,11 @@ void emc(Int_t kin, Int_t arm=0){
   vector<Int_t> He3vec = gGet_RunNoChain(He3list);
   vector<Int_t> D2vec  = gGet_RunNoChain(D2list);
 
-  Double_t He3charge = 0;
-  Double_t D2charge  = 0;
+  //Double_t He3charge = 0;
+  //Double_t D2charge  = 0;
   yieldHistogram *He3full = new yieldHistogram("Full Kinematic Helium-3 Yield" ,50,0,1);
   yieldHistogram *D2full  = new yieldHistogram("Full Kinematic Deuterium Yield",50,0,1);
-  yieldHistogram *EMCfull = new yieldHistogram("Full Kinematic EMC Ratio"      ,50,0,1);
+  //yieldHistogram *EMCfull = new yieldHistogram("Full Kinematic EMC Ratio"      ,50,0,1);
 
   /****************************************************************************
   * Here is where it needs to turn into a loop over each run.
@@ -46,8 +47,9 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2;
-    Int_t Iev=0, n;
+    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, ph, th, dp, z, x_bj, Q2, n, p;
+    //Double_t p[1] = {0};
+    Int_t Iev=0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
@@ -71,23 +73,25 @@ void emc(Int_t kin, Int_t arm=0){
     T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
 
     Int_t events = T->GetEntries();
+    cout << events << endl;
     Double_t trig_rec  = 0;
     Double_t trig_scal = 0;
+    Double_t charge    = 0;
 
-    for(int i=0;i<events;i++){
-      T->GetEntry(i);
-      if(updated && I>0.){
-        He3charge += Q;
+    for(Int_t j=0; j<events; j++){
+      T->GetEntry(j);
+      if((updated==1) && I>0.){
+        charge += Q;
         avgI += I;
         Iev++;
       }
       if(T2==1){
         trig_rec++;
-        if(PID(cer, prl1, prl2, p, n, arm)&&ACC(ph, th, dp, arm)&&EC(z, arm)){
+        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)){
           He3part->addCount(x_bj, Q2);
         }
       }
-      if(i==(events-1)){
+      if(j==(events-1)){
         trig_scal = T2s;
       }
     }
@@ -96,8 +100,9 @@ void emc(Int_t kin, Int_t arm=0){
     //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     He3part->scale(1./lt);
     He3part->scale(1./He3Nuclei(avgI));
+    He3part->setCharge(charge);
     He3part->save(Form("He3run_histos/kin%d/%d.dat",kin,He3vec[i]));
-    He3full->Add(He3part);
+    He3full->add(He3part);
 
     delete T;
     delete He3part;
@@ -112,8 +117,8 @@ void emc(Int_t kin, Int_t arm=0){
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2;
-    Int_t Iev = 0, n;
+    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2, n;
+    Int_t Iev = 0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
@@ -139,11 +144,12 @@ void emc(Int_t kin, Int_t arm=0){
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
     Double_t trig_scal = 0;
+    Double_t charge    = 0;
 
-    for(int i=0;i<events;i++){
-      T->GetEntry(i);
+    for(Int_t j=0; j<events; j++){
+      T->GetEntry(j);
       if(updated && I>0.){
-        D2charge += Q;
+        charge += Q;
         avgI += I;
         Iev++;
       }
@@ -153,7 +159,7 @@ void emc(Int_t kin, Int_t arm=0){
           D2part->addCount(x_bj, Q2);
         }
       }
-      if(i==(events-1)){
+      if(j==(events-1)){
         trig_scal = T2s;
       }
     }
@@ -162,8 +168,9 @@ void emc(Int_t kin, Int_t arm=0){
     //T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     D2part->scale(1./lt);
     D2part->scale(1./D2Nuclei(avgI));
+    D2part->setCharge(charge);
     D2part->save(Form("D2run_histos/kin%d/%d.dat",kin,D2vec[i]));
-    D2full->Add(D2part);
+    //D2full->Add(D2part);
 
     delete T;
     delete D2part;
@@ -174,9 +181,9 @@ void emc(Int_t kin, Int_t arm=0){
   * Now start processing the results
   ****************************************************************************/
 
-  //Charge normalizing
-  He3full->scale(1./He3charge);
-  D2full ->scale(1./D2charge);
+  //Charge normalizing - now taken care of when converting yieldHistogram to TH1
+  //He3full->scale(1./He3charge);
+  //D2full ->scale(1./D2charge);
 
   //Endcap Contamination
   He3full->scale((1.-He3ECC(kin)));
@@ -187,7 +194,20 @@ void emc(Int_t kin, Int_t arm=0){
   D2full ->scale(1./2.);
 
   //Bin by bin Positron Subtraction
-  for(Int_t i=1; i<He3full->GetNbinsX()+1; i++){
+  vector<Double_t> He3x = He3full->getAvgx();
+  vector<Double_t> D2x  = D2full->getAvgx();
+
+  for(Int_t i = 0; i < He3x.size(); i++){
+    He3full->scaleBin(i, He3Positrons(He3x[i]));
+  }
+  for(Int_t i = 0; i < D2x.size(); i++){
+    D2full->scaleBin(i, D2Positrons(He3x[i]));
+  }
+
+  He3full->save(Form("He3run_histos/kin%d/full.dat", kin));
+  D2full ->save(Form("D2run_histos/kin%d/full.dat",  kin));
+
+  /*for(Int_t i=1; i<He3full->GetNbinsX()+1; i++){
     Double_t bin = He3full->GetBinContent(i);
     bin *= (1. - He3Positrons(He3full->GetBinCenter(i)));
     He3full->SetBinContent(i, bin);
@@ -196,12 +216,12 @@ void emc(Int_t kin, Int_t arm=0){
     Double_t bin = D2full->GetBinContent(i);
     bin *= (1. - D2Positrons(D2full->GetBinCenter(i)));
     D2full->SetBinContent(i, bin);
-  }
+  }*/
 
   //EMC is He3/D
-  EMCfull->Add(He3full);
-  EMCfull->Divide(D2full);
+  //EMCfull->Add(He3full);
+  //EMCfull->Divide(D2full);
 
-  TCanvas *EMC = new TCanvas("EMC","Helium-3 EMC");
-  EMCfull->Draw();
+  //TCanvas *EMC = new TCanvas("EMC","Helium-3 EMC");
+  //EMCfull->Draw();
 }

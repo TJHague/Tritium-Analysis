@@ -53,7 +53,7 @@ TCut PID(Int_t arm=0){
   return PID;
 }
 
-Bool_t PID(Double_t cer, Double_t prl1, Double_t prl2, Double_t p, Int_t n, Int_t arm=0){
+Bool_t PID(Double_t cer, Double_t prl1, Double_t prl2, Double_t p, Double_t n, Int_t arm=0){
   if(arm==0){
     if(cer>2000.){
       if((prl1+prl2)/p/1000.>0.75){

@@ -50,30 +50,30 @@
 
 const char* ROOTPATHS[] = {
   "./tmproot/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin0/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin1/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin2/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin3/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin4/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin5/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin7/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin9/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin11/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin13/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin15/",
-  "/cache/halla/triton/prod/marathon/pass1_calibration/kin16/",
-  "/cache/halla/triton/prod/marathon/pass1/kin1/",
-  "/cache/halla/triton/prod/marathon/pass1/kin2/",
-  "/cache/halla/triton/prod/marathon/pass1/kin3/",
-  "/cache/halla/triton/prod/marathon/pass1/kin4/",
-  "/cache/halla/triton/prod/marathon/pass1/kin5/",
-  "/cache/halla/triton/prod/marathon/pass1/kin7/",
-  "/cache/halla/triton/prod/marathon/pass1/kin9/",
-  "/cache/halla/triton/prod/marathon/pass1/kin11/",
-  "/cache/halla/triton/prod/marathon/pass1/kin13/"
-  "/cache/halla/triton/prod/marathon/pass1/kin15/",
-  "/cache/halla/triton/prod/marathon/pass1/kin16/",
-  "/cache/halla/triton/prod/marathon/pass1/positron/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin1/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin2/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin3/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin4/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin5/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin7/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin9/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin11/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin13/"
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin15/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin16/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/positron/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin0/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin1/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin2/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin3/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin4/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin5/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin7/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin9/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin11/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin13/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin15/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1_calibration/kin16/",
   "./",
   0
 };
@@ -83,7 +83,7 @@ const char* MCPATHS[] = {
 	0
 };
 
-const double pi=3.1415926535897932;
+/*const double pi=3.1415926535897932;
 const double rad=pi/180.0;
 
 //-----------LHRS-----------------------------------------
@@ -141,7 +141,7 @@ const double tg_ph_R_e=0.02;
 TCut dp_cut_R_e  = Form("fabs(R.tr.tg_dp)<%g",tg_dp_R_e);
 TCut th_cut_R_e  = Form("fabs(R.tr.tg_th)<%g",tg_th_R_e);
 TCut ph_cut_R_e  = Form("fabs(R.tr.tg_ph)<%g",tg_ph_R_e);
-TCut acc_cut_R_e = dp_cut_R_e+th_cut_R_e+ph_cut_R_e+z_cut_R;//+aperture_L;
+TCut acc_cut_R_e = dp_cut_R_e+th_cut_R_e+ph_cut_R_e+z_cut_R;//+aperture_L;*/
 
 
 
@@ -187,7 +187,7 @@ TChain* LoadRun(Int_t run, const char* tree = "T")
   Int_t   i  = 0;
   TChain* tt = 0;
   while (ROOTPATHS[i]) {
-   tt = LoadRun(run,ROOTPATHS[i++],tree,1);
+   tt = LoadRun(run,ROOTPATHS[i++],tree,0);
    if (tt) break;
   }
 //    if (!tt)

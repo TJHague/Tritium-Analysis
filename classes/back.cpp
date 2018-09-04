@@ -181,18 +181,18 @@ Int_t yieldHistogram::save(TString file){
   return 1; //Something went wrong with the file
 }
 
-Int_t yieldHistogram::add(yieldHistogram *other){
-  if((nbins == other->nbins) && (bin_min == other->bin_min) && (bin_max == other->bin_max)){
-    charge += other->charge;
+Int_t yieldHistogram::add(yieldHistogram other){
+  if((nbins == other.nbins) && (bin_min == other.bin_min) && (bin_max == other.bin_max)){
+    charge += other.charge;
     for(Int_t i = 0; i < nbins; i++){
       if(bins[i].entries != 0){
-        bins[i].scale = ((bins[i].entries * bins[i].scale) + (other->bins[i].entries * other->bins[i].scale)) / (bins[i].entries + other->bins[i].entries);
+        bins[i].scale = ((bins[i].entries * bins[i].scale) + (other.bins[i].entries * other.bins[i].scale)) / (bins[i].entries + other.bins[i].entries);
       }else{
-        bins[i].scale = other->bins[i].scale;
+        bins[i].scale = other.bins[i].scale;
       }
-      bins[i].xsum    += other->bins[i].xsum;
-      bins[i].Q2sum   += other->bins[i].Q2sum;
-      bins[i].entries += other->bins[i].entries;
+      bins[i].xsum    += other.bins[i].xsum;
+      bins[i].Q2sum   += other.bins[i].Q2sum;
+      bins[i].entries += other.bins[i].entries;
     }
     return 0;
   }
