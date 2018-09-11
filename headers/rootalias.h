@@ -58,7 +58,7 @@ const char* ROOTPATHS[] = {
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin7/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin9/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin11/",
-  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin13/"
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin13/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin15/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin16/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/positron/",

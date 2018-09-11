@@ -99,7 +99,7 @@ Bool_t EC(Double_t z, Int_t arm=0){
 TCut Trig2(Int_t arm=0){
   TCut T2="";
   if(arm==0){
-    T2 += "DL.evtypebits>>2&1";
+    T2 += "DL.bit2==1";
   }else{
     T2 += "DR.evtypebits>>5&1";
   }

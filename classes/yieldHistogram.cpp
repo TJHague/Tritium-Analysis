@@ -15,6 +15,7 @@ yieldHistogram::yieldHistogram(TString t, Int_t n, Double_t min, Double_t max){
   binfo.xsum    = 0;
   binfo.entries = 0;
   binfo.scale   = 1;
+  binfo.scaled  = 0;
   for(Int_t i = 0; i < nbins; i++){
     bins.push_back(bin_info());
     bins[i]=binfo;
@@ -25,12 +26,14 @@ yieldHistogram::yieldHistogram(TString t, Int_t n, Double_t min, Double_t max){
   underflow.xsum    = 0;
   underflow.entries = 0;
   underflow.scale   = 1;
+  underflow.scaled  = 0;
   
   //Initialize overflow bin
   overflow.Q2sum   = 0;
   overflow.xsum    = 0;
   overflow.entries = 0;
   overflow.scale   = 1;
+  overflow.scaled  = 0;
 }
 
 //If for some reason I want to make a quick piece of code and don't want to bother naming the Histogram
@@ -49,13 +52,17 @@ yieldHistogram::yieldHistogram(TString file){
   f >> bin_min;
   f >> bin_max;
   f >> charge;
+  f >> livetime;
+  f >> avgI;
 
   f >> underflow.entries;
+  f >> underflow.scaled;
   f >> underflow.xsum;
   f >> underflow.Q2sum;
   f >> underflow.scale;
 
   f >> overflow.entries;
+  f >> overflow.scaled;
   f >> overflow.xsum;
   f >> overflow.Q2sum;
   f >> overflow.scale;
@@ -63,6 +70,7 @@ yieldHistogram::yieldHistogram(TString file){
   for(Int_t i = 0; i < nbins; i++){
     bins.push_back(bin_info());
     f >> bins[i].entries;
+    f >> bins[i].scaled;
     f >> bins[i].xsum;
     f >> bins[i].Q2sum;
     f >> bins[i].scale;
@@ -74,13 +82,15 @@ yieldHistogram::yieldHistogram(TString file){
 //Scale all bins by scaling factor s
 void yieldHistogram::scale(Double_t s){
   for(Int_t i = 0; i < nbins; i++){
-    bins[i].scale *= s;
+    bins[i].scale  *= s;
+    bins[i].scaled *= s;
   }
 }
 
 //Scale a bin b by scaling factor s
 void yieldHistogram::scaleBin(Int_t b, Double_t s){
-  bins[b].scale *= s;
+  bins[b].scale  *= s;
+  bins[b].scaled *= s;
 }
 
 //Add a count with physics variables x and Q2
@@ -88,18 +98,21 @@ Int_t yieldHistogram::addCount(Double_t x, Double_t Q2){
   Int_t n = TMath::FloorNint((x - bin_min)/((bin_max - bin_min)/(nbins)));
   if(n < 0){
     underflow.entries++;
-    underflow.xsum  += x;
-    underflow.Q2sum += Q2;
+    underflow.scaled += 1;
+    underflow.xsum   += x;
+    underflow.Q2sum  += Q2;
     return -1;
   }else if(n > nbins){
     overflow.entries++;
-    overflow.xsum  += x;
-    overflow.Q2sum += Q2;
+    overflow.scaled += 1;
+    overflow.xsum   += x;
+    overflow.Q2sum  += Q2;
     return 1;
   }
   bins[n].entries++;
-  bins[n].xsum  += x;
-  bins[n].Q2sum += Q2;
+  bins[n].scaled += 1;
+  bins[n].xsum   += x;
+  bins[n].Q2sum  += Q2;
   return 0;
 }
 
@@ -133,7 +146,7 @@ vector<Double_t> yieldHistogram::getAvgQ2(){
 vector <Double_t> yieldHistogram::getCounts(){
   vector<Double_t> counts;
   for(Int_t i = 0; i < nbins; i++){
-    counts.push_back(bins[i].scale * (Double_t)bins[i].entries);
+    counts.push_back(bins[i].scaled);
   }
   return counts;
 }
@@ -148,11 +161,31 @@ Double_t yieldHistogram::getCharge(){
   return charge;
 }
 
+void yieldHistogram::setLivetime(Double_t lt){
+  livetime = lt;
+}
+
+Double_t yieldHistogram::getLivetime(){
+  return livetime;
+}
+
+void yieldHistogram::setAvgI(Double_t i){
+  avgI = i;
+}
+
+Double_t yieldHistogram::getAvgI(){
+  return avgI;
+}
+
 //Put the data into a TH1D and return the pointer to it
-TH1D* yieldHistogram::getTH1(){
-  TH1D *histo = new TH1D("yieldHistogram",title.Data(),nbins,bin_min,bin_max);
+TH1D* yieldHistogram::getTH1(TString name){
+  TH1D *histo = new TH1D(name.Data(),title.Data(),nbins,bin_min,bin_max);
+  histo->Sumw2();
   for(Int_t i = 0; i < nbins; i++){
-    histo->SetBinContent(i + 1, bins[i].entries * bins[i].scale / charge);
+    for(Int_t j = 0; j < bins[i].entries; j++){
+//      histo->AddBinContent(i + 1);
+      histo->Fill(bins[i].xsum/bins[i].entries);
+    }
   }
   return histo;
 }
@@ -167,12 +200,14 @@ Int_t yieldHistogram::save(TString file){
     f << bin_min << endl;
     f << bin_max << endl;
     f << charge  << endl;
+    f << livetime << endl;
+    f << avgI << endl;
     
-    f << underflow.entries << " " << underflow.xsum << " " << underflow.Q2sum << " " << underflow.scale << endl;
-    f << overflow.entries  << " " << overflow.xsum  << " " << overflow.Q2sum  << " " << overflow.scale  << endl;
+    f << underflow.entries << " " << underflow.scaled << " " << underflow.xsum << " " << underflow.Q2sum << " " << underflow.scale << endl;
+    f << overflow.entries  << " " << overflow.scaled  << " " << overflow.xsum  << " " << overflow.Q2sum  << " " << overflow.scale  << endl;
 
     for(Int_t i = 0; i < nbins ; i++){
-      f << bins[i].entries << " " << bins[i].xsum << " " << bins[i].Q2sum << " " << bins[i].scale << endl;
+      f << bins[i].entries << " " << bins[i].scaled   << " " << bins[i].xsum   << " " << bins[i].Q2sum   << " " << bins[i].scale << endl;
     }
 
     return 0;
@@ -190,6 +225,7 @@ Int_t yieldHistogram::add(yieldHistogram *other){
       }else{
         bins[i].scale = other->bins[i].scale;
       }
+      bins[i].scaled  += other->bins[i].scaled;
       bins[i].xsum    += other->bins[i].xsum;
       bins[i].Q2sum   += other->bins[i].Q2sum;
       bins[i].entries += other->bins[i].entries;
