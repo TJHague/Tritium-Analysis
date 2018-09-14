@@ -89,12 +89,6 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
 
       T->SetBranchAddress("EKLx.x_bj",&x_bj);
       T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-
-      Int_t events = T->GetEntries();
-      cout << events << endl;
-      Double_t trig_rec  = 0;
-      Double_t trig_scal = 0;
-      Double_t charge    = 0;
     }else{
       T->SetBranchAddress("RightBCM.charge_dnew",&Q);
       T->SetBranchAddress("RightBCM.current_dnew",&I);
