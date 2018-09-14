@@ -67,33 +67,64 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
     //Double_t p[1] = {0};
     Int_t Iev=0;
 
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-    T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
-    T->SetBranchAddress("DL.bit2",&T2);
-    T->SetBranchAddress("evLeftT2",&T2s);
+    if(arm==0){
+      T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
+      T->SetBranchAddress("LeftBCM.current_dnew",&I);
+      T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+      T->SetBranchAddress("DL.bit2",&T2);
+      T->SetBranchAddress("evLeftT2",&T2s);
 
-    //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
+      //PID variables
+      T->SetBranchAddress("L.cer.asum_c",&cer);
+      T->SetBranchAddress("L.prl1.e",&prl1);
+      T->SetBranchAddress("L.prl2.e",&prl2);
+      T->SetBranchAddress("L.tr.p",&p);
+      T->SetBranchAddress("L.tr.n",&n);
 
-    //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+      //Acceptance variables
+      T->SetBranchAddress("L.tr.tg_ph",&ph);
+      T->SetBranchAddress("L.tr.tg_th",&th);
+      T->SetBranchAddress("L.tr.tg_dp",&dp);
+      T->SetBranchAddress("rpl.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
+      T->SetBranchAddress("EKLx.x_bj",&x_bj);
+      T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
 
-    Int_t events = T->GetEntries();
-    cout << events << endl;
-    Double_t trig_rec  = 0;
-    Double_t trig_scal = 0;
-    Double_t charge    = 0;
+      Int_t events = T->GetEntries();
+      cout << events << endl;
+      Double_t trig_rec  = 0;
+      Double_t trig_scal = 0;
+      Double_t charge    = 0;
+    }else{
+      T->SetBranchAddress("RightBCM.charge_dnew",&Q);
+      T->SetBranchAddress("RightBCM.current_dnew",&I);
+      T->SetBranchAddress("RightBCM.isrenewed",&updated);
+      T->SetBranchAddress("DR.bit5",&T2);
+      T->SetBranchAddress("evRightT5",&T2s);
+
+      //PID variables
+      T->SetBranchAddress("R.cer.asum_c",&cer);
+      T->SetBranchAddress("R.ps.e",&prl1);
+      T->SetBranchAddress("R.sh.e",&prl2);
+      T->SetBranchAddress("R.tr.p",&p);
+      T->SetBranchAddress("R.tr.n",&n);
+
+      //Acceptance variables
+      T->SetBranchAddress("R.tr.tg_ph",&ph);
+      T->SetBranchAddress("R.tr.tg_th",&th);
+      T->SetBranchAddress("R.tr.tg_dp",&dp);
+      T->SetBranchAddress("rpr.z",&z);
+
+      T->SetBranchAddress("EKRx.x_bj",&x_bj);
+      T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
+    }
+
+      Int_t events = T->GetEntries();
+      cout << events << endl;
+      Double_t trig_rec  = 0;
+      Double_t trig_scal = 0;
+      Double_t charge    = 0;
+
 
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
