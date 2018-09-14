@@ -19,7 +19,7 @@
 void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
   //Load runs
   TString set="";
-  if(kin>=7&&arm==0){
+  if(kin>=7){
     if(iter==1){
       set = "_1st";
     }else if(iter==2){
