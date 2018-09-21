@@ -16,10 +16,10 @@
 
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
-void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
+void emcR(Int_t kin, Int_t iter=0, Int_t arm=1){
   //Load runs
   TString set="";
-  if(kin>=7&&arm==0){
+  if(kin>=7){
     if(iter==1){
       set = "_1st";
     }else if(iter==2){
@@ -67,28 +67,28 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
     //Double_t p[1] = {0};
     Int_t Iev=0;
 
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-    T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
-    T->SetBranchAddress("DL.bit2",&T2);
-    T->SetBranchAddress("evLeftT2",&T2s);
+    T->SetBranchAddress("RightBCM.charge_dnew",&Q);
+    T->SetBranchAddress("RightBCM.current_dnew",&I);
+    T->SetBranchAddress("RightBCM.isrenewed",&updated);
+    T->SetBranchAddress("DR.bit5",&T2);
+    T->SetBranchAddress("evRightT5",&T2s);
 
     //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
+    T->SetBranchAddress("R.cer.asum_c",&cer);
+    T->SetBranchAddress("R.ps.e",&prl1);
+    T->SetBranchAddress("R.sh.e",&prl2);
+    T->SetBranchAddress("R.tr.p",&p);
+    T->SetBranchAddress("R.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("R.tr.tg_ph",&ph);
+    T->SetBranchAddress("R.tr.tg_th",&th);
+    T->SetBranchAddress("R.tr.tg_dp",&dp);
+    T->SetBranchAddress("rpr.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKRx.x_bj",&x_bj);
+    T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKRx.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     cout << events << endl;
@@ -144,28 +144,28 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
     //  Make this work for both arms
     Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2, n, W2;
     Int_t Iev = 0;
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-    T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
-    T->SetBranchAddress("DL.bit2",&T2);
-    T->SetBranchAddress("evLeftT2",&T2s);
+    T->SetBranchAddress("RightBCM.charge_dnew",&Q);
+    T->SetBranchAddress("RightBCM.current_dnew",&I);
+    T->SetBranchAddress("RightBCM.isrenewed",&updated);
+    T->SetBranchAddress("DR.bit5",&T2);
+    T->SetBranchAddress("evRightT5",&T2s);
 
     //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
+    T->SetBranchAddress("R.cer.asum_c",&cer);
+    T->SetBranchAddress("R.ps.e",&prl1);
+    T->SetBranchAddress("R.sh.e",&prl2);
+    T->SetBranchAddress("R.tr.p",&p);
+    T->SetBranchAddress("R.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("R.tr.tg_ph",&ph);
+    T->SetBranchAddress("R.tr.tg_th",&th);
+    T->SetBranchAddress("R.tr.tg_dp",&dp);
+    T->SetBranchAddress("rpr.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKRx.x_bj",&x_bj);
+    T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKRx.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
@@ -181,7 +181,7 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&(W2cut(W2)==true)){
+        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&&(W2cut(W2)==true)){
           D2part->addCount(x_bj, Q2);
         }
       }
@@ -262,6 +262,8 @@ void emc(Int_t kin, Int_t iter=0, Int_t arm=0){
   ratio->Divide(D2full);
 
   TFile *f = new TFile(Form("fullKin/kin%d%s.root",kin,set.Data()),"RECREATE");
+  He3full->Write();
+  D2full->Write();
   ratio->Write();
   //ratio->Draw("P");
 

@@ -65,55 +65,94 @@ Double_t H1Nuclei(Double_t I){
 }
 
 Double_t He3ECC(Int_t kin){
-  if(kin==1){
-    return 0.028307946;
+  if(kin==0){
+    return 0.0234217;
+  }else if(kin==1){
+    return 0.0218539;
   }else if(kin==2){
-    return 0.026412663;
+    return 0.0202861;
   }else if(kin==3){
-    return 0.021025946;
+    return 0.0163029;
+  }else if(kin==4){
+    return 0.0153788;
   }else if(kin==5){
-    return 0.017594063;
+    return 0.0144547;
   }else if(kin==7){
-    return 0.013816999;
+    return 0.0117678;
   }else if(kin==9){
-    return 0.011232989;
+    return 0.009389;
   }else if(kin==11){
-    return 0.008003037;
+    return 0.0069394;
   }else if(kin==13){
-    return 0.006503249;
+    return 0.0055396;
   }else if(kin==15){
-    return 0.005162994;
+    return 0.0043623;
+  }else if(kin==16){
+    return 0.0032;
   }
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
 }
 
 Double_t H3ECC(Int_t kin){
-  if(kin==1){
-    return 0.021853892;
+  if(kin==0){
+    return 0.0234217;
+  }else if(kin==1){
+    return 0.0218539;
   }else if(kin==2){
-    return 0.020286097;
+    return 0.0202861;
   }else if(kin==3){
-    return 0.016302875;
+    return 0.0163029;
+  }else if(kin==4){
+    return 0.0153788;
   }else if(kin==5){
-    return 0.014454685;
+    return 0.0144547;
   }else if(kin==7){
-    return 0.01176781;
+    return 0.0117678;
   }else if(kin==9){
-    return 0.009388988;
+    return 0.009389;
   }else if(kin==11){
-    return 0.006939431;
+    return 0.0069394;
   }else if(kin==13){
     return 0.0055396;
   }else if(kin==15){
-    return 0.004362285;
+    return 0.0043623;
+  }else if(kin==16){
+    return 0.0032;
   }
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
 }
 
 Double_t D2ECC(Int_t kin){
-  if(kin==1){
+  if(kin==0){
+    return 0.0234217;
+  }else if(kin==1){
+    return 0.0218539;
+  }else if(kin==2){
+    return 0.0202861;
+  }else if(kin==3){
+    return 0.0163029;
+  }else if(kin==4){
+    return 0.0153788;
+  }else if(kin==5){
+    return 0.0144547;
+  }else if(kin==7){
+    return 0.0117678;
+  }else if(kin==9){
+    return 0.009389;
+  }else if(kin==11){
+    return 0.0069394;
+  }else if(kin==13){
+    return 0.0055396;
+  }else if(kin==15){
+    return 0.0043623;
+  }else if(kin==16){
+    return 0.0032;
+  }
+
+/* Old Values
+ if(kin==1){
     return 0.011656013;
   }else if(kin==2){
     return 0.010794583;
@@ -133,7 +172,7 @@ Double_t D2ECC(Int_t kin){
     return 0.002642317;
   }else if(kin==15){
     return 0.002147393;
-  }
+  }*/
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
 }

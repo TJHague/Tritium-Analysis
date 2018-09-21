@@ -13,7 +13,7 @@ TCut ACC(Int_t arm=0){
     ACC += "R.tr.tg_ph<0.02";
     ACC += "R.tr.tg_th>-0.05";
     ACC += "R.tr.tg_th<0.055";
-    ACC += "TMath::Abs(L.tr.tg_dp)<0.04";
+    ACC += "TMath::Abs(R.tr.tg_dp)<0.04";
   }
   return ACC;
 }
@@ -106,3 +106,9 @@ TCut Trig2(Int_t arm=0){
   return T2;
 }
 
+Bool_t W2cut(Double_t W2){
+  if(W2>2.5){
+    return true;
+  }
+  return false;
+}

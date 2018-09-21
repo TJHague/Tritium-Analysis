@@ -50,6 +50,7 @@
 
 const char* ROOTPATHS[] = {
   "./tmproot/",
+  "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin0/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin1/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin2/",
   "/lustre/expphy/cache/halla/triton/prod/marathon/pass1/kin3/",
