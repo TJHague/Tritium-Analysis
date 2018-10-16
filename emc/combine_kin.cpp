@@ -5,136 +5,91 @@
 #include <iostream>
 
 void combine_kin(){
-  TH1D* emc[18];
+  TH1D* emc[12];
   bool plotted = false;
-  //emc = (TH1D*) gDirectory->Get("emc");
-  //emc->Draw("P");
 
   auto legend = new TLegend(0.1,0.1,0.48,0.3);
   legend->SetHeader("Helium-3 EMC Ratio","C");
-  //legend->AddEntry(emc,"Kin 1","p");
-  //legend->Draw();
 
-//  f->Close();
-
+  int j = 0; //array location
   for(Int_t i = 0; i <= 5; i++){
-    if( !gSystem->AccessPathName(Form("fullKin/kin%d.root",i))){
-      TFile *f = new TFile(Form("fullKin/kin%d.root",i));
-      emc[i] = (TH1D*) gDirectory->Get("emc");
-      emc[i]->SetDirectory(0);
-      emc[i]->SetMarkerStyle(21); //Box
-      emc[i]->SetMarkerColor(i+1);
-      emc[i]->SetMarkerSize(1);
+    if( !gSystem->AccessPathName(Form("cleanedKin/kin%d.root",i))){
+      TFile *f = new TFile(Form("cleanedKin/kin%d.root",i));
+      emc[j] = (TH1D*) gDirectory->Get("emc");
+      emc[j]->SetDirectory(0);
+      emc[j]->SetMarkerStyle(21); //Box
+      emc[j]->SetMarkerColor(i+1);
+      emc[j]->SetMarkerSize(1);
 
       if(plotted){
-        emc[i]->Draw("SAME");
+        emc[j]->Draw("SAME");
       }else{
-        emc[i]->GetYaxis()->SetRangeUser(0.6,1.4);
-        emc[i]->SetTitle("Helium-3 EMC Ratio");
-        emc[i]->Draw("P");
+        emc[j]->GetYaxis()->SetRangeUser(0.6,1.4);
+        emc[j]->SetTitle("Helium-3 EMC Ratio");
+        emc[j]->Draw("P");
         plotted = true;
       }
 
-      legend->AddEntry(emc[i],Form("Kin %d",i),"p");
+      legend->AddEntry(emc[j],Form("Kin %d",i),"p");
 
       f->Close();
+      j++;
     }
   }
 
-  for(Int_t i = 7; i < 17; i=i+2){
-    if( !gSystem->AccessPathName(Form("fullKin/kin%d_1st.root",i))){
-      TFile *f = new TFile(Form("fullKin/kin%d_1st.root",i));
-      emc[i] = (TH1D*) gDirectory->Get("emc");
-      emc[i]->SetDirectory(0);
-      if(i<9){
-        emc[i]->SetMarkerStyle(21); //Box
-        emc[i]->SetMarkerColor(i+1);
+  for(Int_t i = 7; i <= 15; i=i+2){
+    if( !gSystem->AccessPathName(Form("cleanedKin/kin%d.root",i))){
+      TFile *f = new TFile(Form("cleanedKin/kin%d.root",i));
+      emc[j] = (TH1D*) gDirectory->Get("emc");
+      emc[j]->SetDirectory(0);
+      if(j<9){
+        emc[j]->SetMarkerStyle(21); //Box
+        emc[j]->SetMarkerColor(j+1);
       }else{
-        emc[i]->SetMarkerStyle(22); //Triangle
-        emc[i]->SetMarkerColor(i-8);
+        emc[j]->SetMarkerStyle(22); //Triangle
+        emc[j]->SetMarkerColor(j-8);
       }
-      emc[i]->SetMarkerSize(1);
+      emc[j]->SetMarkerSize(1);
 
       if(plotted){
-        emc[i]->Draw("SAME");
+        emc[j]->Draw("SAME");
       }else{
-        emc[i]->GetYaxis()->SetRangeUser(0.6,1.4);
-        emc[i]->SetTitle("Helium-3 EMC Ratio");
-        emc[i]->Draw("P");
+        emc[j]->GetYaxis()->SetRangeUser(0.6,1.4);
+        emc[j]->SetTitle("Helium-3 EMC Ratio");
+        emc[j]->Draw("P");
         plotted = true;
       }
 
-      legend->AddEntry(emc[i],Form("Kin %d 1st",i),"p");
+      legend->AddEntry(emc[j],Form("Kin %d",i),"p");
 
       f->Close();
-    }
-    if( !gSystem->AccessPathName(Form("fullKin/kin%d_2nd.root",i))){
-      TFile *f = new TFile(Form("fullKin/kin%d_2nd.root",i));
-      emc[i+1] = (TH1D*) gDirectory->Get("emc");
-      emc[i+1]->SetDirectory(0);
-      if((i+1)<9){
-        emc[i+1]->SetMarkerStyle(21); //Box
-        emc[i+1]->SetMarkerColor(i+2);
-      }else{
-        emc[i+1]->SetMarkerStyle(22); //Triangle
-        emc[i+1]->SetMarkerColor(i-7);
-      }
-      emc[i+1]->SetMarkerSize(1);
-
-      if(plotted){
-        emc[i+1]->Draw("SAME");
-      }else{
-        emc[i+1]->GetYaxis()->SetRangeUser(0.6,1.4);
-        emc[i+1]->SetTitle("Helium-3 EMC Ratio");
-        emc[i+1]->Draw("P");
-        plotted = true;
-      }
-
-      legend->AddEntry(emc[i+1],Form("Kin %d 2nd",i),"p");
-
-      f->Close();
+      j++;
     }
   }
 
-  if( !gSystem->AccessPathName("fullKin/kin16_1st.root")){
-    TFile *f = new TFile("fullKin/kin16_1st.root");
-    emc[16] = (TH1D*) gDirectory->Get("emc");
-    emc[16]->SetDirectory(0);
-    emc[16]->SetMarkerStyle(22); //Box
-    emc[16]->SetMarkerColor(9);
-    emc[16]->SetMarkerSize(1);
+  if( !gSystem->AccessPathName("cleanedKin/kin16.root")){
+    TFile *f = new TFile("cleanedKin/kin16.root");
+    emc[j] = (TH1D*) gDirectory->Get("emc");
+    emc[j]->SetDirectory(0);
+    if(j<9){
+      emc[j]->SetMarkerStyle(21); //Box
+      emc[j]->SetMarkerColor(j+1);
+    }else{
+      emc[j]->SetMarkerStyle(22); //Triangle
+      emc[j]->SetMarkerColor(j-8);
+    }
+    emc[j]->SetMarkerSize(1);
 
     if(plotted){
-      emc[16]->Draw("SAME");
+      emc[j]->Draw("SAME");
     }else{
-      emc[16]->GetYaxis()->SetRangeUser(0.6,1.4);
-      emc[16]->SetTitle("Helium-3 EMC Ratio");
-      emc[16]->Draw("P");
+      emc[j]->GetYaxis()->SetRangeUser(0.6,1.4);
+      emc[j]->SetTitle("Helium-3 EMC Ratio");
+      emc[j]->Draw("P");
       plotted = true;
     }
 
-    legend->AddEntry(emc[16],"Kin 16 1st","p");
-
-    f->Close();
-  }
-  if( !gSystem->AccessPathName("fullKin/kin16_2nd.root")){
-    TFile *f = new TFile("fullKin/kin16_2nd.root");
-    emc[17] = (TH1D*) gDirectory->Get("emc");
-    emc[17]->SetDirectory(0);
-    emc[17]->SetMarkerStyle(22); //Box
-    emc[17]->SetMarkerColor(1);
-    emc[17]->SetMarkerSize(1);
-
-    if(plotted){
-      emc[17]->Draw("SAME");
-    }else{
-      emc[17]->GetYaxis()->SetRangeUser(0.6,1.4);
-      emc[17]->SetTitle("Helium-3 EMC Ratio");
-      emc[17]->Draw("P");
-      plotted = true;
-    }
-
-    legend->AddEntry(emc[17],"Kin 16 2nd","p");
+    legend->AddEntry(emc[j],"Kin 16","p");
 
     f->Close();
   }

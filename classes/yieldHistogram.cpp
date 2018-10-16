@@ -146,7 +146,7 @@ vector<Double_t> yieldHistogram::getAvgQ2(){
 vector <Double_t> yieldHistogram::getCounts(){
   vector<Double_t> counts;
   for(Int_t i = 0; i < nbins; i++){
-    counts.push_back(bins[i].scaled);
+    counts.push_back(bins[i].entries);
   }
   return counts;
 }
