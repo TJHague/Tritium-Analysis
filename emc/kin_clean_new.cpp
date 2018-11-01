@@ -4,19 +4,19 @@
  * This is part of a set of code to get the He3/D2 EMC ratio.
  */
 
-void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="cleanedKin", TString hist_name="emc"){
+void kin_clean_new(int kin, TString folder, TString inf="fullKin", TString outf="cleanedKin", TString hname="emc"){
   if(kin<=5){
     /* Kin 0-5 only had 1 iteration
      * Move the data to a new histogram and omit the first and last bin
      */
 
     TFile *f = new TFile(Form("%s/%s/kin%d.root",folder.Data(),inf.Data(),kin));
-    TH1D *emc = (TH1D*) gDirectory->Get("emc");
+    TH1D *emc = (TH1D*) gDirectory->Get(hname.Data());
     emc->SetDirectory(0);
     delete f;
 
     bool first = true;
-    TH1D *cleaned = new TH1D("emc","He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
+    TH1D *cleaned = new TH1D(hname.Data(),"He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
     cleaned->Sumw2();
     for(int i = 1; i <= emc->GetNbinsX(); i++){
       double c = emc->GetBinContent(i);
@@ -34,12 +34,12 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
         }
       }
     }
-    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"RECREATE");
+    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"UPDATE");
     cleaned->Write();
 
     delete emc;
-    delete cleaned;
     delete out;
+    delete cleaned;
   }else if(kin<=16 && kin!=15){
     /* Kin 7-15 had 2 iterations
      * First combine them into one histogram with a weighted average
@@ -48,12 +48,12 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
     
     //Combine iterations
     TFile *f = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),kin));
-    TH1D *i1 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i1 = (TH1D*) gDirectory->Get(hname.Data());
     i1->SetDirectory(0);
     delete f;
 
     TFile *g = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i2 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i2 = (TH1D*) gDirectory->Get(hname.Data());
     i2->SetDirectory(0);
     delete g;
 
@@ -79,7 +79,7 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
 
     //Remove first and last bin
     bool first = true;
-    TH1D *cleaned = new TH1D("emc","He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
+    TH1D *cleaned = new TH1D(hname.Data(),"He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
     cleaned->Sumw2();
     for(int i = 1; i <= emc->GetNbinsX(); i++){
       double c = emc->GetBinContent(i);
@@ -97,7 +97,7 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
         }
       }
     }
-    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"RECREATE");
+    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"UPDATE");
     cleaned->Write();
 
     delete emc;
@@ -112,17 +112,17 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
 
     //Combine iterations
     TFile *f = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),kin));
-    TH1D *i1 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i1 = (TH1D*) gDirectory->Get(hname.Data());
     i1->SetDirectory(0);
     delete f;
 
     TFile *g = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i2 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i2 = (TH1D*) gDirectory->Get(hname.Data());
     i2->SetDirectory(0);
     delete g;
 
     TFile *h = new TFile(Form("%s/%s/kin%d_3rd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i3 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i3 = (TH1D*) gDirectory->Get(hname.Data());
     i3->SetDirectory(0);
     delete h;
 
@@ -150,7 +150,7 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
     }
 
     bool first = true;
-    TH1D *cleaned = new TH1D("emc","He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
+    TH1D *cleaned = new TH1D(hname.Data(),"He-3 EMC Ratio",emc->GetNbinsX(),emc->GetXaxis()->GetXmin(),emc->GetXaxis()->GetXmax());
     cleaned->Sumw2();
     for(int i = 1; i <= emc->GetNbinsX(); i++){
       double c = emc->GetBinContent(i);
@@ -168,7 +168,7 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
         }
       }
     }
-    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"RECREATE");
+    TFile *out = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),kin),"UPDATE");
     cleaned->Write();
 
     delete emc;

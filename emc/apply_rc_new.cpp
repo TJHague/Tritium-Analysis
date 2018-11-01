@@ -1,4 +1,4 @@
-void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
+void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor", TString outhist="rad"){
   /*TString set = "";
   if(kin>=7){
     if(iter==1){
@@ -18,18 +18,18 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
 
   for(int i=0;i<=5;i++){
     TFile *a = new TFile(Form("%s/%s/kin%d.root",folder.Data(),inf.Data(),i),"UPDATE");
-    TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
-    TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
-    He3->SetDirectory(0);
-    TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
-    TH1D *D2 = (TH1D*) D2clean->Clone("D2rad");
-    D2->SetDirectory(0);
+    TH1D *He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+    TH1D *He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//    He3->SetDirectory(0);
+    TH1D *D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+    TH1D *D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//    D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
-    delete a;
+//    delete a;
     TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
     emc->Sumw2();
 
-    cout << "He3" << endl;
+    cout << Form("He3%s",inhist.Data()) << endl;
     for(int j=1; j<=He3->GetNbinsX(); j++){
       if(He3->GetBinContent(j)!=0){
         double born, rad;
@@ -41,7 +41,7 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
         He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
       }
     }
-    cout << "D2" << endl;
+    cout << Form("D2%s",inhist.Data()) << endl;
     for(int j=1; j<=D2->GetNbinsX(); j++){
       if(D2->GetBinContent(j)!=0){
         double born, rad;
@@ -56,24 +56,23 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
 //    
     emc->Add(He3);
     emc->Divide(D2);
-
-    a = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),i),"RECREATE");
+//    a = new TFile(Form("%s/%s/kin%d.root",folder.Data(),outf.Data(),i),"RECREATE");
     He3->Write();
     D2->Write();
     emc->Write();
-    delete a;
     delete emc;
+    delete a;
   }
  for(int i=7;i<15;i+=2){
     TFile *a = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),i),"UPDATE");
-    TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
-    TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
-    He3->SetDirectory(0);
-    TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
-    TH1D *D2 = (TH1D*) D2clean->Clone("D2rad");
-    D2->SetDirectory(0);
+    TH1D *He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+    TH1D *He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//    He3->SetDirectory(0);
+    TH1D *D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+    TH1D *D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//    D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
-    delete a;
+//    delete a;
     TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
 
     for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -101,22 +100,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
     emc->Add(He3);
     emc->Divide(D2);
 
-    a = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),outf.Data(),i),"RECREATE");
+//    a = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),outf.Data(),i),"RECREATE");
     He3->Write();
     D2->Write();
     emc->Write();
-    delete a;
     delete emc;
+    delete a;
 
     a = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),i),"UPDATE");
-    He3clean = (TH1D*) gDirectory->Get("He3");
-    He3 = (TH1D*) He3clean->Clone("He3rad");
-    He3->SetDirectory(0);
-    D2clean = (TH1D*) gDirectory->Get("D2full");
-    D2 = (TH1D*) D2clean->Clone("D2rad");
-    D2->SetDirectory(0);
+    He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+    He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//    He3->SetDirectory(0);
+    D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+    D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//    D2->SetDirectory(0);
 //    emc = (TH1D*) gDirectory->Get("emc");
-    delete a;
+//    delete a;
     emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
     emc->Sumw2();
     for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -143,24 +142,24 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
     emc->Add(He3);
     emc->Divide(D2);
 
-    a = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),outf.Data(),i),"RECREATE");
+//    a = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),outf.Data(),i),"RECREATE");
     He3->Write();
     D2->Write();
     emc->Write();
-    delete a;
     delete emc;
-    cout << "maybe?" << endl;
+    delete a;
+//    cout << "maybe?" << endl;
   }
-  cout << "end of loops" << endl;
+//  cout << "end of loops" << endl;
   TFile *a = new TFile(Form("%s/%s/kin15_1st.root",folder.Data(),inf.Data()),"UPDATE");
-  TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
-  TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
-  He3->SetDirectory(0);
-  TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
-  TH1D *D2 = (TH1D*) D2->Clone("D2rad");
-  D2->SetDirectory(0);
+  TH1D *He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+  TH1D *He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//  He3->SetDirectory(0);
+  TH1D *D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+  TH1D *D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//  D2->SetDirectory(0);
 //  TH1D *emc = (TH1D*) gDirectory->Get("emc");
-  delete a;
+//  delete a;
   TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
@@ -188,22 +187,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   emc->Add(He3);
   emc->Divide(D2);
 
-  a = new TFile(Form("%s/%s/kin15_1st.root",folder.Data(),outf.Data()),"RECREATE");
+//  a = new TFile(Form("%s/%s/kin15_1st.root",folder.Data(),outf.Data()),"RECREATE");
   He3->Write();
   D2->Write();
   emc->Write();
-  delete a;
   delete emc;
+  delete a;
 
   a = new TFile(Form("%s/%s/kin15_2nd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
-  He3 = (TH1D*) He3clean->Clone("He3rad");
-  He3->SetDirectory(0);
-  D2clean = (TH1D*) gDirectory->Get("D2");
-  D2 = (TH1D*) D2clean->Clone("D2rad");
-  D2->SetDirectory(0);
+  He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+  He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//  He3->SetDirectory(0);
+  D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+  D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
-  delete a;
+//  delete a;
   emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
@@ -231,22 +230,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   emc->Add(He3);
   emc->Divide(D2);
   
-  a = new TFile(Form("%s/%s/kin15_2nd.root",folder.Data(),outf.Data()),"RECREATE");
+//  a = new TFile(Form("%s/%s/kin15_2nd.root",folder.Data(),outf.Data()),"RECREATE");
   He3->Write();
   D2->Write();
   emc->Write();
-  delete a;
   delete emc;
+  delete a;
 
   a = new TFile(Form("%s/%s/kin15_3rd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
-  He3 = (TH1D*) He3clean->Clone("He3rad");
-  He3->SetDirectory(0);
-  D2clean = (TH1D*) gDirectory->Get("D2full");
-  D2 = (TH1D*) D2clean->Clone("D2rad");
-  D2->SetDirectory(0);
+  He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+  He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//  He3->SetDirectory(0);
+  D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+  D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
-  delete a;
+//  delete a;
   emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
@@ -274,22 +273,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   emc->Add(He3);
   emc->Divide(D2);
 
-  a = new TFile(Form("%s/%s/kin15_3rd.root",folder.Data(),outf.Data()),"RECREATE");
+//  a = new TFile(Form("%s/%s/kin15_3rd.root",folder.Data(),outf.Data()),"RECREATE");
   He3->Write();
   D2->Write();
   emc->Write();
-  delete a;
   delete emc;
+  delete a;
 
   a = new TFile(Form("%s/%s/kin16_1st.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
-  He3 = (TH1D*) He3clean->Clone("He3rad");
-  He3->SetDirectory(0);
-  D2clean = (TH1D*) gDirectory->Get("D2full");
-  D2 = (TH1D*) D2clean->Clone("D2rad");
-  D2->SetDirectory(0);
+  He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+  He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//  He3->SetDirectory(0);
+  D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+  D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
-  delete a;
+//  delete a;
   emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
@@ -317,22 +316,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   emc->Add(He3);
   emc->Divide(D2);
 
-  a = new TFile(Form("%s/%s/kin16_1st.root",folder.Data(),outf.Data()),"RECREATE");
+//  a = new TFile(Form("%s/%s/kin16_1st.root",folder.Data(),outf.Data()),"RECREATE");
   He3->Write();
   D2->Write();
   emc->Write();
-  delete a;
   delete emc;
+  delete a;
 
   a = new TFile(Form("%s/%s/kin16_2nd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
-  He3 = (TH1D*) He3clean->Clone("He3rad");
-  He3->SetDirectory(0);
-  D2clean = (TH1D*) gDirectory->Get("D2full");
-  D2 = (TH1D*) D2clean->Clone("D2rad");
-  D2->SetDirectory(0);
+  He3clean = (TH1D*) gDirectory->Get(Form("He3%s",inhist.Data()));
+  He3 = (TH1D*) He3clean->Clone(Form("He3%s",outhist.Data()));
+//  He3->SetDirectory(0);
+  D2clean = (TH1D*) gDirectory->Get(Form("D2%s",inhist.Data()));
+  D2 = (TH1D*) D2clean->Clone(Form("D2%s",outhist.Data()));
+//  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
-  delete a;
+//  delete a;
   emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
@@ -356,15 +355,15 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
     }
   }
-  a = new TFile(Form("%s/%s/kin16_2nd.root",folder.Data(),outf.Data()),"RECREATE");
+//  a = new TFile(Form("%s/%s/kin16_2nd.root",folder.Data(),outf.Data()),"RECREATE");
   He3->Write();
   D2->Write();
   
   emc->Add(He3);
   emc->Divide(D2);
   emc->Write();
-  delete a;
   delete emc;
+  delete a;
 
   He3rc.close();
   D2rc.close();
