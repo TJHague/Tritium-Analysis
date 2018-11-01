@@ -66,29 +66,29 @@ Double_t H1Nuclei(Double_t I){
 
 Double_t He3ECC(Int_t kin){
   if(kin==0){
-    return 0.0234217;
+    return 0.0271195;
   }else if(kin==1){
-    return 0.0218539;
+    return 0.0251296;
   }else if(kin==2){
-    return 0.0202861;
+    return 0.0229473;
   }else if(kin==3){
-    return 0.0163029;
+    return 0.0183983;
   }else if(kin==4){
-    return 0.0153788;
+    return 0.0172781;
   }else if(kin==5){
-    return 0.0144547;
+    return 0.0157382;
   }else if(kin==7){
-    return 0.0117678;
+    return 0.0125219;
   }else if(kin==9){
-    return 0.009389;
+    return 0.0097427;
   }else if(kin==11){
-    return 0.0069394;
+    return 0.0071525;
   }else if(kin==13){
-    return 0.0055396;
+    return 0.0057231;
   }else if(kin==15){
-    return 0.0043623;
+    return 0.0044973;
   }else if(kin==16){
-    return 0.0032;
+    return 0.0032718;
   }
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
@@ -126,29 +126,29 @@ Double_t H3ECC(Int_t kin){
 
 Double_t D2ECC(Int_t kin){
   if(kin==0){
-    return 0.0234217;
+    return 0.0186017;
   }else if(kin==1){
-    return 0.0218539;
+    return 0.0113827;
   }else if(kin==2){
-    return 0.0202861;
+    return 0.0102172;
   }else if(kin==3){
-    return 0.0163029;
+    return 0.0082068;
   }else if(kin==4){
-    return 0.0153788;
+    return 0.0093849;
   }else if(kin==5){
-    return 0.0144547;
+    return 0.0086493;
   }else if(kin==7){
-    return 0.0117678;
+    return 0.0083141;
   }else if(kin==9){
-    return 0.009389;
+    return 0.0057051;
   }else if(kin==11){
-    return 0.0069394;
+    return 0.0051219;
   }else if(kin==13){
-    return 0.0055396;
+    return 0.0034977;
   }else if(kin==15){
-    return 0.0043623;
+    return 0.002765;
   }else if(kin==16){
-    return 0.0032;
+    return 0.0026865;
   }
 
 /* Old Values
@@ -178,14 +178,16 @@ Double_t D2ECC(Int_t kin){
 }
 
 Double_t H1ECC(Int_t kin){
-  if(kin==1){
-    return 0.025429549;
+  if(kin==0){
+    return 0.02922687;
+  }else if(kin==1){
+    return 0.02387363;
   }else if(kin==2){
-    return 0.023649616;
+    return 0.02094824;
   }else if(kin==3){
-    return 0.022536696;
+    return 0.01708867;
   }else if(kin==4){
-    return 0.021100542;
+    return 0.01767261;
   }
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
