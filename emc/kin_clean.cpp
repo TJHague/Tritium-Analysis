@@ -11,7 +11,7 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
      */
 
     TFile *f = new TFile(Form("%s/%s/kin%d.root",folder.Data(),inf.Data(),kin));
-    TH1D *emc = (TH1D*) gDirectory->Get("emc");
+    TH1D *emc = (TH1D*) gDirectory->Get("emcrad");
     emc->SetDirectory(0);
     delete f;
 
@@ -48,12 +48,12 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
     
     //Combine iterations
     TFile *f = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),kin));
-    TH1D *i1 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i1 = (TH1D*) gDirectory->Get("emcrad");
     i1->SetDirectory(0);
     delete f;
 
     TFile *g = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i2 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i2 = (TH1D*) gDirectory->Get("emcrad");
     i2->SetDirectory(0);
     delete g;
 
@@ -112,17 +112,17 @@ void kin_clean(int kin, TString folder, TString inf="radKin", TString outf="clea
 
     //Combine iterations
     TFile *f = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),kin));
-    TH1D *i1 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i1 = (TH1D*) gDirectory->Get("emcrad");
     i1->SetDirectory(0);
     delete f;
 
     TFile *g = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i2 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i2 = (TH1D*) gDirectory->Get("emcrad");
     i2->SetDirectory(0);
     delete g;
 
     TFile *h = new TFile(Form("%s/%s/kin%d_3rd.root",folder.Data(),inf.Data(),kin));
-    TH1D *i3 = (TH1D*) gDirectory->Get("emc");
+    TH1D *i3 = (TH1D*) gDirectory->Get("emcrad");
     i3->SetDirectory(0);
     delete h;
 

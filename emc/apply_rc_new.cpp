@@ -26,7 +26,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //    D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
 //    delete a;
-    TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+    TH1D *emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
     emc->Sumw2();
 
     cout << Form("He3%s",inhist.Data()) << endl;
@@ -73,7 +73,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //    D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
 //    delete a;
-    TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+    TH1D *emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
 
     for(int j=1; j<=He3->GetNbinsX(); j++){
       if(He3->GetBinContent(j)!=0){
@@ -116,7 +116,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //    D2->SetDirectory(0);
 //    emc = (TH1D*) gDirectory->Get("emc");
 //    delete a;
-    emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+    emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
     emc->Sumw2();
     for(int j=1; j<=He3->GetNbinsX(); j++){
       if(He3->GetBinContent(j)!=0){
@@ -160,7 +160,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //  D2->SetDirectory(0);
 //  TH1D *emc = (TH1D*) gDirectory->Get("emc");
 //  delete a;
-  TH1D *emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+  TH1D *emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
   for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -203,7 +203,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
 //  delete a;
-  emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+  emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
   for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -246,7 +246,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
 //  delete a;
-  emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+  emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
   for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -289,7 +289,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
 //  delete a;
-  emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+  emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
   for(int j=1; j<=He3->GetNbinsX(); j++){
@@ -332,7 +332,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
 //  D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
 //  delete a;
-  emc = new TH1D("emcrad","He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
+  emc = new TH1D(Form("emc%s",outhist.Data()),"He-3 EMC Ratio",He3->GetNbinsX(),He3->GetXaxis()->GetXmin(),He3->GetXaxis()->GetXmax());
   emc->Sumw2();
 
   for(int j=1; j<=He3->GetNbinsX(); j++){
