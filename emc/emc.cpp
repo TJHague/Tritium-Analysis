@@ -60,7 +60,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, ph, th, dp, z, x_bj, Q2, n, p, W2;
     //Double_t p[1] = {0};
     Int_t Iev=0;
-
+    cout <<"ok1" << endl;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
@@ -90,6 +90,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     Double_t trig_scal = 0;
     Double_t charge    = 0;
 
+    cout << "ok2" << endl;
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
       if((updated==1) && I>0.){
@@ -115,6 +116,10 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     He3part->setAvgI(avgI);
     //cout << "He3 Nuclei: " << He3Nuclei(avgI) << endl;
     He3part->setCharge(charge);
+    cout << set.Data() << endl;
+    cout << "ok3" << endl;
+    cout << folder << "/kin" << kin << set << "/He3/" << He3vec[i] << ".dat" << endl;
+    cout << Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]) << endl;
     He3part->save(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
     TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
     tmp->Scale(1. / He3part->getLivetime());

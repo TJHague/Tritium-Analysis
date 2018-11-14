@@ -4,7 +4,7 @@
  * This is part of a set of code to get the He3/D2 EMC ratio.
  */
 
-void merge_all_new(TString folder, TString h_name, bool zero_err=false, TString inf="cleanedKin"){
+void merge_all_new(TString folder, TString h_name, TString outf="He3EMC", bool zero_err=false, TString inf="cleanedKin"){
   
   TH1D *hist[12];
 
@@ -105,7 +105,7 @@ void merge_all_new(TString folder, TString h_name, bool zero_err=false, TString 
   emc->SetAxisRange(0.9,1.3,"Y");
   emc->SetAxisRange(0,1,"X");
 
-  TFile *out = new TFile(Form("%s/He3EMC.root",folder.Data()),"UPDATE");
+  TFile *out = new TFile(Form("%s/%s.root",folder.Data(),outf.Data()),"UPDATE");
   emc->Write();
 
   delete emc;

@@ -15,14 +15,22 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   getline(He3rc,tmp);
   ifstream D2rc("/work/halla/triton/tjhague/radcor/T2_externals/OUT/D2emc_xs.out");
   getline(D2rc,tmp);
-
+  cout <<"test" << endl;
   for(int i=0;i<=5;i++){
+    cout <<"1" <<endl;
     TFile *a = new TFile(Form("%s/%s/kin%d.root",folder.Data(),inf.Data(),i),"UPDATE");
-    TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
+    cout <<"2" <<endl;
+    TH1D *He3clean = (TH1D*) gDirectory->Get("He3full");
+    He3clean->SetDirectory(0);
+    cout <<"3" <<endl;
     TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
+    cout <<"3" <<endl;
     He3->SetDirectory(0);
-    TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
+    cout <<"4" <<endl;
+    TH1D *D2clean = (TH1D*) gDirectory->Get("D2full");
+    D2clean->SetDirectory(0);
     TH1D *D2 = (TH1D*) D2clean->Clone("D2rad");
+    cout <<"5" <<endl;
     D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
     delete a;
@@ -53,7 +61,6 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
         D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
       }
     }
-//    
     emc->Add(He3);
     emc->Divide(D2);
 
@@ -66,10 +73,10 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   }
  for(int i=7;i<15;i+=2){
     TFile *a = new TFile(Form("%s/%s/kin%d_1st.root",folder.Data(),inf.Data(),i),"UPDATE");
-    TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
+    TH1D *He3clean = (TH1D*) gDirectory->Get("He3full");
     TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
     He3->SetDirectory(0);
-    TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
+    TH1D *D2clean = (TH1D*) gDirectory->Get("D2full");
     TH1D *D2 = (TH1D*) D2clean->Clone("D2rad");
     D2->SetDirectory(0);
 //    TH1D *emc = (TH1D*) gDirectory->Get("emc");
@@ -109,7 +116,7 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
     delete emc;
 
     a = new TFile(Form("%s/%s/kin%d_2nd.root",folder.Data(),inf.Data(),i),"UPDATE");
-    He3clean = (TH1D*) gDirectory->Get("He3");
+    He3clean = (TH1D*) gDirectory->Get("He3full");
     He3 = (TH1D*) He3clean->Clone("He3rad");
     He3->SetDirectory(0);
     D2clean = (TH1D*) gDirectory->Get("D2full");
@@ -153,11 +160,11 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   }
   cout << "end of loops" << endl;
   TFile *a = new TFile(Form("%s/%s/kin15_1st.root",folder.Data(),inf.Data()),"UPDATE");
-  TH1D *He3clean = (TH1D*) gDirectory->Get("He3");
+  TH1D *He3clean = (TH1D*) gDirectory->Get("He3full");
   TH1D *He3 = (TH1D*) He3clean->Clone("He3rad");
   He3->SetDirectory(0);
-  TH1D *D2clean = (TH1D*) gDirectory->Get("D2");
-  TH1D *D2 = (TH1D*) D2->Clone("D2rad");
+  TH1D *D2clean = (TH1D*) gDirectory->Get("D2full");
+  TH1D *D2 = (TH1D*) D2clean->Clone("D2rad");
   D2->SetDirectory(0);
 //  TH1D *emc = (TH1D*) gDirectory->Get("emc");
   delete a;
@@ -196,10 +203,10 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   delete emc;
 
   a = new TFile(Form("%s/%s/kin15_2nd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
+  He3clean = (TH1D*) gDirectory->Get("He3full");
   He3 = (TH1D*) He3clean->Clone("He3rad");
   He3->SetDirectory(0);
-  D2clean = (TH1D*) gDirectory->Get("D2");
+  D2clean = (TH1D*) gDirectory->Get("D2full");
   D2 = (TH1D*) D2clean->Clone("D2rad");
   D2->SetDirectory(0);
 //  emc = (TH1D*) gDirectory->Get("emc");
@@ -239,7 +246,7 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   delete emc;
 
   a = new TFile(Form("%s/%s/kin15_3rd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
+  He3clean = (TH1D*) gDirectory->Get("He3full");
   He3 = (TH1D*) He3clean->Clone("He3rad");
   He3->SetDirectory(0);
   D2clean = (TH1D*) gDirectory->Get("D2full");
@@ -282,7 +289,7 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   delete emc;
 
   a = new TFile(Form("%s/%s/kin16_1st.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
+  He3clean = (TH1D*) gDirectory->Get("He3full");
   He3 = (TH1D*) He3clean->Clone("He3rad");
   He3->SetDirectory(0);
   D2clean = (TH1D*) gDirectory->Get("D2full");
@@ -325,7 +332,7 @@ void apply_rc(TString folder, TString inf="fullKin", TString outf="radKin"){
   delete emc;
 
   a = new TFile(Form("%s/%s/kin16_2nd.root",folder.Data(),inf.Data()),"UPDATE");
-  He3clean = (TH1D*) gDirectory->Get("He3");
+  He3clean = (TH1D*) gDirectory->Get("He3full");
   He3 = (TH1D*) He3clean->Clone("He3rad");
   He3->SetDirectory(0);
   D2clean = (TH1D*) gDirectory->Get("D2full");
