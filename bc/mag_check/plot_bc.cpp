@@ -42,7 +42,7 @@ void plot_bc(int bins){
     D2avg[i]/=bins;
   }
 
-  int diff = (bins+1)/2;
+  int diff = (bins-1)/2;
 
   double x[100], He3[100], D2[100], ratio[100];
   for(int i=0; i<He3avg.size(); i++){
