@@ -80,9 +80,9 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.tr.tg_dp",&dp);
     T->SetBranchAddress("rpl.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKLxe.x_bj",&x_bj);
+    T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKLxe.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     //cout << events << endl;
@@ -107,16 +107,21 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
       if(j==(events-1)){
         trig_scal = T2s;
       }
+      if(j%10000==0){
+        cout << j << endl;
+      } 
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    //T->Draw("EKLxe.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    cout << lt << endl;
     He3part->setLivetime(lt);
     //cout << "He3 Livetime: " << lt << endl;
+    cout << avgI << endl;
     He3part->setAvgI(avgI);
     //cout << "He3 Nuclei: " << He3Nuclei(avgI) << endl;
+    cout << charge << endl;
     He3part->setCharge(charge);
-    cout << set.Data() << endl;
     cout << "ok3" << endl;
     cout << folder << "/kin" << kin << set << "/He3/" << He3vec[i] << ".dat" << endl;
     cout << Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]) << endl;
@@ -162,9 +167,9 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.tr.tg_dp",&dp);
     T->SetBranchAddress("rpl.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKLxe.x_bj",&x_bj);
+    T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKLxe.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
@@ -190,7 +195,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    //T->Draw("EKLxe.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     D2part->setLivetime(lt);
     //cout << "D2 Livetime: " << lt << endl;
     D2part->setAvgI(avgI);
