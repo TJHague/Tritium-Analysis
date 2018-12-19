@@ -1,5 +1,5 @@
 {
-  TString folder = "x_03";
+  TString folder = "newx03";
   ofstream heinp("He3.inp");
   ofstream dinp("D2.inp");
   heinp << "n   xbj   Q2" << endl;

@@ -107,7 +107,7 @@ TCut Trig2(Int_t arm=0){
 }
 
 Bool_t W2cut(Double_t W2){
-  if(W2>2.5){
+  if(W2>3){
     return true;
   }
   return false;
