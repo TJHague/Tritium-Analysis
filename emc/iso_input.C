@@ -263,7 +263,7 @@
     }
   }*/
 
-  TFile *f = new TFile(Form("%s/He3EMC.root",folder.Data()));
+  TFile *f = new TFile(Form("%s/He3.root",folder.Data()));
   TH1D *ratio = (TH1D*) gDirectory->Get("emc");
 
   ofstream out("x_for_iso.dat");

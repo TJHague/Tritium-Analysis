@@ -19,12 +19,21 @@ Double_t f2ratiobodek(Double_t x){
   return f2r;
 }
 
+Double_t f2ratiowhitlow(Double_t x){
+  Double_t f2r = 0.9706;
+  f2r -= x*1.261;
+  f2r += x*x*0.7838;
+  return f2r;
+}
+
 Double_t He3iso(Double_t x, Double_t norm=1){
   Double_t f2r=0;
   if(norm==0){
     f2r = f2ratio(x);
   }else if(norm==2){
     f2r = f2ratiobodek(x);
+  }else if(norm==3){
+    f2r = f2ratiowhitlow(x);
   }else{
     f2r = f2rationorm(x);
   }
@@ -43,6 +52,7 @@ void iso_apply(TString folder, TString inhist=""){
   TH1D *emciso = (TH1D*) emc->Clone(Form("emc%siso",inhist.Data()));
   TH1D *emcisonorm = (TH1D*) emc->Clone(Form("emc%sisonorm",inhist.Data()));
   TH1D *emcisobodek = (TH1D*) emc->Clone(Form("emc%sisobodek",inhist.Data()));
+  TH1D *emcisowhitlow = (TH1D*) emc->Clone(Form("emc%sisowhitlow",inhist.Data()));
 
   for(int j=1; j<=emciso->GetNbinsX(); j++){
     double avgx;
@@ -56,6 +66,7 @@ void iso_apply(TString folder, TString inhist=""){
       emciso->SetBinContent(j,emciso->GetBinContent(j)*He3iso(avgx,0));
       emcisonorm->SetBinContent(j,emcisonorm->GetBinContent(j)*He3iso(avgx));
       emcisobodek->SetBinContent(j,emcisobodek->GetBinContent(j)*He3iso(avgx,2));
+      emcisowhitlow->SetBinContent(j,emcisowhitlow->GetBinContent(j)*He3iso(avgx,3));
     }
     for(int k=0;k<3;k++){
       iso_in >> avgx;
@@ -64,10 +75,12 @@ void iso_apply(TString folder, TString inhist=""){
   emciso->Write();
   emcisonorm->Write();
   emcisobodek->Write();
+  emcisowhitlow->Write();
   delete emc;
   delete emciso;
   delete emcisonorm;
   delete emcisobodek;
+  delete emcisowhitlow;
   delete a;
 
   iso_in.close();
