@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #cd /work/halla/triton/mnycz/Marathon/Analysis/Data_Quality/All_Runs/
-for f in /work/halla/triton/mnycz/Marathon/Analysis/Data_Quality/All_Runs/[U]*.dat; do
+for f in /work/halla/triton/tjhague/Tritium_Analysis/one_offs/runlists/[U]*.dat; do
   echo $f
   analyzer -l 'check_target.C("'$f'")'
 done

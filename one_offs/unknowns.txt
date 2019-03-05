@@ -1,8 +1,87 @@
+KIN11
+1573 - Junk
+1601 - Junk - Home no beam
+1607 - Trippy but good, check target - e>10k e<100k - 3.31062e7 - Tritium
+2667 - No beam
+
+KIN13
+1648 - Very little beam. Check e<15ki - junk
+1678 - A little trippy, but good. Short. Check e<16k - Caron Hole
+1701 - Very trippy. Possibly junk. Check e<25k - Carbon Hole
+1725 - No beam
+1737 - Very little beam - check e<40k - Carbon Hole
+1765 - No beam
+1769 - No beam
+1777 - No beam
+1778 - Good/short run. Check e<12k - Carbon Hole
+1802 - No beam
+
+KIN15
+1906 - Home, trippy. m@e
+1931 - A little trippy, but probably good. check e<100k - He3
+2042 - no beam
+
 KIN1
-2397 - 15.175e6 - Moves at end
-2430 - 25.6e6
-2439 - 29.37e6
+2397 - 15.175e6 - Moves at end - Junk/Optics - Carbon Hole or Dummy
+2430 - 25.6e6   - Moves at end - no beam
+2439 - 29.37e6  - M@e - Trippy but good - short - 2.93673e7
+
+KIN2
+1255 - no beam
+
+KIN3
+1310 - No beam
+1317 - No beam
 
 KIN4
-2567 - 13.1081e6
+2567 - Good beam, few trips. BDS=13.1081e6 - Carbon Hole
+
+KIN7
+1361 - Good/short run. moves at end. Check e<22k - Carbon Hole
+1385 - Good/short. moves at end. check e<12k - Carbon Hole
+
+KIN9
+1446 - no beam
+2646 - no beam
+
+NO KIN - check again.
+1218 - good. m@e. e<50k - Empty kin1
+1252 - looks bad - revisit - check between 4 and 16k - supposed to be junk He3 - BDS nonsense
+1253 - no beam
+1259 - Appears bad (unless farm froze?)
+1267 - Might be Tritium? - check e>200000 - TRITIUM kin2
+1275 - Carbon Hole? - check e=6000 - Carbon Hole
+1278 - Missing - log says home
+1303 - HOME - no beam
+1305 - Home  - no beam
+1311 - No T Tree??? - daq not responding
+1315 - No beam
+1316 - no beam
+1391 - No T Tree??? - CODA crash
+1512 - Home no beam
+1534 - No T Tree??? - MCC killed beam?
+1649 - Carbon Hole - No beam
+1724 - No Beam - He3
+1780 - No T Tree??? - CODA Crash
+1782 - No T Tree??? - CODA Crash
+1814-1833 - Planned down - DAQ tests/no beam
+1923 - Coda Crash -no T Tree
+2027 - Home cosmics
+2029 - home cosmics
+2038 - home cosmics
+2172 - home junk
+2231 - coda crash
+2291-2294 - not replayed - unser calib
+2295-2315 - Cosmics/home/detector checks
+2379,2382 - optics - Junk
+2400 - raster on optics
+2410,2412,2413 - optics prescale test
+2456 - CODA crash
+2463-2467 - cosmics
+2608 - carbon hole
+2786 - cosmics
+2794,2795 - junk
+
+
+
 

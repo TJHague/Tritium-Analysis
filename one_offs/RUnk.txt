@@ -1,0 +1,72 @@
+90928 - daq froze
+90933 - He3 but only ~100 events with beam
+90997 - Carbon foil - few events
+91023 - No T Tree - coda crash
+91024 - coda crash
+91049 - coda crash
+91108 - Investigate! - maybe junk? - beam @60k - Dummy
+91153-91160 - coda crash
+91202 - no beam
+91203 - home no beam
+91204 - home no beam
+91205 - home no beam
+91206 - home no beam
+91301 - no T tree - coda crash
+91329 - home no beam
+91336 - home no beam
+91337 - home no beam
+91350,352, - cosmics
+91401 - Check e20000 - D2
+91403 - check e20000 - D2
+91465 - home no beam
+91580 - unser calib - home
+91581,588 - junk
+91654 - no beam - optics?
+91783 - carbon foil - no beam
+91840 - home no beam
+91912 - dummy no beam
+91989 - coda crash
+92003 - check e2000 - carbon hole
+92004 - check e50000 - carbon foil w/ clock
+92005 - check e20000 - tritium
+92006 - check e20000 - tritium
+92007 - check e20000 - tritium
+92008 - check e20000 - He3
+92009 - check e20000 - He3
+92010 - check e20000 - He3
+92011 - junk
+92012 - check e20000 - He3
+92013 - check e20000 - Dummy
+92014 - check e20000 - D2
+92015 - check e20000 - D2
+92016 - check e20000 - H3
+92017 - check e20000 - H3
+92018 - check e20000 - H3
+92019 - check e20000 - H3
+
+---From Unknown_kin16
+90893 - no beam
+90916 - cosmic junk
+90922 - check e20k - H3
+90964 - m@e check e5k - He3
+90979 - complete junk
+90987 - check e2k - Tritium - low events
+91020 - carbon hole
+91029 - check e20k - dummy
+91091 - carbon hole no beam
+91094 - D2 - check e10k and e20k - seems ladder moved w/o asking - very small movement
+91102 - no beam
+91122 - no beam
+91213 - home
+91330 - no beam
+91339 - no beam
+91615 - optics
+91652 - check e2k - carbon hole
+91677 - check e10k - D2
+91752 - Tritium, switched to empty at end..... gaaaaaaaaaaaaah
+91841 - junk
+91864 - no beam
+91899 - single foil - t8?
+91900 - optics
+91982 - no beam
+

@@ -7,4 +7,6 @@ void getBDSevent(Int_t run, Int_t event){
   T->SetBranchAddress("haBDSPOS",&BDS);
   T->GetEntry(event);
   cout << "BDS position at event " << event << " is: " << BDS << endl << endl;
+
+  exit(0);
 }

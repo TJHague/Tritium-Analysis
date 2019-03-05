@@ -4,7 +4,6 @@
 
 void check_target(TString runlist){
 
-  TString list_tar = gGet_InputFile_Var(runlist,0);
   TString list = gGet_InputFile_Var(runlist,2);
   
   vector<Int_t> runvec = gGet_RunNoChain(list);
@@ -17,7 +16,11 @@ void check_target(TString runlist){
     c1->cd(1);
     rootfile->Draw("haBDSPOS:Entry$");
     c1->cd(2);
-    rootfile->Draw("LeftBCM.current_dnew:Entry$");
+    if(runvec[i]<90000){
+      rootfile->Draw("LeftBCM.current_dnew:Entry$");
+    }else{
+      rootfile->Draw("RightBCM.current_dnew:Entry$");
+    }
     gPad->WaitPrimitive();
   }
 }
