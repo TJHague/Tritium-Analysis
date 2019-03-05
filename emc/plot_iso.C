@@ -1,5 +1,5 @@
 {
-  TFile *f = new TFile("newx03/He3.root");
+  TFile *f = new TFile("p2_test/He3.root");
   gStyle->SetErrorX(0);
 
   TH1D *i = (TH1D*) f->Get("emciso");

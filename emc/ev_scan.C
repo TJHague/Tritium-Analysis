@@ -46,17 +46,17 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
     cout << vec[i] << endl;
     TChain* T = LoadRun(vec[i],"T");
     ofstream event_list(Form("%s/%d.csv",folder.Data(),vec[i]),ofstream::trunc);
-    event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,x,Q2,W2,x no EL,Q2 no EL,W2 no EL,charge,current,renewed,T2,T2scalar" << endl;
+    event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,x,Q2,W2,x no EL,Q2 no EL,W2 no EL,dnew,dnew_rate,clock,T2,T2scalar" << endl;
     //run_info << runvec[i] << "," << endl;
 
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, xnel, Q2nel, W2nel;
+    Double_t T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, xnel, Q2nel, W2nel, clock, dnew, dnew_rate;
     Double_t z[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0}, p[100]={0};
     
     if(kin!=16){
       //Int_t Iev=0;
-      T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-      T->SetBranchAddress("LeftBCM.current_dnew",&I);
-      T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+      T->SetBranchAddress("V1495ClockCount",&clock);
+      T->SetBranchAddress("evLeftdnew",&dnew);
+      T->SetBranchAddress("evLeftdnew_r",&dnew_rate);
       T->SetBranchAddress("DL.bit2",&T2);
       T->SetBranchAddress("evLeftT2",&T2s);
 
@@ -82,9 +82,9 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
       T->SetBranchAddress("EKLx.W2"  ,&W2nel);
     }else{
       //Int_t Iev=0;
-      T->SetBranchAddress("RightBCM.charge_dnew",&Q);
-      T->SetBranchAddress("RightBCM.current_dnew",&I);
-      T->SetBranchAddress("RightBCM.isrenewed",&updated);
+      T->SetBranchAddress("V1495ClockCount",&clock);
+      T->SetBranchAddress("evRightdnew",&dnew);
+      T->SetBranchAddress("evRightdnew_r",&dnew_rate);
       T->SetBranchAddress("DR.bit5",&T2);
       T->SetBranchAddress("evRightT5",&T2s);
 
@@ -155,11 +155,11 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
       event_list << ",";
       event_list << double(W2nel);
       event_list << ",";
-      event_list << double(Q);
+      event_list << double(clock);
       event_list << ",";
-      event_list << double(I);
+      event_list << double(dnew);
       event_list << ",";
-      event_list << double(updated);
+      event_list << double(dnew_rate);
       event_list << ",";
       event_list << double(T2);
       event_list << ",";

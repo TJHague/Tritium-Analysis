@@ -1,5 +1,5 @@
 {
-  TFile *f = new TFile("newx03/He3.root");
+  TFile *f = new TFile("pass2_noEL/He3.root");
   gStyle->SetErrorX(0);
 
   TH1D *e = (TH1D*) f->Get("emc");

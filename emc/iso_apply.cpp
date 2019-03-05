@@ -44,7 +44,7 @@ Double_t He3iso(Double_t x, Double_t norm=1){
 
 void iso_apply(TString folder, TString inhist=""){
   string tmp;
-  ifstream iso_in("/work/halla/triton/tjhague/Tritium-Analysis/emc/x_for_iso.dat");
+  ifstream iso_in(Form("%s/x_for_iso.dat",folder.Data()));
   getline(iso_in,tmp);
 
   TFile *a = new TFile(Form("%s/He3.root",folder.Data()),"UPDATE");

@@ -65,7 +65,7 @@ Double_t f2(Double_t x, Double_t Q2, bool deut){
 
 void whitlow_emc(TString folder){
   string tmp;
-  ifstream in("/work/halla/triton/tjhague/Tritium-Analysis/emc/x_for_iso.dat");
+  ifstream in(Form("%s/x_for_iso.dat",folder.Data()));
   getline(in,tmp);
 
   TH1D *w = new TH1D("whitlow_emc","Whitlow EMC Prediction",33,0,0.99);

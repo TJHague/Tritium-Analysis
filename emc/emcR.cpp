@@ -32,10 +32,10 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
 
   Double_t He3charge = 0;
   Double_t D2charge  = 0;
-  //TH1D *He3full = new TH1D("He3full","Full Kinematic Helium-3 Yield" ,nbins,low,high);
-  //TH1D *D2full  = new TH1D("D2full" ,"Full Kinematic Deuterium Yield",nbins,low,high);
-  //He3full->Sumw2();
-  //D2full->Sumw2();
+  TH1D *He3full = new TH1D("He3full","Full Kinematic Helium-3 Yield" ,nbins,low,high);
+  TH1D *D2full  = new TH1D("D2full" ,"Full Kinematic Deuterium Yield",nbins,low,high);
+  He3full->Sumw2();
+  D2full->Sumw2();
   //yieldHistogram *He3full = new yieldHistogram("Full Kinematic Helium-3 Yield" ,nbins,low,high);
   //yieldHistogram *D2full  = new yieldHistogram("Full Kinematic Deuterium Yield",nbins,low,high);
   //yieldHistogram *EMCfull = new yieldHistogram("Full Kinematic EMC Ratio"      ,nbins,low,high);
@@ -84,7 +84,7 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
     T->SetBranchAddress("EKRx.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
-    //cout << events << endl;
+    cout << events << endl;
     Double_t trig_rec  = 0;
     Double_t trig_scal = 0;
     Double_t charge    = 0;
@@ -121,13 +121,13 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
     cout << "ok3" << endl;
     cout << folder << "/kin" << kin << set << "/He3/" << He3vec[i] << ".dat" << endl;
     He3part->save(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
-    //TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
-    //tmp->Scale(1. / He3part->getLivetime());
-    //tmp->Scale(1. / He3Nuclei(He3part->getAvgI()));
+    TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
+    tmp->Scale(1. / He3part->getLivetime());
+    tmp->Scale(1. / He3Nuclei(He3part->getAvgI()));
     He3charge += He3part->getCharge();
-    //He3full->Add(tmp);
+    He3full->Add(tmp);
 
-    //delete tmp;
+    delete tmp;
     delete T;
     delete He3part;
   }
@@ -173,7 +173,7 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
 
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
-      if(updated && I>0.){
+      if((updated==1) && I>0.){
         charge += Q;
         avgI += I;
         Iev++;
@@ -197,13 +197,13 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
     //cout << "D2 Nuclei: " << D2Nuclei(avgI) << endl;
     D2part->setCharge(charge);
     D2part->save(Form("%s/kin%d%s/D2/%d.dat",folder.Data(),kin,set.Data(),D2vec[i]));
-    //TH1D *tmp = D2part->getTH1(Form("D2_%d",D2vec[i]));
-    //tmp->Scale(1. / D2part->getLivetime());
-    //tmp->Scale(1. / D2Nuclei(D2part->getAvgI()));
+    TH1D *tmp = D2part->getTH1(Form("D2_%d",D2vec[i]));
+    tmp->Scale(1. / D2part->getLivetime());
+    tmp->Scale(1. / D2Nuclei(D2part->getAvgI()));
     D2charge += D2part->getCharge();
-    //D2full->Add(tmp);
+    D2full->Add(tmp);
 
-    //delete tmp;
+    delete tmp;
     delete T;
     delete D2part;
   }
@@ -213,7 +213,7 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
   * Now start processing the results
   ****************************************************************************/
 
-  /*//Charge normalizing - now taken care of when converting yieldHistogram to TH1
+  //Charge normalizing - now taken care of when converting yieldHistogram to TH1
   He3full->Scale(1./He3charge);
   D2full ->Scale(1./D2charge);
 
@@ -250,5 +250,5 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
   delete f;
   delete He3full;
   delete D2full;
-  delete ratio;*/
+  delete ratio;
 }

@@ -9,6 +9,8 @@
 
 #include "emc.cpp"
 #include "emcR.cpp"
+#include "hydro_ana.cpp"
+//#include "hydro_anaR.cpp"
 #include "kin_clean.cpp"
 #include "merge_all.cpp"
 #include "kinYield.cpp"
@@ -20,3 +22,4 @@
 #include "ev_scan.C"
 #include "iso_apply.cpp"
 #include "whitlow_emc.C"
+#include "whitlow_test.C"

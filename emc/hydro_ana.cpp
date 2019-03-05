@@ -1,5 +1,5 @@
 /*
- *Main file for EMC analysis of tritium data. This file will do the He3/D as
+ *Main file for EMC analysis of tritium data. This file will do the H1/D as
  *that is my calculation for my thesis.
  *
  * Tyler Hague - August 2018
@@ -7,7 +7,7 @@
 
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
-void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, Int_t iter=0){
+void hydro_ana(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, Int_t iter=0){
   Int_t arm=0;
   //Load runs
   TString set="";
@@ -24,21 +24,21 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     }
   }
 
-  TString He3dat = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; He3dat += "He3_kin"; He3dat += kin; He3dat += set.Data(); He3dat += ".dat";
+  TString H1dat = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; H1dat += "H1_kin"; H1dat += kin; H1dat += set.Data(); H1dat += ".dat";
   TString D2dat  = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; D2dat  += "D2_kin";  D2dat  += kin; D2dat  += set.Data(); D2dat  += ".dat";
-  TString He3list = gGet_InputFile_Var(He3dat,2);
+  TString H1list = gGet_InputFile_Var(H1dat,2);
   TString D2list  = gGet_InputFile_Var(D2dat ,2);
-  //cout << He3list << endl;
-  vector<Int_t> He3vec = gGet_RunNoChain(He3list);
+  //cout << H1list << endl;
+  vector<Int_t> H1vec = gGet_RunNoChain(H1list);
   vector<Int_t> D2vec  = gGet_RunNoChain(D2list);
 
-  Double_t He3charge = 0;
+  Double_t H1charge = 0;
   Double_t D2charge  = 0;
-  //TH1D *He3full = new TH1D("He3full","Full Kinematic Helium-3 Yield" ,nbins,low,high);
+  //TH1D *H1full = new TH1D("H1full","Full Kinematic Helium-3 Yield" ,nbins,low,high);
   //TH1D *D2full  = new TH1D("D2full" ,"Full Kinematic Deuterium Yield",nbins,low,high);
-  //He3full->Sumw2();
+  //H1full->Sumw2();
   //D2full->Sumw2();
-  //yieldHistogram *He3full = new yieldHistogram("Full Kinematic Helium-3 Yield" ,nbins,low,high);
+  //yieldHistogram *H1full = new yieldHistogram("Full Kinematic Helium-3 Yield" ,nbins,low,high);
   //yieldHistogram *D2full  = new yieldHistogram("Full Kinematic Deuterium Yield",nbins,low,high);
   //yieldHistogram *EMCfull = new yieldHistogram("Full Kinematic EMC Ratio"      ,nbins,low,high);
 
@@ -48,11 +48,11 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   ****************************************************************************/
   
   //Helium-3 Yield
-  for(Int_t i=0; i<He3vec.size(); i++){
-    //cout << "on run " << He3vec[i] << endl;
-    TChain* T = LoadRun(He3vec[i],"T");
+  for(Int_t i=0; i<H1vec.size(); i++){
+    //cout << "on run " << H1vec[i] << endl;
+    TChain* T = LoadRun(H1vec[i],"T");
 
-    yieldHistogram *He3part = new yieldHistogram("Partial Kinematic Helium-3 Yield",nbins,low,high);
+    yieldHistogram *H1part = new yieldHistogram("Partial Kinematic Hydrogen Yield",nbins,low,high);
 
     //Calculate charge and live time
     //Todo:
@@ -101,7 +101,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
       if(T2==1){
         trig_rec++;
         if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&&(W2cut(W2)==true)){
-          He3part->addCount(x_bj, Q2);
+          H1part->addCount(x_bj, Q2);
         }
       }
       if(j==(events-1)){
@@ -113,28 +113,28 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    //T->Draw("EKLx.x_bj>>H1part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     cout << lt << endl;
-    He3part->setLivetime(lt);
-    //cout << "He3 Livetime: " << lt << endl;
+    H1part->setLivetime(lt);
+    //cout << "H1 Livetime: " << lt << endl;
     cout << avgI << endl;
-    He3part->setAvgI(avgI);
-    //cout << "He3 Nuclei: " << He3Nuclei(avgI) << endl;
+    H1part->setAvgI(avgI);
+    //cout << "H1 Nuclei: " << H1Nuclei(avgI) << endl;
     cout << charge << endl;
-    He3part->setCharge(charge);
+    H1part->setCharge(charge);
     cout << "ok3" << endl;
-    cout << folder << "/kin" << kin << set << "/He3/" << He3vec[i] << ".dat" << endl;
-    cout << Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]) << endl;
-    He3part->save(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
-    //TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
-    //tmp->Scale(1. / He3part->getLivetime());
-    //tmp->Scale(1. / He3Nuclei(He3part->getAvgI()));
-    He3charge += He3part->getCharge();
-    //He3full->Add(tmp);
+    cout << folder << "/kin" << kin << set << "/H1/" << H1vec[i] << ".dat" << endl;
+    cout << Form("%s/kin%d%s/H1/%d.dat",folder.Data(),kin,set.Data(),H1vec[i]) << endl;
+    H1part->save(Form("%s/kin%d%s/H1/%d.dat",folder.Data(),kin,set.Data(),H1vec[i]));
+    //TH1D *tmp = H1part->getTH1(Form("H1_%d",H1vec[i]));
+    //tmp->Scale(1. / H1part->getLivetime());
+    //tmp->Scale(1. / H1Nuclei(H1part->getAvgI()));
+    H1charge += H1part->getCharge();
+    //H1full->Add(tmp);
 
     //delete tmp;
     delete T;
-    delete He3part;
+    delete H1part;
   }
 
   //Deuterium Yield
@@ -219,21 +219,21 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   ****************************************************************************/
 
   /*//Charge normalizing - now taken care of when converting yieldHistogram to TH1
-  He3full->Scale(1./He3charge);
+  H1full->Scale(1./H1charge);
   D2full ->Scale(1./D2charge);
 
   //Endcap Contamination
-  He3full->Scale((1.-He3ECC(kin)));
+  H1full->Scale((1.-H1ECC(kin)));
   D2full ->Scale((1.-D2ECC(kin)));
 
   //Scale per nucleon
-  He3full->Scale(1./3.);
+  H1full->Scale(1./3.);
   D2full ->Scale(1./2.);
 
- for(Int_t i=1; i<He3full->GetNbinsX()+1; i++){
-    Double_t bin = He3full->GetBinContent(i);
-    bin *= (1. - He3Positrons(He3full->GetBinCenter(i)));
-    He3full->SetBinContent(i, bin);
+ for(Int_t i=1; i<H1full->GetNbinsX()+1; i++){
+    Double_t bin = H1full->GetBinContent(i);
+    bin *= (1. - H1Positrons(H1full->GetBinCenter(i)));
+    H1full->SetBinContent(i, bin);
   }
   for(Int_t i=1; i<D2full->GetNbinsX()+1; i++){
     Double_t bin = D2full->GetBinContent(i);
@@ -244,16 +244,16 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   TH1D *ratio = new TH1D("emc",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
   ratio->Sumw2();
-  ratio->Add(He3full);
+  ratio->Add(H1full);
   ratio->Divide(D2full);
 
   TFile *f = new TFile(Form("%s/fullKin/kin%d%s.root",folder.Data(),kin,set.Data()),"RECREATE");
-  He3full->Write();
+  H1full->Write();
   D2full->Write();
   ratio->Write();
   
   delete f;
-  delete He3full;
+  delete H1full;
   delete D2full;
   delete ratio;*/
 }

@@ -1,5 +1,5 @@
 {
-  TString folder = "newx03";
+  TString folder = "p2newz";
   
   vector<double> he3avgx(33,0);
   vector<double> he3avgq2(33,0);
@@ -19,7 +19,7 @@
 
     bool first = true;
     for(int j=0;j<x.size();j++){
-      if(x[j]!=0){
+      if(x[j]!=0&&x[j+1]!=0){
         if(!first){
           he3avgx[j] += x[j]/c[j];
           he3avgq2[j] += q2[j]/c[j];
@@ -266,7 +266,7 @@
   TFile *f = new TFile(Form("%s/He3.root",folder.Data()));
   TH1D *ratio = (TH1D*) gDirectory->Get("emc");
 
-  ofstream out("x_for_iso.dat");
+  ofstream out(Form("%s/x_for_iso.dat",folder.Data()));
   out << "Bin Center | He3/D2 | x avg (He3) | Q2 avg (He3) | x avg (D2) | Q2 avg (D2)" << endl;
   for(int j=1;j<=ratio->GetNbinsX();j++){
     out << ratio->GetBinCenter(j) << "        " << ratio->GetBinContent(j) << "  " << he3avgx[j-1] << "      " << he3avgq2[j-1] << "        " << d2avgx[j-1] << "     " << d2avgq2[j-1] << endl;

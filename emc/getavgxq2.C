@@ -1,5 +1,5 @@
 {
-  TString folder = "x_03_test";
+  TString folder = "newx03";
   
   vector<double> he3avgx(33,0);
   vector<double> he3avgq2(33,0);
@@ -203,7 +203,7 @@
     }
   }*/
 
-  TFile *f = new TFile(Form("%s/He3EMC.root",folder.Data()));
+  TFile *f = new TFile(Form("%s/He3.root",folder.Data()));
   TH1D *ratio = (TH1D*) gDirectory->Get("emc");
 
   cout << "Bin Center | He3/D2 | x avg (He3) | Q2 avg (He3) | x avg (D2) | Q2 avg (D2)" << endl;

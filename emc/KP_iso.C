@@ -19,7 +19,7 @@
     iso->SetBinContent(i+1,y[i]);
   }
   
-  TFile *f = new TFile("newx03/He3.root","UPDATE");
+  TFile *f = new TFile("p2newz/He3.root","UPDATE");
   iso->Write();
 
   in.close();

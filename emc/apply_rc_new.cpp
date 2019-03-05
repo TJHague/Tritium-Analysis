@@ -11,9 +11,11 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
   }*/
   //Have to remove first line from stream
   string tmp;
-  ifstream He3rc("/work/halla/triton/tjhague/radcor/T2_externals/OUT/He3emc_xs.out");
+  ifstream He3rc(Form("%s/He3emc_xs.out",folder.Data()));
+  cout << Form("%s/He3emc_xs.out",folder.Data()) << endl;
   getline(He3rc,tmp);
-  ifstream D2rc("/work/halla/triton/tjhague/radcor/T2_externals/OUT/D2emc_xs.out");
+  ifstream D2rc(Form("%s/D2emc_xs.out",folder.Data()));
+  cout << Form("%s/D2emc_xs.out",folder.Data()) << endl;
   getline(D2rc,tmp);
 
   for(int i=0;i<=5;i++){

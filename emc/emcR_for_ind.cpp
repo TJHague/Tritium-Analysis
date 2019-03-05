@@ -7,8 +7,8 @@
 
 //Kin should be integer of kinematic
 //Arm - 0 is left, right otherwise
-void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, Int_t iter=0){
-  Int_t arm=0;
+void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, Int_t iter=0){
+  Int_t arm=1;
   //Load runs
   TString set="";
   if(kin>=7){
@@ -16,8 +16,6 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
       set = "_1st";
     }else if(iter==2){
       set = "_2nd";
-    }else if(iter==3 && kin==15){
-      set = "_3rd";
     }else{
       cout << "1st or 2nd iteration of that kin?" << endl;
       exit(0);
@@ -61,31 +59,32 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     //Double_t p[1] = {0};
     Int_t Iev=0;
     cout <<"ok1" << endl;
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-    T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
-    T->SetBranchAddress("DL.bit2",&T2);
-    T->SetBranchAddress("evLeftT2",&T2s);
+
+    T->SetBranchAddress("RightBCM.charge_dnew",&Q);
+    T->SetBranchAddress("RightBCM.current_dnew",&I);
+    T->SetBranchAddress("RightBCM.isrenewed",&updated);
+    T->SetBranchAddress("DR.bit5",&T2);
+    T->SetBranchAddress("evRightT5",&T2s);
 
     //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
+    T->SetBranchAddress("R.cer.asum_c",&cer);
+    T->SetBranchAddress("R.ps.e",&prl1);
+    T->SetBranchAddress("R.sh.e",&prl2);
+    T->SetBranchAddress("R.tr.p",&p);
+    T->SetBranchAddress("R.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("R.tr.tg_ph",&ph);
+    T->SetBranchAddress("R.tr.tg_th",&th);
+    T->SetBranchAddress("R.tr.tg_dp",&dp);
+    T->SetBranchAddress("rpr.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKRx.x_bj",&x_bj);
+    T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKRx.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
-    //cout << events << endl;
+    cout << events << endl;
     Double_t trig_rec  = 0;
     Double_t trig_scal = 0;
     Double_t charge    = 0;
@@ -114,17 +113,13 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
     //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
-    cout << lt << endl;
     He3part->setLivetime(lt);
     //cout << "He3 Livetime: " << lt << endl;
-    cout << avgI << endl;
     He3part->setAvgI(avgI);
     //cout << "He3 Nuclei: " << He3Nuclei(avgI) << endl;
-    cout << charge << endl;
     He3part->setCharge(charge);
     cout << "ok3" << endl;
     cout << folder << "/kin" << kin << set << "/He3/" << He3vec[i] << ".dat" << endl;
-    cout << Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]) << endl;
     He3part->save(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
     //TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
     //tmp->Scale(1. / He3part->getLivetime());
@@ -148,28 +143,28 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     //  Make this work for both arms
     Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2, n, W2;
     Int_t Iev = 0;
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
-    T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
-    T->SetBranchAddress("DL.bit2",&T2);
-    T->SetBranchAddress("evLeftT2",&T2s);
+    T->SetBranchAddress("RightBCM.charge_dnew",&Q);
+    T->SetBranchAddress("RightBCM.current_dnew",&I);
+    T->SetBranchAddress("RightBCM.isrenewed",&updated);
+    T->SetBranchAddress("DR.bit5",&T2);
+    T->SetBranchAddress("evRightT5",&T2s);
 
     //PID variables
-    T->SetBranchAddress("L.cer.asum_c",&cer);
-    T->SetBranchAddress("L.prl1.e",&prl1);
-    T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
-    T->SetBranchAddress("L.tr.n",&n);
+    T->SetBranchAddress("R.cer.asum_c",&cer);
+    T->SetBranchAddress("R.ps.e",&prl1);
+    T->SetBranchAddress("R.sh.e",&prl2);
+    T->SetBranchAddress("R.tr.p",&p);
+    T->SetBranchAddress("R.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("R.tr.tg_ph",&ph);
+    T->SetBranchAddress("R.tr.tg_th",&th);
+    T->SetBranchAddress("R.tr.tg_dp",&dp);
+    T->SetBranchAddress("rpr.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKRx.x_bj",&x_bj);
+    T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKRx.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;
@@ -185,7 +180,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&(W2cut(W2)==true)){
+        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&&(W2cut(W2)==true)){
           D2part->addCount(x_bj, Q2);
         }
       }
@@ -251,7 +246,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   He3full->Write();
   D2full->Write();
   ratio->Write();
-  
+
   delete f;
   delete He3full;
   delete D2full;

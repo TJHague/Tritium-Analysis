@@ -1,9 +1,9 @@
 {
-  TString folder = "new_ECC";
+  TString folder = "p2old";
   int bins = 33;
   double min = 0;
   double max = .99;
-  /*for(int i = 0; i <= 5; i++){
+/*  for(int i = 0; i <= 5; i++){
     cout << i << endl;
     emc(i,folder,bins,min,max);
 //    kin_clean(i,folder);
@@ -19,8 +19,8 @@
   emc(15,folder,bins,min,max,3);
   cout << "16" << endl;
   emcR(16,folder,bins,min,max,1);
-  emcR(16,folder,bins,min,max,2);*/
-  //apply_rc(folder);
+  emcR(16,folder,bins,min,max,2);
+  */apply_rc(folder);
   for(int i = 0; i <= 5; i++){
     cout << i << endl;
 //    emc(i,folder,bins,min,max);

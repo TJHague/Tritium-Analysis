@@ -113,7 +113,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    //T->Draw("EKLxe.x_bj>>He3part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     cout << lt << endl;
     He3part->setLivetime(lt);
     //cout << "He3 Livetime: " << lt << endl;
@@ -178,7 +178,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
 
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
-      if((updated==1) && I>0.){
+      if(updated && I>0.){
         charge += Q;
         avgI += I;
         Iev++;
@@ -195,7 +195,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     }
     Double_t lt = trig_rec/trig_scal;
     avgI /= Iev;
-    //T->Draw("EKLx.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
+    //T->Draw("EKLxe.x_bj>>D2part",PID(arm)+ACC(arm)+EC(arm)+Trig2(arm),"");
     D2part->setLivetime(lt);
     //cout << "D2 Livetime: " << lt << endl;
     D2part->setAvgI(avgI);
