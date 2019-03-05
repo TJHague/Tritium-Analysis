@@ -1,0 +1,48 @@
+Kinematic 0
+Upstream -0.111145 +/- 0.00454478
+Downstream 0.135792 +/- 0.00428717
+
+Kinematic 1
+Upstream -0.116888 +/- 0.00491543
+Downstream 0.130082 +/- 0.00404577
+
+Kinematic 2
+Upstream -0.117418 +/- 0.00477946
+Downstream 0.129056 +/- 0.00381667
+
+Kinematic 3
+Upstream -0.117998 +/- 0.00473277
+Downstream 0.128146 +/- 0.00361877
+
+Kinematic 4
+Upstream -0.115129 +/- 0.00422129
+Downstream 0.130557 +/- 0.00340502
+
+Kinematic 5
+Upstream -0.118403 +/- 0.00466574
+Downstream 0.126702 +/- 0.00327281
+
+Kinematic 7
+Upstream -0.117835 +/- 0.00468416
+Downstream 0.126402 +/- 0.00337628
+
+Kinematic 9
+Upstream -0.118625 +/- 0.00476303
+Downstream 0.12489 +/- 0.00330282
+
+Kinematic 11
+Upstream -0.11805 +/- 0.00457839
+Downstream 0.124994 +/- 0.002947
+
+Kinematic 13
+Upstream -0.117887 +/- 0.0045243
+Downstream 0.124477 +/- 0.0029913
+
+Kinematic 15
+Upstream -0.118044 +/- 0.0047534
+Downstream 0.12341 +/- 0.00304988
+
+Kinematic 16
+Upstream -0.118458 +/- 0.00588689
+Downstream 0.127952 +/- 0.00230558
+

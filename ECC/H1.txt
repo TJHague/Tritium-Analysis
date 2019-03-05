@@ -1,0 +1,24 @@
+Kinematic 0
+Upstream -0.111052 +/- 0.00453228
+Downstream 0.135588 +/- 0.00439534
+
+Kinematic 1
+Upstream -0.116749 +/- 0.00484835
+Downstream 0.129994 +/- 0.00400735
+
+Kinematic 2
+Upstream -0.117327 +/- 0.00475643
+Downstream 0.129053 +/- 0.0038274
+
+Kinematic 3
+Upstream -0.117926 +/- 0.00473672
+Downstream 0.128039 +/- 0.0036439
+
+Kinematic 4
+Upstream -0.114892 +/- 0.00420246
+Downstream 0.130556 +/- 0.00345199
+
+Kinematic 5
+Upstream 0 +/- 0
+Downstream 0 +/- 0
+
