@@ -63,6 +63,10 @@ void ecc(int kin, TString target){
   double up_stdev = upfit->GetParameter(2);
   double down_center = downfit->GetParameter(1);
   double down_stdev = downfit->GetParameter(2);
+  double emup_center = emupfit->GetParameter(1);
+  double emup_stdev = emupfit->GetParameter(2);
+  double emdown_center = emdownfit->GetParameter(1);
+  double emdown_stdev = emdownfit->GetParameter(2);
   double targ_up_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,up_center,up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,up_center,up_stdev)));
   double em_up_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,up_center,up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,up_center,up_stdev)));
   double targ_down_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,down_center,down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,down_center,down_stdev)));
@@ -70,8 +74,14 @@ void ecc(int kin, TString target){
 
   ofstream fitout(target+".txt",ofstream::app);
   fitout << "Kinematic " << kin << endl;
+  fitout << "For Target:" << endl;
   fitout << "Upstream " << up_center << " +/- " << up_stdev << endl;
-  fitout << "Downstream " << down_center << " +/- " << down_stdev << endl << endl;
+  fitout << "Downstream " << down_center << " +/- " << down_stdev << endl;
+  fitout << "For Empty:" << endl;
+  fitout << "Upstream " << emup_center << " +/- " << emup_stdev << endl;
+  fitout << "Downstream " << emdown_center << " +/- " << emdown_stdev << endl << endl;
+  fitout << "Upstream Counts - Target: " << targ_up_count << "    Empty: " << em_up_count << endl;
+  fitout << "Downstream Counts - Target: " << targ_down_count << "    Empty: " << em_down_count << endl;
   fitout.close();
 
   //Get the center of the upstream and downstream cuts
