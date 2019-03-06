@@ -80,7 +80,7 @@ void ecc(int kin, TString target){
   if(kin<=5){
     it=kin;
   }else if(kin==16){
-    it=12;
+    it=11;
   }else{
     it=((kin-5)/2)+5;
   }
