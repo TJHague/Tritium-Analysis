@@ -1,4 +1,4 @@
-!#/bin/sh
+#!/bin/sh
 
 declare -a targs=("H1" "He3" "D2" "H3")
 
@@ -8,7 +8,9 @@ do
   do
     if [ $j -lt 6 ] || [ $(( $j%2 )) -eq 1 ] || [ $j -eq 16 ];
     then
-      analyzer -l -q 'ecc.C('$j',"'"$i"'")'
+      analyzer -l -q 'ecc.C('$j',"'"$i"'",1.5,1.5,"sig1_5")'
+      analyzer -l -q 'ecc.C('$j',"'"$i"'",2,2,"sig2")'
+      analyzer -l -q 'ecc.C('$j',"'"$i"'",0,2,"sigout2")'
     fi
   done
 done

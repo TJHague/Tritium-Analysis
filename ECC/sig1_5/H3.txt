@@ -1,0 +1,250 @@
+Kinematic 0
+For Target:
+Upstream -0.107433 +/- 0.00575672
+Downstream 0.135866 +/- 0.00424058
+For Empty:
+Upstream -0.108595 +/- 0.00545703
+Downstream 0.136065 +/- 0.00402394
+
+Upstream Counts - Target: 557364    Empty: 204376
+Downstream Counts - Target: 919930    Empty: 238140
+Kinematic 1
+For Target:
+Upstream -0.117146 +/- 0.00404409
+Downstream 0.130144 +/- 0.00402323
+For Empty:
+Upstream -0.11766 +/- 0.00396699
+Downstream 0.130169 +/- 0.0039442
+
+Upstream Counts - Target: 242965    Empty: 102550
+Downstream Counts - Target: 452854    Empty: 124228
+Kinematic 2
+For Target:
+Upstream -0.117744 +/- 0.00384173
+Downstream 0.129104 +/- 0.00380489
+For Empty:
+Upstream -0.118163 +/- 0.00379224
+Downstream 0.128957 +/- 0.00378444
+
+Upstream Counts - Target: 227661    Empty: 79429
+Downstream Counts - Target: 397270    Empty: 88630
+Kinematic 3
+For Target:
+Upstream -0.118379 +/- 0.00371442
+Downstream 0.128108 +/- 0.00361717
+For Empty:
+Upstream -0.118805 +/- 0.0035708
+Downstream 0.128214 +/- 0.00352825
+
+Upstream Counts - Target: 185023    Empty: 52919
+Downstream Counts - Target: 317991    Empty: 56388
+Kinematic 4
+For Target:
+Upstream -0.115402 +/- 0.00356667
+Downstream 0.130598 +/- 0.0033713
+For Empty:
+Upstream -0.115816 +/- 0.00347815
+Downstream 0.130568 +/- 0.00327962
+
+Upstream Counts - Target: 111926    Empty: 19580
+Downstream Counts - Target: 175596    Empty: 21809
+Kinematic 5
+For Target:
+Upstream -0.118693 +/- 0.00351581
+Downstream 0.126807 +/- 0.00327664
+For Empty:
+Upstream -0.119213 +/- 0.00342231
+Downstream 0.126723 +/- 0.00330054
+
+Upstream Counts - Target: 67164    Empty: 17498
+Downstream Counts - Target: 107980    Empty: 17932
+Kinematic 7
+For Target:
+Upstream -0.117936 +/- 0.00363883
+Downstream 0.126764 +/- 0.00335345
+For Empty:
+Upstream -0.118319 +/- 0.00350798
+Downstream 0.126864 +/- 0.00326521
+
+Upstream Counts - Target: 64147    Empty: 19696
+Downstream Counts - Target: 91537    Empty: 18910
+Kinematic 9
+For Target:
+Upstream -0.119041 +/- 0.00343137
+Downstream 0.124941 +/- 0.00324642
+For Empty:
+Upstream -0.119811 +/- 0.00321924
+Downstream 0.124537 +/- 0.00308537
+
+Upstream Counts - Target: 48538    Empty: 14115
+Downstream Counts - Target: 67987    Empty: 13389
+Kinematic 11
+For Target:
+Upstream -0.118559 +/- 0.00315995
+Downstream 0.125016 +/- 0.00303359
+For Empty:
+Upstream -0.119033 +/- 0.00306397
+Downstream 0.125054 +/- 0.00317652
+
+Upstream Counts - Target: 33365    Empty: 5087
+Downstream Counts - Target: 40998    Empty: 3992
+Kinematic 13
+For Target:
+Upstream -0.118496 +/- 0.00306347
+Downstream 0.124504 +/- 0.00305417
+For Empty:
+Upstream -0.119326 +/- 0.0028607
+Downstream 0.124151 +/- 0.00232568
+
+Upstream Counts - Target: 25071    Empty: 1011
+Downstream Counts - Target: 27040    Empty: 753
+Kinematic 15
+For Target:
+Upstream -0.118675 +/- 0.00297811
+Downstream 0.123536 +/- 0.0029489
+For Empty:
+Upstream -0.119362 +/- 0.00273546
+Downstream 0.123623 +/- 0.00247954
+
+Upstream Counts - Target: 21683    Empty: 1117
+Downstream Counts - Target: 21118    Empty: 708
+Kinematic 16
+For Target:
+Upstream -0.119703 +/- 0.00287515
+Downstream 0.128026 +/- 0.00224229
+For Empty:
+Upstream -0.120573 +/- 0.00253455
+Downstream 0.12803 +/- 0.0024683
+
+Upstream Counts - Target: 2092    Empty: 107
+Downstream Counts - Target: 19534    Empty: 738
+Kinematic 0
+For Target:
+Upstream -0.107433 +/- 0.00575672
+Downstream 0.135866 +/- 0.00424058
+For Empty:
+Upstream -0.108595 +/- 0.00545703
+Downstream 0.136065 +/- 0.00402394
+
+Upstream Counts - Target: 557364    Empty: 204376
+Downstream Counts - Target: 919930    Empty: 238140
+Kinematic 1
+For Target:
+Upstream -0.117146 +/- 0.00404409
+Downstream 0.130144 +/- 0.00402323
+For Empty:
+Upstream -0.11766 +/- 0.00396699
+Downstream 0.130169 +/- 0.0039442
+
+Upstream Counts - Target: 242965    Empty: 102550
+Downstream Counts - Target: 452854    Empty: 124228
+Kinematic 2
+For Target:
+Upstream -0.117744 +/- 0.00384173
+Downstream 0.129104 +/- 0.00380489
+For Empty:
+Upstream -0.118163 +/- 0.00379224
+Downstream 0.128957 +/- 0.00378444
+
+Upstream Counts - Target: 227661    Empty: 79429
+Downstream Counts - Target: 397270    Empty: 88630
+Kinematic 3
+For Target:
+Upstream -0.118379 +/- 0.00371442
+Downstream 0.128108 +/- 0.00361717
+For Empty:
+Upstream -0.118805 +/- 0.0035708
+Downstream 0.128214 +/- 0.00352825
+
+Upstream Counts - Target: 185023    Empty: 52919
+Downstream Counts - Target: 317991    Empty: 56388
+Kinematic 4
+For Target:
+Upstream -0.115402 +/- 0.00356667
+Downstream 0.130598 +/- 0.0033713
+For Empty:
+Upstream -0.115816 +/- 0.00347815
+Downstream 0.130568 +/- 0.00327962
+
+Upstream Counts - Target: 111926    Empty: 19580
+Downstream Counts - Target: 175596    Empty: 21809
+Kinematic 5
+For Target:
+Upstream -0.118693 +/- 0.00351581
+Downstream 0.126807 +/- 0.00327664
+For Empty:
+Upstream -0.119213 +/- 0.00342231
+Downstream 0.126723 +/- 0.00330054
+
+Upstream Counts - Target: 67164    Empty: 17498
+Downstream Counts - Target: 107980    Empty: 17932
+Kinematic 7
+For Target:
+Upstream -0.117936 +/- 0.00363883
+Downstream 0.126764 +/- 0.00335345
+For Empty:
+Upstream -0.118319 +/- 0.00350798
+Downstream 0.126864 +/- 0.00326521
+
+Upstream Counts - Target: 64147    Empty: 19696
+Downstream Counts - Target: 91537    Empty: 18910
+Kinematic 9
+For Target:
+Upstream -0.119041 +/- 0.00343137
+Downstream 0.124941 +/- 0.00324642
+For Empty:
+Upstream -0.119811 +/- 0.00321924
+Downstream 0.124537 +/- 0.00308537
+
+Upstream Counts - Target: 48538    Empty: 14115
+Downstream Counts - Target: 67987    Empty: 13389
+Kinematic 11
+For Target:
+Upstream -0.118559 +/- 0.00315995
+Downstream 0.125016 +/- 0.00303359
+For Empty:
+Upstream -0.119033 +/- 0.00306397
+Downstream 0.125054 +/- 0.00317652
+
+Upstream Counts - Target: 33365    Empty: 5087
+Downstream Counts - Target: 40998    Empty: 3992
+Kinematic 13
+For Target:
+Upstream -0.118496 +/- 0.00306347
+Downstream 0.124504 +/- 0.00305417
+For Empty:
+Upstream -0.119326 +/- 0.0028607
+Downstream 0.124151 +/- 0.00232568
+
+Upstream Counts - Target: 25071    Empty: 1011
+Downstream Counts - Target: 27040    Empty: 753
+Kinematic 15
+For Target:
+Upstream -0.118675 +/- 0.00297811
+Downstream 0.123536 +/- 0.0029489
+For Empty:
+Upstream -0.119362 +/- 0.00273546
+Downstream 0.123623 +/- 0.00247954
+
+Upstream Counts - Target: 21683    Empty: 1117
+Downstream Counts - Target: 21118    Empty: 708
+Kinematic 16
+For Target:
+Upstream -0.119703 +/- 0.00287515
+Downstream 0.128026 +/- 0.00224229
+For Empty:
+Upstream -0.120573 +/- 0.00253455
+Downstream 0.12803 +/- 0.0024683
+
+Upstream Counts - Target: 2092    Empty: 107
+Downstream Counts - Target: 19534    Empty: 738
+Kinematic 16
+For Target:
+Upstream -0.119703 +/- 0.00287515
+Downstream 0.128026 +/- 0.00224229
+For Empty:
+Upstream -0.12045 +/- 0.0026176
+Downstream 0.128065 +/- 0.00251536
+
+Upstream Counts - Target: 2092    Empty: 89
+Downstream Counts - Target: 19534    Empty: 614
