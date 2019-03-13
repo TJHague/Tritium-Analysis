@@ -119,12 +119,12 @@ void ecc(int kin, TString target, double insig, double outsig, TString outfolder
 
   ecc_plot->Scale(targ_up_count/em_up_count);
   em_down->Scale(targ_down_count/em_down_count);
-  TH1D *test = (TH1D*) ecc_plot->Clone("test");
-  test->Add(em_down);
-  test->Divide(targ_plot);
-  TCanvas *c6 = new TCanvas();
-  c6->cd(0);
-  test->Draw();
+  //TH1D *test = (TH1D*) ecc_plot->Clone("test");
+  ecc_plot->Add(em_down);
+  ecc_plot->Divide(targ_plot);
+  //TCanvas *c6 = new TCanvas();
+  //c6->cd(0);
+  //test->Draw();
   /*ecc_plot->Add(em_down);
   ecc_plot->Divide(targ_plot);*/
 
