@@ -17,7 +17,7 @@ TCut ACC(Int_t arm=0){
 
 Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
   if(arm==0){
-    if((TMath::Abs(ph)<0.03)){
+    if((TMath::Abs(ph)<0.033)){
       if((th>-0.06)&&(th<0.06)){
         if((TMath::Abs(dp)<0.04)){
           return true;
@@ -25,7 +25,7 @@ Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
       }
     }
   }else{
-    if((ph>-0.03)&&(ph<0.03)){
+    if((ph>-0.03)&&(ph<0.033)){
       if((th>-0.06)&&(th<0.06)){
         if((TMath::Abs(dp)<0.04)){
           return true;
@@ -65,8 +65,8 @@ TCut PID_noep(Int_t arm=0){
 
 Bool_t PID(Double_t cer, Double_t prl1, Double_t prl2, Double_t p, Double_t n, Int_t arm=0){
   if(arm==0){
-    if(cer>2000.){
-      if((prl1+prl2)/p/1000.>0.75){
+    if(cer>1500.){
+      if((prl1+prl2)/p/1000.>0.7){
         if(n==1){
           return true;
         }
@@ -74,7 +74,7 @@ Bool_t PID(Double_t cer, Double_t prl1, Double_t prl2, Double_t p, Double_t n, I
     }
   }else{
     if(cer>2000){
-      if((prl1+prl2)/p/1000.>0.75){
+      if((prl1+prl2)/p/1000.>0.7){
         if(n==1)
           return true;
       }
@@ -93,7 +93,7 @@ TCut EC(int kin){
   if(kin<=5){
     it=kin;
   }else if(kin==16){
-    it=12;
+    it=11;
   }else{
     it=((kin-5)/2)+5;
   }
@@ -107,7 +107,7 @@ Bool_t EC(Double_t z, int kin){
   if(kin<=5){
     it=kin;
   }else if(kin==16){
-    it=12;
+    it=11;
   }else{
     it=((kin-5)/2)+5;
   }

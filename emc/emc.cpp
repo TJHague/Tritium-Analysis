@@ -167,9 +167,9 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.tr.tg_dp",&dp);
     T->SetBranchAddress("rpl.z",&z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKLxe.x_bj",&x_bj);
+    T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKLxe.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     Double_t trig_rec  = 0;

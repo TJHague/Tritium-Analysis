@@ -3,7 +3,7 @@
 #include "../headers/rootalias.h"
 #include "../headers/cuts.h"
 
-void ecc(int kin, TString target){
+void ecc(int kin, TString target, double insig, double outsig, TString outfolder){
   if(kin>5 && target=="H1"){
     exit(0);
   }
@@ -47,31 +47,41 @@ void ecc(int kin, TString target){
   TH1D *z = new TH1D(Form("z_kin%d",kin),Form("Target Z for Kinematic %d",kin),180,-.18,.18);
   targ->Draw((kin==16) ? Form("rpr.z>>z_kin%d",kin) : Form("rpl.z>>z_kin%d",kin) ,cut);
 
+  z->Fit("upfit","L","SAME",-.13,-.11);
   z->Fit("downfit","L","SAME",.12,.15);
-  z->Fit("upfit","L","SAME",-.13,-.10);
 
   TCanvas *c2 = new TCanvas();
   c2->cd(0);
   TH1D *emz = new TH1D(Form("emz_kin%d",kin),Form("Empty Z for Kinematic %d",kin),180,-.18,.18);
   em->Draw((kin==16) ? Form("rpr.z>>emz_kin%d",kin) : Form("rpl.z>>emz_kin%d",kin) ,emcut);
 
+  emz->Fit("emupfit","L","SAME",-.13,-.11);
   emz->Fit("emdownfit","L","SAME",.12,.15);
-  emz->Fit("emupfit","L","SAME",-.13,-.10);
 
   //Can get standard dev with GetParameter(2) and center with GetParameter(1)
   double up_center = upfit->GetParameter(1);
   double up_stdev = upfit->GetParameter(2);
   double down_center = downfit->GetParameter(1);
   double down_stdev = downfit->GetParameter(2);
-  double targ_up_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,up_center,up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,up_center,up_stdev)));
-  double em_up_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,up_center,up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,up_center,up_stdev)));
-  double targ_down_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,down_center,down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,down_center,down_stdev)));
-  double em_down_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,down_center,down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,down_center,down_stdev)));
+  double emup_center = emupfit->GetParameter(1);
+  double emup_stdev = emupfit->GetParameter(2);
+  double emdown_center = emdownfit->GetParameter(1);
+  double emdown_stdev = emdownfit->GetParameter(2);
+  double targ_up_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,up_center,outsig*up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,up_center,insig*up_stdev)));
+  double em_up_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,emup_center,outsig*up_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,emup_center,insig*up_stdev)));
+  double targ_down_count = targ->GetEntries(cut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,down_center,insig*down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,down_center,outsig*down_stdev)));
+  double em_down_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,emdown_center,insig*down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,emdown_center,outsig*down_stdev)));
 
-  ofstream fitout(target+".txt",ofstream::app);
+  ofstream fitout(outfolder+"/"+target+".txt",ofstream::app);
   fitout << "Kinematic " << kin << endl;
+  fitout << "For Target:" << endl;
   fitout << "Upstream " << up_center << " +/- " << up_stdev << endl;
-  fitout << "Downstream " << down_center << " +/- " << down_stdev << endl << endl;
+  fitout << "Downstream " << down_center << " +/- " << down_stdev << endl;
+  fitout << "For Empty:" << endl;
+  fitout << "Upstream " << emup_center << " +/- " << emup_stdev << endl;
+  fitout << "Downstream " << emdown_center << " +/- " << emdown_stdev << endl << endl;
+  fitout << "Upstream Counts - Target: " << targ_up_count << "    Empty: " << em_up_count << endl;
+  fitout << "Downstream Counts - Target: " << targ_down_count << "    Empty: " << em_down_count << endl;
   fitout.close();
 
   //Get the center of the upstream and downstream cuts
@@ -97,19 +107,28 @@ void ecc(int kin, TString target){
   TCanvas *c3 = new TCanvas();
   c3->cd(0);
   em->Draw(Form("%s>>ecc_kin%d",emx.Data(),kin),emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,up_cut[it])) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,center)));
+  cout << emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,up_cut[it])) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,center)) << endl;
   TCanvas *c4 = new TCanvas();
   c4->cd(0);
   em->Draw(Form("%s>>em_down",emx.Data()),emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,center)) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])));
+  cout << emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,center)) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])) << endl;
   TCanvas *c5 = new TCanvas();
   c5->cd(0);
   targ->Draw(x+">>targtmp",cut + EC(kin));
+  cout << cut + EC(kin) << endl;
 
   ecc_plot->Scale(targ_up_count/em_up_count);
   em_down->Scale(targ_down_count/em_down_count);
-  ecc_plot->Add(em_down);
-  ecc_plot->Divide(targ_plot);
+  TH1D *test = (TH1D*) ecc_plot->Clone("test");
+  test->Add(em_down);
+  test->Divide(targ_plot);
+  TCanvas *c6 = new TCanvas();
+  c6->cd(0);
+  test->Draw();
+  /*ecc_plot->Add(em_down);
+  ecc_plot->Divide(targ_plot);*/
 
-  TFile *f = new TFile(target+".root","UPDATE");
+  TFile *f = new TFile(outfolder+"/"+target+".root","UPDATE");
   ecc_plot->Write();
   f->Close();
 }

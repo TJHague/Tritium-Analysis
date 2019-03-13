@@ -79,9 +79,9 @@ void emcR(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, I
     T->SetBranchAddress("R.tr.tg_dp",&dp);
     T->SetBranchAddress("rpr.z",&z);
 
-    T->SetBranchAddress("EKRx.x_bj",&x_bj);
-    T->SetBranchAddress("EKRx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKRx.W2"  ,&W2  );
+    T->SetBranchAddress("EKRxe.x_bj",&x_bj);
+    T->SetBranchAddress("EKRxe.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKRxe.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     cout << events << endl;
