@@ -128,3 +128,13 @@ Downstream 0.128065 +/- 0.00251536
 
 Upstream Counts - Target: 709    Empty: 47
 Downstream Counts - Target: 2983    Empty: 309
+Kinematic 16
+For Target:
+Upstream -0.119421 +/- 0.00306068
+Downstream 0.127851 +/- 0.00245531
+For Empty:
+Upstream -0.12045 +/- 0.0026176
+Downstream 0.128065 +/- 0.00251536
+
+Upstream Counts - Target: 709    Empty: 47
+Downstream Counts - Target: 2983    Empty: 309
