@@ -192,7 +192,7 @@ TH1D* yieldHistogram::getTH1(TString name){
 
 //Save data to a text file
 Int_t yieldHistogram::save(TString file){
-  ofstream f(file.Data());
+  ofstream f(file.Data(),ofstream::trunc);
   f << setprecision(10);
   if(f.is_open()){
     f << title << endl;
