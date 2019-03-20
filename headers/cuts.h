@@ -6,22 +6,45 @@
 TCut ACC(Int_t arm=0){
   TCut ACC="";
   if(arm==0){
-    ACC += "TMath::Abs(L.tr.tg_dp)<0.04";
-    ACC += "((L.tr.tg_ph/0.035)**2) + (((L.tr.tg_th-0.0025)/0.0675)**2) < 1";
+    TString ph = "L.tr.tg_ph";
+    TString th = "L.tr.tg_th";
+    ACC = TString(ph+"+1.1*"+th+">-0.077").Data();
+    ACC += TString(ph+"+3.3*"+th+">-0.198").Data();
+    ACC += TString(ph+"-3.3*"+th+"<0.198").Data();
+    ACC += TString(ph+"-1.1*"+th+"<0.077").Data();
+    ACC += TString(ph+"<0.033").Data();
+    ACC += TString(ph+"+1.1*"+th+"<0.088").Data();
+    ACC += TString(ph+"+3.3*"+th+"<0.231").Data();
+    ACC += TString(ph+"-3.3*"+th+">-0.231").Data();
+    ACC += TString(ph+"-1.1*"+th+">-0.088").Data();
+    ACC += TString(ph+">-0.033").Data();
+    ACC += "L.tr.tg_dp>-0.035";
+    ACC += "L.tr.tg_dp<0.045";
   }else{
-    ACC += "TMath::Abs(R.tr.tg_dp)<0.04";
-    ACC += "((R.tr.tg_ph/0.035)**2) + (((R.tr.tg_th-0.0025)/0.0675)**2) < 1";
+    TString ph = "R.tr.tg_ph";
+    TString th = "R.tr.tg_th";
+    ACC += TString("0.015*"+ph+"-0.037*"+th+"<0.00222").Data();
+    ACC += TString(ph+"<0.037").Data();
+    ACC += TString(ph+"-14*"+th+"<0.877").Data();
+    ACC += TString(ph+">-0.033").Data();
+    ACC += TString(ph+"+6.6*"+th+">-0.396").Data();
+    ACC += "R.tr.tg_dp>-0.03";
+    ACC += "R.tr.tg_dp<0.045";
+
+    //Focal Plane Cut
+    ACC += "(0.16*R.tr.x)-(0.95*R.tr.th)<0.0325";
+    ACC += "R.tr.x<0.5";
+    ACC += "(0.155*R.tr.x)-(0.95*R.tr.th)>-0.027";
+    ACC += "R.tr.x>-0.45";
   }
   return ACC;
 }
 
 Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
   if(arm==0){
-    if((TMath::Abs(ph)<0.033)){
-      if((th>-0.06)&&(th<0.06)){
-        if((TMath::Abs(dp)<0.04)){
-          return true;
-        }
+    if(((ph+(1.1*th))>-0.077)&&((ph+(3.3*th))>-0.198)&&((ph-(3.3*th))<0.198)&&((ph-(1.1*th))<0.077)&&((ph+(1.1*th))<0.088)&&((ph+(3.3*th))<0.231)&&((ph-(3.3*th))>-0.231)&&((ph-(1.1*th))>-0.088)&&(ph<0.033)&&(ph>-0.033)){
+      if(dp>-0.035&&dp<0.045){
+        return true;
       }
     }
   }else{
