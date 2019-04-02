@@ -1,0 +1,17 @@
+#!/bin/sh
+
+folder=$1
+
+rm ${folder}/He3.root
+rm ${folder}/*.inp
+rm ${folder}/*.dat
+rm ${folder}/*.out
+rm ${folder}/fullKin/*
+rm ${folder}/cleanedKin/*
+rm ${folder}/radKin/*
+
+for dir in ${folder}/kin*; do
+  rm ${dir}/He3/*
+  rm ${dir}/D2/*
+  rm ${dir}/H1/*
+done
