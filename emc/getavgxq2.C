@@ -1,5 +1,5 @@
 {
-  TString folder = "newx03";
+  TString folder = "p2_march";
   
   vector<double> he3avgx(33,0);
   vector<double> he3avgq2(33,0);

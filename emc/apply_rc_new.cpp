@@ -41,6 +41,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         He3rc >> rad;
         cout << born/rad << endl;
         He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+        He3->SetBinError(j,He3->GetBinError(j)*born/rad);
         He3rc >> rad;
       }
     }
@@ -54,6 +55,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         D2rc >> rad;
         cout << born/rad << endl;
         D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+        D2->SetBinError(j,D2->GetBinError(j)*born/rad);
         D2rc >> rad;
       }
     }
@@ -87,6 +89,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         }
         He3rc >> rad;
         He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+        He3->SetBinError(j,He3->GetBinError(j)*born/rad);
         He3rc >> rad;
       }
     }
@@ -98,6 +101,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         }
         D2rc >> rad;
         D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+        D2->SetBinError(j,D2->GetBinError(j)*born/rad);
         D2rc >> rad;
       }
     }
@@ -132,6 +136,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         }
         He3rc >> rad;
         He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+        He3->SetBinError(j,He3->GetBinError(j)*born/rad);
         He3rc >> rad;
       }
     }
@@ -143,6 +148,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
         }
         D2rc >> rad;
         D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+        D2->SetBinError(j,D2->GetBinError(j)*born/rad);
         D2rc >> rad;
       }
     }
@@ -179,6 +185,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       He3rc >> rad;
       He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+      He3->SetBinError(j,He3->GetBinError(j)*born/rad);
       He3rc >> rad;
     }
   }
@@ -190,6 +197,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       D2rc >> rad;
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+      D2->SetBinError(j,D2->GetBinError(j)*born/rad);
       D2rc >> rad;
     }
   }
@@ -224,6 +232,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       He3rc >> rad;
       He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+      He3->SetBinError(j,He3->GetBinError(j)*born/rad);
       He3rc >> rad;
     }
   }
@@ -235,6 +244,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       D2rc >> rad;
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+      D2->SetBinError(j,D2->GetBinError(j)*born/rad);
       D2rc >> rad;
     }
   }
@@ -269,6 +279,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       He3rc >> rad;
       He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+      He3->SetBinError(j,He3->GetBinError(j)*born/rad);
       He3rc >> rad;
     }
   }
@@ -280,6 +291,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       D2rc >> rad;
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+      D2->SetBinError(j,D2->GetBinError(j)*born/rad);
       D2rc >> rad;
     }
   }
@@ -314,6 +326,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       He3rc >> rad;
       He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+      He3->SetBinError(j,He3->GetBinError(j)*born/rad);
       He3rc >> rad;
     }
   }
@@ -325,6 +338,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       D2rc >> rad;
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+      D2->SetBinError(j,D2->GetBinError(j)*born/rad);
       D2rc >> rad;
     }
   }
@@ -359,6 +373,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       He3rc >> rad;
       He3->SetBinContent(j,He3->GetBinContent(j)*born/rad);
+      He3->SetBinError(j,He3->GetBinError(j)*born/rad);
       He3rc >> rad;
     }
   }
@@ -370,6 +385,7 @@ void apply_rc_new(TString folder, TString inf="fullKin", TString inhist="nocor",
       }
       D2rc >> rad;
       D2->SetBinContent(j,D2->GetBinContent(j)*born/rad);
+      D2->SetBinError(j,D2->GetBinError(j)*born/rad);
       D2rc >> rad;
     }
   }

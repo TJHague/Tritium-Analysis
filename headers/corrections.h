@@ -1,35 +1,92 @@
 //const Double_t Na = 6.0221409e23; //Avogadro's Number
+//Error calculations return absolute error squared
 
 Double_t He3Positrons(Double_t x){
-  return 0.1009*TMath::Exp(-1.*x*8.913);
+  return TMath::Exp((-8.42406685*x) - 2.63480349);
+}
+
+Double_t He3PositronsError(Double_t x){
+  double e2 = x*((x*0.18265823) - 0.04746606);
+  e2 += (x*-0.04746606) + 0.01300976;
+  e2 *= TMath::Power(He3Positrons(x),2.);
+  return e2;
 }
 
 Double_t H3Positrons(Double_t x){
-  return 0.0778*TMath::Exp(-1.*x*8.026);
+  return TMath::Exp((-8.42875968*x) - 2.61143195);
+}
+
+Double_t H3PositronsError(Double_t x){
+  double e2 = x*((x*0.11225664) - 0.02803864);
+  e2 += (x*-0.02803864) + 0.0073564;
+  e2 *= TMath::Power(H3Positrons(x),2.);
+  return e2;
 }
 
 Double_t D2Positrons(Double_t x){
-  return 0.087557*TMath::Exp(-1*x*8.446762);
+  return TMath::Exp((-9.15721674*x) - 2.46454072);
+}
+
+Double_t D2PositronsError(Double_t x){
+  double e2 = x*((x*0.08534386) - 0.0208084);
+  e2 += (x*-0.0208084 ) + 0.00529717;
+  e2 *= TMath::Power(D2Positrons(x),2.);
+  return e2;
 }
 
 Double_t H1Positrons(Double_t x){
-  return 0.079031*TMath::Exp(-1*x*8.587641);
+  return TMath::Exp((-10.1463193*x) - 2.38884408);
+}
+
+Double_t H1PositronsError(Double_t x){
+  double e2 = x*((x*0.4684634) - 0.10968713);
+  e2 += (x*-0.10968713) + 0.02644275;
+  e2 *= TMath::Power(H1Positrons(x),2.);
+  return e2;
 }
 
 Double_t He3Boiling(Double_t I){
   return (1 + (-0.004759*I) + (8.69e-05*I*I));
 }
 
+Double_t He3BoilingError(Double_t I){
+  double e2 = 2.27472736e-5 + (I*-3.87742681e-6) + (I*I*1.33896582e-7);
+  e2 += I*(-3.87742681e-6 + (I*8.29429505e-7) + (I*I*-3.12627997e-8));
+  e2 += I*I*(1.33896582e-7 + (I*-3.12627997e-8) + (I*I*1.23486170e-9));
+  return e2;
+}
+
 Double_t H3Boiling(Double_t I){
   return (1 + (-0.007399*I) + (0.0001293*I*I));
+}
+
+Double_t H3BoilingError(Double_t I){
+  double e2 = 1.86657952e-5 + (I*-3.19917239e-6) + (I*I*1.11529912e-7);
+  e2 += I*(-3.19917239e-6 + (I*6.78338365e-7) + (I*I*-2.56740813e-8));
+  e2 += I*I*(1.11529912e-7 + (I*-2.56740813e-8) + (I*I*1.01360349e-9));
+  return e2;
 }
 
 Double_t D2Boiling(Double_t I){
   return (1 + (-0.006651*I) + (0.0001147*I*I));
 }
 
+Double_t D2BoilingError(Double_t I){
+  double e2 = 3.29666199e-5 + (I*-5.43509145e-6) + (I*I*1.85710186e-7);
+  e2 += I*(-5.43509145e-6 + (I*1.02699833e-6) + (I*I*-3.73633538e-8));
+  e2 += I*I*(1.85710186e-7 + (I*-3.73633538e-8) + (I*I*1.42075428e-9));
+  return e2;
+}
+
 Double_t H1Boiling(Double_t I){
   return (1 + (-0.008529*I) + (0.0001527*I*I));
+}
+
+Double_t H1BoilingError(Double_t I){
+  double e2 = 3.51614436e-5 + (I*-5.65699024e-6) + (I*I*1.89975924e-7);
+  e2 += I*(-5.65699024e-6 + (I*1.08065286e-6) + (I*I*-3.91159021e-8));
+  e2 += I*I*(1.89975924e-7 + (I*-3.91159021e-8) + (I*I*1.48091481e-9));
+  return e2;
 }
 
 Double_t He3Thickness(Double_t I){

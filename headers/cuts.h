@@ -25,7 +25,7 @@ TCut ACC(Int_t arm=0){
     TString th = "R.tr.tg_th";
     ACC += TString("0.015*"+ph+"-0.037*"+th+"<0.00222").Data();
     ACC += TString(ph+"<0.037").Data();
-    ACC += TString(ph+"-14*"+th+"<0.877").Data();
+    ACC += TString(ph+"+14*"+th+"<0.877").Data();
     ACC += TString(ph+">-0.033").Data();
     ACC += TString(ph+"+6.6*"+th+">-0.396").Data();
     ACC += "R.tr.tg_dp>-0.03";
@@ -40,7 +40,7 @@ TCut ACC(Int_t arm=0){
   return ACC;
 }
 
-Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
+Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Double_t fpx=0, Double_t fpth=0, Int_t arm=0){
   if(arm==0){
     if(((ph+(1.1*th))>-0.077)&&((ph+(3.3*th))>-0.198)&&((ph-(3.3*th))<0.198)&&((ph-(1.1*th))<0.077)&&((ph+(1.1*th))<0.088)&&((ph+(3.3*th))<0.231)&&((ph-(3.3*th))>-0.231)&&((ph-(1.1*th))>-0.088)&&(ph<0.033)&&(ph>-0.033)){
       if(dp>-0.035&&dp<0.045){
@@ -48,9 +48,9 @@ Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Int_t arm=0){
       }
     }
   }else{
-    if((ph>-0.03)&&(ph<0.033)){
-      if((th>-0.06)&&(th<0.06)){
-        if((TMath::Abs(dp)<0.04)){
+    if((((0.015*ph)-(0.037*th))<0.00222) && (ph<0.037) && ((ph+(14*th))<0.877) && (ph>-0.033) && ((ph+(6.6*th))>-0.396)){
+      if(dp>-0.03 && dp<0.045){
+        if((((0.16*fpx)-(0.95*fpth))<0.0325) && (fpx<0.5) && (((0.155*fpx)-(0.95*fpth))>-0.027) && (fpx>-0.45)){
           return true;
         }
       }

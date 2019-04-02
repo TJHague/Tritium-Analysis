@@ -91,7 +91,8 @@ void merge_all_new(TString folder, TString h_name, TString outf="He3EMC", bool z
     if(c != 0){
       c /= e;
       e = 1./TMath::Sqrt(e);
-      e = TMath::Sqrt((e*e)+(c*0.005*c*0.005));
+      e = TMath::Sqrt((e*e)+(c*0.005*c*0.005)+(c*c*0.002*0.002));
+      //e = TMath::Sqrt((e*e)+(c*0.005*c*0.005));
       emc->SetBinContent(i,c);
       if(!zero_err){
         emc->SetBinError(i,e);

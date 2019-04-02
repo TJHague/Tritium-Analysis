@@ -34,6 +34,11 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
 
   Double_t He3charge = 0;
   Double_t D2charge  = 0;
+
+  Double_t bcm_gain = 0.00033518;
+  Double_t bcm_offset = 0.0217;
+  Double_t clock_rate = 103700.0;
+
   //TH1D *He3full = new TH1D("He3full","Full Kinematic Helium-3 Yield" ,nbins,low,high);
   //TH1D *D2full  = new TH1D("D2full" ,"Full Kinematic Deuterium Yield",nbins,low,high);
   //He3full->Sumw2();
@@ -57,13 +62,17 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, ph, th, dp, z, x_bj, Q2, n, p, W2;
+    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, dnew, drate, clock;
+    Double_t z[100]={0}, p[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0};
     //Double_t p[1] = {0};
     Int_t Iev=0;
     cout <<"ok1" << endl;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+    T->SetBranchAddress("evLeftdnew",&dnew);
+    T->SetBranchAddress("evLeftdnew_r",&drate);
+    T->SetBranchAddress("V1495ClockCount",&clock);
     T->SetBranchAddress("DL.bit2",&T2);
     T->SetBranchAddress("evLeftT2",&T2s);
 
@@ -71,18 +80,18 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.cer.asum_c",&cer);
     T->SetBranchAddress("L.prl1.e",&prl1);
     T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
+    T->SetBranchAddress("L.tr.p",p);
     T->SetBranchAddress("L.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("L.tr.tg_ph",ph);
+    T->SetBranchAddress("L.tr.tg_th",th);
+    T->SetBranchAddress("L.tr.tg_dp",dp);
+    T->SetBranchAddress("rpl.z",z);
 
-    T->SetBranchAddress("EKLx.x_bj",&x_bj);
-    T->SetBranchAddress("EKLx.Q2"  ,&Q2  );
-    T->SetBranchAddress("EKLx.W2"  ,&W2  );
+    T->SetBranchAddress("EKLxe.x_bj",&x_bj);
+    T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
+    T->SetBranchAddress("EKLxe.W2"  ,&W2  );
 
     Int_t events = T->GetEntries();
     //cout << events << endl;
@@ -93,19 +102,24 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     cout << "ok2" << endl;
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
-      if((updated==1) && I>0.){
+      /*if((updated==1) && I>0.){
         charge += Q;
         avgI += I;
+        Iev++;
+      }*/
+      if(drate>0.){
+        avgI += drate*bcm_gain;
         Iev++;
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&&(W2cut(W2)==true)){
+        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], 0, 0, arm)==true)&&(EC(z[0], arm)==true)&&(W2cut(W2)==true)&&drate>0.){
           He3part->addCount(x_bj, Q2);
         }
       }
       if(j==(events-1)){
         trig_scal = T2s;
+        charge = (dnew*bcm_gain) + (clock*bcm_offset/clock_rate);
       }
       if(j%10000==0){
         cout << j << endl;
@@ -146,11 +160,15 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     //Calculate charge and live time
     //Todo:
     //  Make this work for both arms
-    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, p, ph, th, dp, z, x_bj, Q2, n, W2;
+    Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, dnew, drate, clock;
+    Double_t z[100]={0}, p[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0};
     Int_t Iev = 0;
     T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
     T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+    T->SetBranchAddress("evLeftdnew",&dnew);
+    T->SetBranchAddress("evLeftdnew_r",&drate);
+    T->SetBranchAddress("V1495ClockCount",&clock);
     T->SetBranchAddress("DL.bit2",&T2);
     T->SetBranchAddress("evLeftT2",&T2s);
 
@@ -158,14 +176,14 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.cer.asum_c",&cer);
     T->SetBranchAddress("L.prl1.e",&prl1);
     T->SetBranchAddress("L.prl2.e",&prl2);
-    T->SetBranchAddress("L.tr.p",&p);
+    T->SetBranchAddress("L.tr.p",p);
     T->SetBranchAddress("L.tr.n",&n);
 
     //Acceptance variables
-    T->SetBranchAddress("L.tr.tg_ph",&ph);
-    T->SetBranchAddress("L.tr.tg_th",&th);
-    T->SetBranchAddress("L.tr.tg_dp",&dp);
-    T->SetBranchAddress("rpl.z",&z);
+    T->SetBranchAddress("L.tr.tg_ph",ph);
+    T->SetBranchAddress("L.tr.tg_th",th);
+    T->SetBranchAddress("L.tr.tg_dp",dp);
+    T->SetBranchAddress("rpl.z",z);
 
     T->SetBranchAddress("EKLxe.x_bj",&x_bj);
     T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
@@ -178,19 +196,24 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
 
     for(Int_t j=0; j<events; j++){
       T->GetEntry(j);
-      if((updated==1) && I>0.){
+      /*if((updated==1) && I>0.){
         charge += Q;
         avgI += I;
+        Iev++;
+      }*/
+      if(drate>0.){
+        avgI += drate*bcm_gain;
         Iev++;
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p, n, arm)==true)&&(ACC(ph, th, dp, arm)==true)&&(EC(z, arm)==true)&(W2cut(W2)==true)){
+        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], arm)==true)&&(EC(z[0], arm)==true)&(W2cut(W2)==true)&&drate>0.){
           D2part->addCount(x_bj, Q2);
         }
       }
       if(j==(events-1)){
         trig_scal = T2s;
+        charge = (dnew*bcm_gain) + (clock*bcm_offset/clock_rate);
       }
     }
     Double_t lt = trig_rec/trig_scal;

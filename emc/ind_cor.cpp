@@ -34,6 +34,10 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
 
   Double_t He3charge = 0;
   Double_t D2charge  = 0;
+  vector<Double_t> He3boilerr;
+  vector<Double_t> D2boilerr;
+  He3boilerr.resize(nbins,0.);
+  D2boilerr.resize(nbins,0.);
   TH1D *He3 = new TH1D("He3","Full Kinematic Helium-3 Yield" ,nbins,low,high);
   TH1D *He3nocor = new TH1D("He3nocor","Full Kinematic Helium-3 Yield" ,nbins,low,high);
   TH1D *He3lt = new TH1D("He3lt","Full Kinematic Helium-3 Yield" ,nbins,low,high);
@@ -75,10 +79,19 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
     tmp3->Scale(1. / He3part->getLivetime());
     He3lt->Add(tmp);
     tmp3->Scale(1. / He3Nuclei(He3part->getAvgI()));
-    He3->Add(tmp3);
     tmp2->Scale(1. / He3Nuclei(He3part->getAvgI()));
     He3boiling->Add(tmp2);
     He3charge += He3part->getCharge();
+    for(int j=1; j<=nbins; j++){
+      if(tmp3->GetBinContent(j)!=0){
+        double c = tmp3->GetBinContent(j);
+        double e = tmp3->GetBinError(j);
+        //The errors are correlated run-to-run so they must be summed and added to the total yield
+        //tmp3->SetBinError(j,TMath::Sqrt((e*e)+(c*c*He3BoilingError(He3part->getAvgI())/TMath::Power(He3Boiling(He3part->getAvgI()),2.))));
+        He3boilerr[j-1] += TMath::Sqrt(He3BoilingError(He3part->getAvgI()))*c/He3Boiling(He3part->getAvgI());
+      }
+    }
+    He3->Add(tmp3);
 
     delete tmp;
     delete tmp2;
@@ -100,10 +113,19 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
     tmp3->Scale(1. / D2part->getLivetime());
     D2lt->Add(tmp);
     tmp3->Scale(1. / D2Nuclei(D2part->getAvgI()));
-    D2->Add(tmp3);
     tmp2->Scale(1. / D2Nuclei(D2part->getAvgI()));
     D2boiling->Add(tmp2);
     D2charge += D2part->getCharge();
+    for(int j=1; j<=nbins; j++){
+      if(tmp3->GetBinContent(j)!=0){
+        double c = tmp3->GetBinContent(j);
+        double e = tmp3->GetBinError(j);
+        //The errors are correlated run-to-run so they must be summed and added to the total yield
+        //tmp3->SetBinError(j,TMath::Sqrt((e*e)+(c*c*D2BoilingError(D2part->getAvgI())/TMath::Power(D2Boiling(D2part->getAvgI()),2.))));
+        D2boilerr[j-1] += TMath::Sqrt(D2BoilingError(D2part->getAvgI()))*c/D2Boiling(D2part->getAvgI());
+      }
+    }
+    D2->Add(tmp3);
 
     delete tmp;
     delete tmp2;
@@ -149,21 +171,45 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
   D2pos ->Scale(1./2.);
   D2ecc ->Scale(1./2.);
 
+  //ofstream berr(Form("%s/boiling_err.txt",folder.Data()),ofstream::app);
   for(Int_t i=1; i<He3->GetNbinsX()+1; i++){
     Double_t bin = He3pos->GetBinContent(i);
     bin *= (1. - He3Positrons(He3pos->GetBinCenter(i)));
     He3pos->SetBinContent(i, bin);
+    He3pos->SetBinError(i, He3pos->GetBinError(i)*(1. - He3Positrons(He3pos->GetBinCenter(i))));
     bin = He3->GetBinContent(i);
-    bin *= (1. - He3Positrons(He3->GetBinCenter(i)));
+    double correction = (1. - He3Positrons(He3->GetBinCenter(i)));
+    bin *= correction;
     He3->SetBinContent(i, bin);
+    double e = He3->GetBinError(i);
+    //Scale the error with corrections applied after calculation
+    He3boilerr[i-1] /= He3charge;
+    He3boilerr[i-1] *= (1-He3ECC(kin));
+    He3boilerr[i-1] /= 3.;
+    He3boilerr[i-1] *= (1. - He3Positrons(He3->GetBinCenter(i)));
+    He3->SetBinError(i,TMath::Sqrt((e*e*correction*correction) + (He3boilerr[i-1]*He3boilerr[i-1]) + (bin*bin*He3PositronsError(He3->GetBinCenter(i))/(correction*correction))));
+    //He3->SetBinError(i,TMath::Sqrt((e*e) + (He3boilerr[i-1]*He3boilerr[i-1])));
+    //berr << "He3_" << kin << set.Data() << "," << He3->GetBinCenter(i) << "," << bin << "," << He3boilerr[i-1] << endl;
+    //He3->SetBinError(i,TMath::Sqrt((e*e)+(bin*bin*He3PositronsError(He3->GetBinCenter(i))*He3PositronsError(He3->GetBinCenter(i))/(correction*correction))));
   }
   for(Int_t i=1; i<D2->GetNbinsX()+1; i++){
     Double_t bin = D2pos->GetBinContent(i);
     bin *= (1. - D2Positrons(D2pos->GetBinCenter(i)));
     D2pos->SetBinContent(i, bin);
+    D2pos->SetBinError(i, D2pos->GetBinError(i)*(1. - D2Positrons(D2pos->GetBinCenter(i))));
     bin = D2->GetBinContent(i);
-    bin *= (1. - D2Positrons(D2->GetBinCenter(i)));
+    double correction = (1. - D2Positrons(D2->GetBinCenter(i)));
+    bin *= correction;
     D2->SetBinContent(i, bin);
+    double e = D2->GetBinError(i);
+    D2boilerr[i-1] /= D2charge;
+    D2boilerr[i-1] *= (1-D2ECC(kin));
+    D2boilerr[i-1] /= 3.;
+    D2boilerr[i-1] *= (1. - D2Positrons(D2->GetBinCenter(i)));
+    D2->SetBinError(i,TMath::Sqrt((e*e*correction*correction) + (D2boilerr[i-1]*D2boilerr[i-1]) + (bin*bin*D2PositronsError(D2->GetBinCenter(i))/(correction*correction))));
+    //D2->SetBinError(i,TMath::Sqrt((e*e) + (D2boilerr[i-1]*D2boilerr[i-1])));
+    //berr << "D2_" << kin << set.Data() << "," << D2->GetBinCenter(i) << "," << bin << "," << D2boilerr[i-1] << endl;
+    //D2->SetBinError(i,TMath::Sqrt((e*e)+(bin*bin*D2PositronsError(D2->GetBinCenter(i))*D2PositronsError(D2->GetBinCenter(i))/(correction*correction))));
   }
 
   TH1D *ratio = new TH1D("emc",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);

@@ -1,7 +1,6 @@
-{
-  TString folder = "p2old";
-  ofstream heinp("He3.inp");
-  ofstream dinp("D2.inp");
+void gen_radinp(TString folder){
+  ofstream heinp(Form("%s/He3.inp",folder.Data()));
+  ofstream dinp(Form("%s/D2.inp",folder.Data()));
   heinp << "n   xbj   Q2" << endl;
   dinp << "n   xbj   Q2" << endl;
 

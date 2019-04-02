@@ -52,11 +52,11 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
       missing << vec[i] << endl;
 
       ofstream event_list(Form("%s/%d.csv",folder.Data(),vec[i]),ofstream::trunc);
-      event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,x,Q2,W2,x no EL,Q2 no EL,W2 no EL,dnew,dnew_rate,clock,T2,T2scalar" << endl;
+      event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,FPx,FPth,x,Q2,W2,x no EL,Q2 no EL,W2 no EL,clock,dnew,dnew_rate,T2,T2scalar" << endl;
       //run_info << runvec[i] << "," << endl;
 
       Double_t T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, xnel, Q2nel, W2nel, clock, dnew, dnew_rate;
-      Double_t z[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0}, p[100]={0};
+      Double_t z[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0}, p[100]={0}, FPx[100]={0}, FPth[100]={0};
 
       if(kin!=16){
         //Int_t Iev=0;
@@ -78,6 +78,8 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         T->SetBranchAddress("L.tr.tg_th",th);
         T->SetBranchAddress("L.tr.tg_dp",dp);
         T->SetBranchAddress("rpl.z",z);
+        T->SetBranchAddress("L.tr.x",FPx);
+        T->SetBranchAddress("L.tr.th",FPth);
 
         T->SetBranchAddress("EKLxe.x_bj",&x_bj);
         T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
@@ -106,6 +108,8 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         T->SetBranchAddress("R.tr.tg_th",th);
         T->SetBranchAddress("R.tr.tg_dp",dp);
         T->SetBranchAddress("rpr.z",z);
+        T->SetBranchAddress("R.tr.x",FPx);
+        T->SetBranchAddress("R.tr.th",FPth);
 
         T->SetBranchAddress("EKRxe.x_bj",&x_bj);
         T->SetBranchAddress("EKRxe.Q2"  ,&Q2  );
@@ -148,6 +152,10 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         event_list << double(dp[0]);
         event_list << ",";
         event_list << double(z[0]);
+        event_list << ",";
+        event_list << double(FPx[0]);
+        event_list << ",";
+        event_list << double(FPth[0]);
         event_list << ",";
         event_list << double(x_bj);
         event_list << ",";

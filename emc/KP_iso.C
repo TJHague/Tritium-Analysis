@@ -1,4 +1,4 @@
-{
+void KP_iso(TString folder){
   ifstream in("F2dis_os1tm1ht1mec1_Dav18_He3Salme");
 
   double x[100];
@@ -19,7 +19,7 @@
     iso->SetBinContent(i+1,y[i]);
   }
   
-  TFile *f = new TFile("p2newz/He3.root","UPDATE");
+  TFile *f = new TFile(Form("%s/He3.root",folder.Data()),"UPDATE");
   iso->Write();
 
   in.close();

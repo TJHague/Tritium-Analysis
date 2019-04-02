@@ -1,5 +1,4 @@
-{
-  TString folder = "p2newz";
+void iso_input(TString folder){
   
   vector<double> he3avgx(33,0);
   vector<double> he3avgq2(33,0);
