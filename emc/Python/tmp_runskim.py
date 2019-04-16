@@ -38,10 +38,10 @@ accR = accR + ' & ' + tph + '>-0.033'
 accR = accR + ' & (' + tph + '+(6.6*' + tth + '))>-0.396'
 accR = accR + ' & dp>-0.03'
 accR = accR + ' & dp<-0.045'
-accR = accR + ' & ((0.16*trx)-(0.95*trth))<0.0325'
-accR = accR + ' & ((0.155*trx)-(0.95*trth))>-0.027'
-accR = accR + ' & trx<0.5'
-accR = accR + ' & trx>-0.45'
+accR = accR + ' & ((0.16*FPx)-(0.95*FPth))<0.0325'
+accR = accR + ' & ((0.155*FPx)-(0.95*FPth))>-0.027'
+accR = accR + ' & FPx<0.5'
+accR = accR + ' & FPx>-0.45'
 
 acc = accL
 

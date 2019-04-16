@@ -27,15 +27,15 @@ accL = accL + ' & dp<0.045'
 
 accR = '((0.015*' + tph + ')-(0.037*' + tth + '))<0.00222'
 accR = accR + ' & ' + tph + '<0.037'
-accR = accR + ' & (' + tph + '-(14*' + tth + '))<0.877'
+accR = accR + ' & (' + tph + '+(14*' + tth + '))<0.877'
 accR = accR + ' & ' + tph + '>-0.033'
 accR = accR + ' & (' + tph + '+(6.6*' + tth + '))>-0.396'
 accR = accR + ' & dp>-0.03'
 accR = accR + ' & dp<-0.045'
-accR = accR + ' & ((0.16*trx)-(0.95*trth))<0.0325'
-accR = accR + ' & ((0.155*trx)-(0.95*trth))>-0.027'
-accR = accR + ' & trx<0.5'
-accR = accR + ' & trx>-0.45'
+accR = accR + ' & ((0.16*FPx)-(0.95*FPth))<0.0325'
+accR = accR + ' & ((0.155*FPx)-(0.95*FPth))>-0.027'
+accR = accR + ' & FPx<0.5'
+accR = accR + ' & FPx>-0.45'
 
 acc = accL
 
@@ -63,7 +63,7 @@ for t in targets:
                 run_events = run_events.replace([np.inf, -np.inf, np.nan, -np.nan], 0)
             
                 #Build the cut
-                cut = acc + ' & nTracks==1 & W2>3.0 & (i((Preshower + Shower)/Momentum)/1000.)>0.7' #Things that won't change
+                cut = acc + ' & nTracks==1 & W2>3.0 & (((Preshower + Shower)/Momentum)/1000.)>0.7' #Things that won't change
                 cut = cut + ' & Z>' + z_cuts_upstream[i] + ' & Z<' + z_cuts_downstream[i] + ' & '
                 if i<11:
                     cut = cut + 'Cherenkov>1500'
