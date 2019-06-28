@@ -86,7 +86,7 @@ void plot_ECC_ratio(TString target1, TString target2, TString folder){
       }
     }
 
-    TCanvas *c1 = new TCanvas();
+/*    TCanvas *c1 = new TCanvas();
     c1->cd(0);
     auto legend = new TLegend(0.1,0.7,0.48,0.9);
 
@@ -147,6 +147,31 @@ void plot_ECC_ratio(TString target1, TString target2, TString folder){
         kin = (kin==17) ? 16 : kin;
         legend2->AddEntry(plots2[i],Form("Kinematic %d",kin),"p");
     }
-    legend2->Draw();
+    legend2->Draw();*/
+  TH1D *comb = new TH1D("comb",Form("%s/%s Endcap Contamination",target1.Data(),target2.Data()),33,0,0.99);
+  ofstream f(Form("%s/%s_%s_ecc.csv",folder.Data(),target1.Data(),target2.Data()));
+  f << "x,ecc,error" << endl;
 
+  for(int i=1; i<=33; i++){
+    double c=0,e=0;
+    for(int j=0; j<=y; j++){
+      double c1 = ratio[j]->GetBinContent(i);
+      double e1 = ratio[j]->GetBinError(i);
+      if(c1!=0){
+        c += c1/(e1*e1);
+        e += 1./(e1*e1);
+      }
+    }
+    if(c!=0){
+      c /= e;
+      e = 1./TMath::Sqrt(e);
+      comb->SetBinContent(i,c);
+      comb->SetBinError(i,e);
+      f << comb->GetBinCenter(i) << "," << c << "," << e << endl;
+    }
+  }
+  comb->SetAxisRange(0.97,1.03,"Y");
+  comb->SetMarkerStyle(8);
+  comb->Draw();
+  f.close();
 }

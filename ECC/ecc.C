@@ -33,8 +33,8 @@ void ecc(int kin, TString target, double insig, double outsig, TString outfolder
 
   //First construct the cut
 
-  TCut cut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0);
-  TCut emcut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0);
+  TCut cut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0) + Trig2(kin==16?1:0);
+  TCut emcut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0) + Trig2(kin==16?1:0);
 
   //Get Normalization value
   TF1 *upfit = new TF1("upfit","gaus",-.18,-.08);
@@ -44,18 +44,18 @@ void ecc(int kin, TString target, double insig, double outsig, TString outfolder
 
   TCanvas *c1 = new TCanvas();
   c1->cd(0);
-  TH1D *z = new TH1D(Form("z_kin%d",kin),Form("Target Z for Kinematic %d",kin),180,-.18,.18);
+  TH1D *z = new TH1D(Form("z_kin%d",kin),Form("Target Z for Kinematic %d",kin),360,-.18,.18);
   targ->Draw((kin==16) ? Form("rpr.z>>z_kin%d",kin) : Form("rpl.z>>z_kin%d",kin) ,cut);
 
-  z->Fit("upfit","L","SAME",-.13,-.11);
+  z->Fit("upfit","L","SAME",-.13,-.1);
   z->Fit("downfit","L","SAME",.12,.15);
 
   TCanvas *c2 = new TCanvas();
   c2->cd(0);
-  TH1D *emz = new TH1D(Form("emz_kin%d",kin),Form("Empty Z for Kinematic %d",kin),180,-.18,.18);
+  TH1D *emz = new TH1D(Form("emz_kin%d",kin),Form("Empty Z for Kinematic %d",kin),360,-.18,.18);
   em->Draw((kin==16) ? Form("rpr.z>>emz_kin%d",kin) : Form("rpl.z>>emz_kin%d",kin) ,emcut);
 
-  emz->Fit("emupfit","L","SAME",-.13,-.11);
+  emz->Fit("emupfit","L","SAME",-.13,-.1);
   emz->Fit("emdownfit","L","SAME",.12,.15);
 
   //Can get standard dev with GetParameter(2) and center with GetParameter(1)

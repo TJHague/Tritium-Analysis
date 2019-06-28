@@ -3,26 +3,13 @@
 #include "../headers/rootalias.h"
 #include "../headers/cuts.h"
 
-void ecc_separate(int kin, TString target, double insig, double outsig, TString outfolder, int iter=0){
-  if(kin>5 && (target=="H1" || iter==0)){
+void ecc_up(int kin, TString target, double insig, double outsig, TString outfolder){
+  if(kin>5 && target=="H1"){
     exit(0);
   }
-
-  TString set="";
-  if(iter==1){
-    set = "_1st";
-  }else if(iter==2){
-    set = "_2nd";
-  }else if(iter==3){
-    set = "_3rd";
-  }
-
   //Load Runs
-  TString targdat = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; targdat += target; targdat += "_kin"; targdat += kin; targdat+= set; targdat += ".dat";
-  TString EMdat   = "/work/halla/triton/tjhague/replay_tritium/replay/scripts/Runlist/"; EMdat  += "EM_kin";                   EMdat   += kin; EMdat += set;  EMdat  += ".dat";
-
-  cout << targdat << endl;
-  cout << EMdat << endl;
+  TString targdat = "../runlists/"; targdat += target; targdat += "_kin"; targdat += kin; targdat += ".dat";
+  TString EMdat   = "../runlists/"; EMdat  += "EM_kin";                   EMdat   += kin;  EMdat  += ".dat";
 
   TString targlist = gGet_InputFile_Var(targdat,2);
   TString EMlist  = gGet_InputFile_Var(EMdat ,2);
@@ -46,8 +33,8 @@ void ecc_separate(int kin, TString target, double insig, double outsig, TString 
 
   //First construct the cut
 
-  TCut cut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0);
-  TCut emcut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0);
+  TCut cut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0) + Trig2(kin==16?1:0);
+  TCut emcut = ACC(kin==16?1:0) + PID(kin==16?1:0) + emW2(kin==16?1:0) + Trig2(kin==16?1:0);
 
   //Get Normalization value
   TF1 *upfit = new TF1("upfit","gaus",-.18,-.08);
@@ -60,7 +47,7 @@ void ecc_separate(int kin, TString target, double insig, double outsig, TString 
   TH1D *z = new TH1D(Form("z_kin%d",kin),Form("Target Z for Kinematic %d",kin),180,-.18,.18);
   targ->Draw((kin==16) ? Form("rpr.z>>z_kin%d",kin) : Form("rpl.z>>z_kin%d",kin) ,cut);
 
-  z->Fit("upfit","L","SAME",-.13,-.11);
+  z->Fit("upfit","L","SAME",-.13,-.1);
   z->Fit("downfit","L","SAME",.12,.15);
 
   TCanvas *c2 = new TCanvas();
@@ -68,7 +55,7 @@ void ecc_separate(int kin, TString target, double insig, double outsig, TString 
   TH1D *emz = new TH1D(Form("emz_kin%d",kin),Form("Empty Z for Kinematic %d",kin),180,-.18,.18);
   em->Draw((kin==16) ? Form("rpr.z>>emz_kin%d",kin) : Form("rpl.z>>emz_kin%d",kin) ,emcut);
 
-  emz->Fit("emupfit","L","SAME",-.13,-.11);
+  emz->Fit("emupfit","L","SAME",-.13,-.1);
   emz->Fit("emdownfit","L","SAME",.12,.15);
 
   //Can get standard dev with GetParameter(2) and center with GetParameter(1)
@@ -86,7 +73,7 @@ void ecc_separate(int kin, TString target, double insig, double outsig, TString 
   double em_down_count = em->GetEntries(emcut + TCut(Form((kin==16) ? "rpr.z>%f-%f" : "rpl.z>%f-%f" ,emdown_center,insig*down_stdev)) + TCut(Form((kin==16) ? "rpr.z<%f+%f" : "rpl.z<%f+%f" ,emdown_center,outsig*down_stdev)));
 
   ofstream fitout(outfolder+"/"+target+".txt",ofstream::app);
-  fitout << "Kinematic " << kin << set << endl;
+  fitout << "Kinematic " << kin << endl;
   fitout << "For Target:" << endl;
   fitout << "Upstream " << up_center << " +/- " << up_stdev << endl;
   fitout << "Downstream " << down_center << " +/- " << down_stdev << endl;
@@ -113,27 +100,27 @@ void ecc_separate(int kin, TString target, double insig, double outsig, TString 
   TString x = (kin==16) ? "EKRxe.x_bj" : "EKLxe.x_bj";
   TString emx = (kin==16) ? "EKRx.x_bj" : "EKLx.x_bj";
 
-  TH1D *ecc_plot = new TH1D(Form("ecc_kin%d%s",kin,set.Data()),Form("Kinematic %d Endcap Contamination",kin),33,0,0.99);
-  TH1D *em_down  = new TH1D("em_down","Temporary EM Plot",33,0,0.99);
+  TH1D *ecc_plot = new TH1D(Form("ecc_kin%d",kin),Form("Kinematic %d Endcap Contamination",kin),33,0,0.99);
+  //TH1D *em_down  = new TH1D("em_down","Temporary EM Plot",33,0,0.99);
   TH1D *targ_plot = new TH1D("targtmp","Temporary Target Plot",33,0,0.99);
 
   TCanvas *c3 = new TCanvas();
   c3->cd(0);
-  em->Draw(Form("%s>>ecc_kin%d%s",emx.Data(),kin,set.Data()),emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,up_cut[it])) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,center)));
+  em->Draw(Form("%s>>ecc_kin%d",emx.Data(),kin),emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,up_cut[it])) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])));
   cout << emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,up_cut[it])) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,center)) << endl;
-  TCanvas *c4 = new TCanvas();
+  /*TCanvas *c4 = new TCanvas();
   c4->cd(0);
   em->Draw(Form("%s>>em_down",emx.Data()),emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,center)) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])));
-  cout << emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,center)) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])) << endl;
+  cout << emcut + TCut(Form((kin==16) ? "rpr.z>%f" : "rpl.z>%f" ,center)) + TCut(Form((kin==16) ? "rpr.z<%f" : "rpl.z<%f" ,down_cut[it])) << endl;*/
   TCanvas *c5 = new TCanvas();
   c5->cd(0);
   targ->Draw(x+">>targtmp",cut + EC(kin));
   cout << cut + EC(kin) << endl;
 
   ecc_plot->Scale(targ_up_count/em_up_count);
-  em_down->Scale(targ_down_count/em_down_count);
+  //em_down->Scale(targ_down_count/em_down_count);
   //TH1D *test = (TH1D*) ecc_plot->Clone("test");
-  ecc_plot->Add(em_down);
+  //ecc_plot->Add(em_down);
   ecc_plot->Divide(targ_plot);
   //TCanvas *c6 = new TCanvas();
   //c6->cd(0);

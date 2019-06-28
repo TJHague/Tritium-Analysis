@@ -5,7 +5,7 @@
 
 void gaus_peak(int kin){
   //Load Runs
-  TString EMdat = "./runlists/"; EMdat += "DM_kin"; EMdat += kin; EMdat += ".dat";
+  TString EMdat = "./runlists/"; EMdat += "H3_kin"; EMdat += kin; EMdat += ".dat";
 
   TString EMlist = gGet_InputFile_Var(EMdat ,2);
 
