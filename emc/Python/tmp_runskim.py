@@ -1,3 +1,9 @@
+#This file is temporary until I recreate the raw files
+#A few columns are mislabeled
+#Clock is labeled as dnew
+#dnew is labeled as dnew_rate
+#dnew_rate is labeled as clock
+
 import numpy as np
 import pandas as pd
 
@@ -27,7 +33,7 @@ accL = accL + ' & dp<0.045'
 
 accR = '((0.015*' + tph + ')-(0.037*' + tth + '))<0.00222'
 accR = accR + ' & ' + tph + '<0.037'
-accR = accR + ' & (' + tph + '+(14*' + tth + '))<0.877'
+accR = accR + ' & (' + tph + '-(14*' + tth + '))<0.877'
 accR = accR + ' & ' + tph + '>-0.033'
 accR = accR + ' & (' + tph + '+(6.6*' + tth + '))>-0.396'
 accR = accR + ' & dp>-0.03'
@@ -69,7 +75,7 @@ for t in targets:
                     cut = cut + 'Cherenkov>1500'
                 else:
                     cut = cut + 'Cherenkov>2000'
-                cut = cut + 'dnew_rate>0.0'
+                cut = cut + ' & clock>0.0'
                 
                 cleaned = run_events.query(cut)
                 cleaned.to_csv("/mnt/d/data/" + out_folder + "/" + run + ".csv")
@@ -78,7 +84,7 @@ for t in targets:
                 meta_data.at[run,'T2']   = run_events.T2.sum()
                 meta_data.at[run,'T2s']  = run_events.T2scalar.iloc[-1]
                 meta_data.at[run,'lt']   = meta_data.at[run,'T2']/meta_data.at[run,'T2s']
-                meta_data.at[run,'avgI'] = run_events.query('dnew_rate>0.0').dnew_rate.sum()*bcm_gain/run_events.query('dnew_rate>0.0').shape[0]
-                meta_data.at[run,'Q']    = (run_events.dnew.iloc[-1]*bcm_gain) + (run_events.clock.iloc[-1]*bcm_offset/clock_rate)
+                meta_data.at[run,'avgI'] = run_events.query('clock>0.0').clock.sum()*bcm_gain/run_events.query('clock>0.0').shape[0]
+                meta_data.at[run,'Q']    = (run_events.dnew_rate.iloc[-1]*bcm_gain) + (run_events.dnew.iloc[-1]*bcm_offset/clock_rate)
             
 meta_data.to_csv("/mnt/d/data/" + out_folder + "/meta.csv")
