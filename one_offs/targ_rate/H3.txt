@@ -1,0 +1,48 @@
+Kin 0
+Upstream:   2.57838
+Downstream: 4.22855
+
+Kin 1
+Upstream:   2.01631
+Downstream: 3.42362
+
+Kin 2
+Upstream:   1.26732
+Downstream: 2.01443
+
+Kin 3
+Upstream:   0.803252
+Downstream: 1.26064
+
+Kin 4
+Upstream:   0.528825
+Downstream: 0.775376
+
+Kin 5
+Upstream:   0.336059
+Downstream: 0.496983
+
+Kin 7
+Upstream:   0.140988
+Downstream: 0.190959
+
+Kin 9
+Upstream:   0.0554838
+Downstream: 0.0735321
+
+Kin 11
+Upstream:   0.0216975
+Downstream: 0.0255364
+
+Kin 13
+Upstream:   0.00787665
+Downstream: 0.00806401
+
+Kin 15
+Upstream:   0.00258618
+Downstream: 0.00236329
+
+Kin 16
+Upstream:   0.000177521
+Downstream: 0.00134336
+

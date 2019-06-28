@@ -1,0 +1,24 @@
+Kin 1
+Upstream:   2.7888
+Downstream: 2.16787
+
+Kin 2
+Upstream:   1.76278
+Downstream: 1.24526
+
+Kin 3
+Upstream:   1.10394
+Downstream: 0.769767
+
+Kin 4
+Upstream:   0.727695
+Downstream: 0.492167
+
+Kin 5
+Upstream:   -nan
+Downstream: -nan
+
+Kin 0
+Upstream:   3.56495
+Downstream: 2.72552
+
