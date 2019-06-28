@@ -6,7 +6,7 @@ void gen_sig(){
   double Mp = 0.938272;
   double alpha = (1.6e-19*1.6e-19)/(4.*TMath::Pi());;
   ifstream in("F2dis_os1tm1ht1mec1_Dav18_He3Salme");
-  ofstream out("sigs.dat");
+  ofstream out("sigs.dat",ofstream::trunc);
 
   while(!in.eof()){
     double x, Q2, F2p, F2n, F2D, F2H3, F2He3;
