@@ -12,7 +12,7 @@ void gen_radinp(TString folder){
     vector<Double_t> x = tmp1->getAvgx();
     vector<Double_t> q2 = tmp1->getAvgQ2();
 
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         heinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -22,7 +22,7 @@ void gen_radinp(TString folder){
     x = tmp2->getAvgx();
     q2 = tmp2->getAvgQ2();
     
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         dinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -41,7 +41,7 @@ void gen_radinp(TString folder){
     vector<Double_t> x = tmp1->getAvgx();
     vector<Double_t> q2 = tmp1->getAvgQ2();
 
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         heinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -51,7 +51,7 @@ void gen_radinp(TString folder){
     x = tmp2->getAvgx();
     q2 = tmp2->getAvgQ2();
     
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         dinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -61,7 +61,7 @@ void gen_radinp(TString folder){
     x = tmp3->getAvgx();
     q2 = tmp3->getAvgQ2();
     
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         heinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -71,7 +71,7 @@ void gen_radinp(TString folder){
     x = tmp4->getAvgx();
     q2 = tmp4->getAvgQ2();
     
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0){
         dinp << n << ", " << x[j] << ", " << q2[j] << endl;
         n++;
@@ -91,7 +91,7 @@ void gen_radinp(TString folder){
   vector<Double_t> x = tmp1->getAvgx();
   vector<Double_t> q2 = tmp1->getAvgQ2();
 
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       heinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;
@@ -101,7 +101,7 @@ void gen_radinp(TString folder){
   x = tmp2->getAvgx();
   q2 = tmp2->getAvgQ2();
   
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       dinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;
@@ -119,7 +119,7 @@ void gen_radinp(TString folder){
   x = tmp1->getAvgx();
   q2 = tmp1->getAvgQ2();
 
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       heinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;
@@ -129,7 +129,7 @@ void gen_radinp(TString folder){
   x = tmp2->getAvgx();
   q2 = tmp2->getAvgQ2();
   
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       dinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;
@@ -139,7 +139,7 @@ void gen_radinp(TString folder){
   x = tmp3->getAvgx();
   q2 = tmp3->getAvgQ2();
   
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       heinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;
@@ -149,7 +149,7 @@ void gen_radinp(TString folder){
   x = tmp4->getAvgx();
   q2 = tmp4->getAvgQ2();
   
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0){
       dinp << n << ", " << x[j] << ", " << q2[j] << endl;
       n++;

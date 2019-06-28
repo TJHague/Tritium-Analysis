@@ -32,5 +32,6 @@ class yieldHistogram{
   TH1D* getTH1(TString);
   Int_t save(TString);
   Int_t add(yieldHistogram*);
+  Int_t getTotalCounts();
 };
 

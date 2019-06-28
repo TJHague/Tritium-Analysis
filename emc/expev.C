@@ -1,5 +1,5 @@
 {
-  TString folder = "p2_evfix";
+  TString folder = "p2_fin";
   TString targs[4] = {"He3","D2","H3","H1"}; 
 
   for(int i=0; i<4; i++){

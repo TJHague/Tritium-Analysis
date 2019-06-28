@@ -17,12 +17,12 @@ void iso_input(TString folder){
     vector<Double_t> c = tmp1->getCounts();
 
     bool first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          he3avgx[j] += x[j]/c[j];
-          he3avgq2[j] += q2[j]/c[j];
-          he3norm[j] += 1./c[j];
+          he3avgx[j] += x[j]*c[j];
+          he3avgq2[j] += q2[j]*c[j];
+          he3norm[j] += c[j];
         }else{
           first = false;
         }
@@ -34,12 +34,12 @@ void iso_input(TString folder){
     c = tmp2->getCounts();
     
     first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          d2avgx[j] += x[j]/c[j];
-          d2avgq2[j] += q2[j]/c[j];
-          d2norm[j] += 1./c[j];
+          d2avgx[j] += x[j]*c[j];
+          d2avgq2[j] += q2[j]*c[j];
+          d2norm[j] += c[j];
         }else{
           first = false;
         }
@@ -60,12 +60,12 @@ void iso_input(TString folder){
     vector<Double_t> c = tmp1->getCounts();
 
     bool first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          he3avgx[j] += x[j]/c[j];
-          he3avgq2[j] += q2[j]/c[j];
-          he3norm[j] += 1./c[j];
+          he3avgx[j] += x[j]*c[j];
+          he3avgq2[j] += q2[j]*c[j];
+          he3norm[j] += c[j];
         }else{
           first = false;
         }
@@ -77,12 +77,12 @@ void iso_input(TString folder){
     c = tmp2->getCounts();
     
     first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          d2avgx[j] += x[j]/c[j];
-          d2avgq2[j] += q2[j]/c[j];
-          d2norm[j] += 1./c[j];
+          d2avgx[j] += x[j]*c[j];
+          d2avgq2[j] += q2[j]*c[j];
+          d2norm[j] += c[j];
         }else{
           first = false;
         }
@@ -94,12 +94,12 @@ void iso_input(TString folder){
     c = tmp3->getCounts();
     
     first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          he3avgx[j] += x[j]/c[j];
-          he3avgq2[j] += q2[j]/c[j];
-          he3norm[j] += 1./c[j];
+          he3avgx[j] += x[j]*c[j];
+          he3avgq2[j] += q2[j]*c[j];
+          he3norm[j] += c[j];
         }else{
           first = false;
         }
@@ -111,12 +111,12 @@ void iso_input(TString folder){
     c = tmp4->getCounts();
     
     first = true;
-    for(int j=0;j<x.size();j++){
+    for(unsigned int j=0;j<x.size();j++){
       if(x[j]!=0&&x[j+1]!=0){
         if(!first){
-          d2avgx[j] += x[j]/c[j];
-          d2avgq2[j] += q2[j]/c[j];
-          d2norm[j] += 1./c[j];
+          d2avgx[j] += x[j]*c[j];
+          d2avgq2[j] += q2[j]*c[j];
+          d2norm[j] += c[j];
         }else{
           first = false;
         }
@@ -138,12 +138,12 @@ void iso_input(TString folder){
   vector<Double_t> c = tmp1->getCounts();
 
   bool first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        he3avgx[j] += x[j]/c[j];
-        he3avgq2[j] += q2[j]/c[j];
-        he3norm[j] += 1./c[j];
+        he3avgx[j] += x[j]*c[j];
+        he3avgq2[j] += q2[j]*c[j];
+        he3norm[j] += c[j];
       }else{
         first = false;
       }
@@ -155,12 +155,12 @@ void iso_input(TString folder){
   c = tmp2->getCounts();
   
   first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        d2avgx[j] += x[j]/c[j];
-        d2avgq2[j] += q2[j]/c[j];
-        d2norm[j] += 1./c[j];
+        d2avgx[j] += x[j]*c[j];
+        d2avgq2[j] += q2[j]*c[j];
+        d2norm[j] += c[j];
       }else{
         first = false;
       }
@@ -180,12 +180,12 @@ void iso_input(TString folder){
   c = tmp1->getCounts();
 
   first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        he3avgx[j] += x[j]/c[j];
-        he3avgq2[j] += q2[j]/c[j];
-        he3norm[j] += 1./c[j];
+        he3avgx[j] += x[j]*c[j];
+        he3avgq2[j] += q2[j]*c[j];
+        he3norm[j] += c[j];
       }else{
         first = false;
       }
@@ -197,12 +197,12 @@ void iso_input(TString folder){
   c = tmp2->getCounts();
   
   first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        d2avgx[j] += x[j]/c[j];
-        d2avgq2[j] += q2[j]/c[j];
-        d2norm[j] += 1./c[j];
+        d2avgx[j] += x[j]*c[j];
+        d2avgq2[j] += q2[j]*c[j];
+        d2norm[j] += c[j];
       }else{
         first = false;
       }
@@ -214,12 +214,12 @@ void iso_input(TString folder){
   c = tmp3->getCounts();
   
   first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        he3avgx[j] += x[j]/c[j];
-        he3avgq2[j] += q2[j]/c[j];
-        he3norm[j] += 1./c[j];
+        he3avgx[j] += x[j]*c[j];
+        he3avgq2[j] += q2[j]*c[j];
+        he3norm[j] += c[j];
       }else{
         first = false;
       }
@@ -231,32 +231,32 @@ void iso_input(TString folder){
   c = tmp4->getCounts();
   
   first = true;
-  for(int j=0;j<x.size();j++){
+  for(unsigned int j=0;j<x.size();j++){
     if(x[j]!=0&&x[j+1]!=0){
       if(!first){
-        d2avgx[j] += x[j]/c[j];
-        d2avgq2[j] += q2[j]/c[j];
-        d2norm[j] += 1./c[j];
+        d2avgx[j] += x[j]*c[j];
+        d2avgq2[j] += q2[j]*c[j];
+        d2norm[j] += c[j];
       }else{
         first = false;
       }
     }
   }
 
-  for(int j=0;j<he3avgx.size();j++){
+  for(unsigned int j=0;j<he3avgx.size();j++){
     if(he3avgx[j]!=0.){
       he3avgx[j]/=he3norm[j];
       he3avgq2[j]/=he3norm[j];
     }
   }
-  for(int j=0;j<d2avgx.size();j++){
+  for(unsigned int j=0;j<d2avgx.size();j++){
     if(d2avgx[j]!=0.){
       d2avgx[j]/=d2norm[j];
       d2avgq2[j]/=d2norm[j];
     }
   }
 
-  /*for(int j=0;j<he3avgx.size();j++){
+  /*for(unsigned int j=0;j<he3avgx.size();j++){
     if(he3avgx[j]!=0.){
       cout << he3avgx[j] << " " << he3avgq2[j] << " " << d2avgx[j] << " " << d2avgq2[j] << endl;
     }

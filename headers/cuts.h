@@ -50,7 +50,7 @@ Bool_t ACC(Double_t ph, Double_t th, Double_t dp, Double_t fpx=0, Double_t fpth=
   }else{
     if((((0.015*ph)-(0.037*th))<0.00222) && (ph<0.037) && ((ph+(14*th))<0.877) && (ph>-0.033) && ((ph+(6.6*th))>-0.396)){
       if(dp>-0.03 && dp<0.045){
-        if((((0.16*fpx)-(0.95*fpth))<0.0325) && (fpx<0.5) && (((0.155*fpx)-(0.95*fpth))>-0.027) && (fpx>-0.45)){
+        if((((0.16*fpx)-(0.95*fpth))<0.0325) && (fpx<0.5) && (fpx>-0.45) && (((0.155*fpx)-(0.95*fpth))>-0.027) ){
           return true;
         }
       }
@@ -134,6 +134,7 @@ Bool_t EC(Double_t z, int kin){
   }else{
     it=((kin-5)/2)+5;
   }
+  //cout << "z>" << up_cut[it] << "&&z<" << down_cut[it] << endl;
   return ((z>up_cut[it])&&(z<down_cut[it]));
 }
 
@@ -168,7 +169,7 @@ TCut W2(Int_t arm=0){
 }
 
 Bool_t W2cut(Double_t W2){
-  if(W2>3){
+  if(W2>3.){
     return true;
   }
   return false;

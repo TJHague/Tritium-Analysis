@@ -52,8 +52,6 @@ yieldHistogram::yieldHistogram(TString file){
   f >> bin_min;
   f >> bin_max;
   f >> charge;
-  f >> livetime;
-  f >> avgI;
 
   f >> underflow.entries;
   f >> underflow.scaled;
@@ -146,16 +144,7 @@ vector<Double_t> yieldHistogram::getAvgQ2(){
 vector <Double_t> yieldHistogram::getCounts(){
   vector<Double_t> counts;
   for(Int_t i = 0; i < nbins; i++){
-    counts.push_back(bins[i].entries);
-  }
-  return counts;
-}
-
-//Returns the number of counts in the histogram
-Int_t yieldHistogram::getTotalCounts(){
-  Int_t counts = 0;
-  for(Int_t i = 0; i < nbins; i++){
-    counts += bins[i].entries;
+    counts.push_back(bins[i].scaled);
   }
   return counts;
 }
@@ -189,11 +178,9 @@ Double_t yieldHistogram::getAvgI(){
 //Put the data into a TH1D and return the pointer to it
 TH1D* yieldHistogram::getTH1(TString name){
   TH1D *histo = new TH1D(name.Data(),title.Data(),nbins,bin_min,bin_max);
-  histo->Sumw2();
   for(Int_t i = 0; i < nbins; i++){
-    for(Int_t j = 0; j < bins[i].entries; j++){
-//      histo->AddBinContent(i + 1);
-      histo->Fill(bins[i].xsum/bins[i].entries);
+    if(bins[i].entries != 0){
+      histo->SetBinContent(i + 1, bins[i].scaled / charge);
     }
   }
   return histo;
@@ -201,7 +188,7 @@ TH1D* yieldHistogram::getTH1(TString name){
 
 //Save data to a text file
 Int_t yieldHistogram::save(TString file){
-  ofstream f(file.Data(),ofstream::trunc);
+  ofstream f(file.Data());
   f << setprecision(10);
   if(f.is_open()){
     f << title << endl;
@@ -209,8 +196,6 @@ Int_t yieldHistogram::save(TString file){
     f << bin_min << endl;
     f << bin_max << endl;
     f << charge  << endl;
-    f << livetime << endl;
-    f << avgI << endl;
     
     f << underflow.entries << " " << underflow.scaled << " " << underflow.xsum << " " << underflow.Q2sum << " " << underflow.scale << endl;
     f << overflow.entries  << " " << overflow.scaled  << " " << overflow.xsum  << " " << overflow.Q2sum  << " " << overflow.scale  << endl;
@@ -227,13 +212,7 @@ Int_t yieldHistogram::save(TString file){
 
 Int_t yieldHistogram::add(yieldHistogram *other){
   if((nbins == other->nbins) && (bin_min == other->bin_min) && (bin_max == other->bin_max)){
-    //Calculate average current
-    avgI = ((avgI*charge) + (other->avgI*other->charge)) / (charge + other->charge);
-    livetime = ((livetime*charge) + (other->livetime*other->charge)) / (charge + other->charge);
-    
     charge += other->charge;
-
-
     for(Int_t i = 0; i < nbins; i++){
       if(bins[i].entries != 0){
         bins[i].scale = ((bins[i].entries * bins[i].scale) + (other->bins[i].entries * other->bins[i].scale)) / (bins[i].entries + other->bins[i].entries);

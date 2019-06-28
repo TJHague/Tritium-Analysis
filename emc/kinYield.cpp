@@ -23,6 +23,8 @@ void kinYield(const char* dir){
   }
   TString out = dir;
   out += "full.dat";
-  full->save(out);
-  delete full;
+  if(full){
+    full->save(out);
+    delete full;
+  }
 }

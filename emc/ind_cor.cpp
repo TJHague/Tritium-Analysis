@@ -65,7 +65,7 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
   ****************************************************************************/
   
   //Helium-3 Yield
-  for(Int_t i=0; i<He3vec.size(); i++){
+  for(unsigned int i=0; i<He3vec.size(); i++){
     yieldHistogram *He3part = new yieldHistogram(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
 
     TH1D *tmp = He3part->getTH1(Form("He3_%d",He3vec[i]));
@@ -99,7 +99,7 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
   }
 
   //Deuterium Yield
-  for(Int_t i=0; i<D2vec.size(); i++){
+  for(unsigned int i=0; i<D2vec.size(); i++){
     yieldHistogram *D2part  = new yieldHistogram(Form("%s/kin%d%s/D2/%d.dat",folder.Data(),kin,set.Data(),D2vec[i]));
     
     TH1D *tmp = D2part->getTH1(Form("D2_%d",D2vec[i]));
@@ -220,33 +220,33 @@ void ind_cor(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high
 
   TH1D *rationocor = new TH1D("emcnocor",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
-  ratio->Sumw2();
-  ratio->Add(He3nocor);
-  ratio->Divide(D2nocor);
+  rationocor->Sumw2();
+  rationocor->Add(He3nocor);
+  rationocor->Divide(D2nocor);
 
   TH1D *ratiolt = new TH1D("emclt",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
-  ratio->Sumw2();
-  ratio->Add(He3lt);
-  ratio->Divide(D2lt);
+  ratiolt->Sumw2();
+  ratiolt->Add(He3lt);
+  ratiolt->Divide(D2lt);
 
   TH1D *ratioboiling = new TH1D("emcboiling",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
-  ratio->Sumw2();
-  ratio->Add(He3boiling);
-  ratio->Divide(D2boiling);
+  ratioboiling->Sumw2();
+  ratioboiling->Add(He3boiling);
+  ratioboiling->Divide(D2boiling);
 
   TH1D *ratiopos = new TH1D("emcpos",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
-  ratio->Sumw2();
-  ratio->Add(He3pos);
-  ratio->Divide(D2pos);
+  ratiopos->Sumw2();
+  ratiopos->Add(He3pos);
+  ratiopos->Divide(D2pos);
 
   TH1D *ratioecc = new TH1D("emcecc",Form("Kinematic %d EMC Ratio",kin),nbins,low,high);
 
-  ratio->Sumw2();
-  ratio->Add(He3ecc);
-  ratio->Divide(D2ecc);
+  ratioecc->Sumw2();
+  ratioecc->Add(He3ecc);
+  ratioecc->Divide(D2ecc);
 
   TFile *f = new TFile(Form("%s/fullKin/kin%d%s.root",folder.Data(),kin,set.Data()),"RECREATE");
   He3->Write();

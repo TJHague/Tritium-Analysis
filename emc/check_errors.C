@@ -46,7 +46,7 @@ void check_errors(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t
   
   ofstream berr(Form("%s/boiling_err.txt",folder.Data()),ofstream::app);
   //Helium-3 Yield
-  for(Int_t i=0; i<He3vec.size(); i++){
+  for(unsigned int i=0; i<He3vec.size(); i++){
     yieldHistogram *He3part = new yieldHistogram(Form("%s/kin%d%s/He3/%d.dat",folder.Data(),kin,set.Data(),He3vec[i]));
 
     TH1D *tmp3 = He3part->getTH1(Form("He3_%d",He3vec[i]));
@@ -67,7 +67,7 @@ void check_errors(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t
   }
 
   //Deuterium Yield
-  for(Int_t i=0; i<D2vec.size(); i++){
+  for(unsigned int i=0; i<D2vec.size(); i++){
     yieldHistogram *D2part  = new yieldHistogram(Form("%s/kin%d%s/D2/%d.dat",folder.Data(),kin,set.Data(),D2vec[i]));
     
     TH1D *tmp3 = D2part->getTH1(Form("D2_%d",D2vec[i]));

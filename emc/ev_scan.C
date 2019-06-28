@@ -52,10 +52,10 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
       missing << vec[i] << endl;
 
       ofstream event_list(Form("%s/%d.csv",folder.Data(),vec[i]),ofstream::trunc);
-      event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,FPx,FPth,x,Q2,W2,x no EL,Q2 no EL,W2 no EL,clock,dnew,dnew_rate,T2,T2scalar" << endl;
+      event_list << "Cherenkov,Preshower,Shower,Momentum,nTracks,Phi,Theta,dp,Z,FPx,FPth,x,Q2,W2,angle,x no EL,Q2 no EL,W2 no EL,angle no EL,clock,dnew,dnew_rate,T2,T2scalar" << endl;
       //run_info << runvec[i] << "," << endl;
 
-      Double_t T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, xnel, Q2nel, W2nel, clock, dnew, dnew_rate;
+      Double_t T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, xnel, Q2nel, W2nel, clock, dnew, dnew_rate, angle, anglenel;
       Double_t z[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0}, p[100]={0}, FPx[100]={0}, FPth[100]={0};
 
       if(kin!=16){
@@ -84,10 +84,12 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         T->SetBranchAddress("EKLxe.x_bj",&x_bj);
         T->SetBranchAddress("EKLxe.Q2"  ,&Q2  );
         T->SetBranchAddress("EKLxe.W2"  ,&W2  );
+        T->SetBranchAddress("EKLxe.angle", &angle);
 
         T->SetBranchAddress("EKLx.x_bj",&xnel );
         T->SetBranchAddress("EKLx.Q2"  ,&Q2nel);
         T->SetBranchAddress("EKLx.W2"  ,&W2nel);
+        T->SetBranchAddress("EKLx.angle", &anglenel);
       }else{
         //Int_t Iev=0;
         T->SetBranchAddress("V1495ClockCount",&clock);
@@ -114,10 +116,12 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         T->SetBranchAddress("EKRxe.x_bj",&x_bj);
         T->SetBranchAddress("EKRxe.Q2"  ,&Q2  );
         T->SetBranchAddress("EKRxe.W2"  ,&W2  );
+        T->SetBranchAddress("EKRxe.angle", &angle);
 
         T->SetBranchAddress("EKRx.x_bj",&xnel );
         T->SetBranchAddress("EKRx.Q2"  ,&Q2nel);
         T->SetBranchAddress("EKRx.W2"  ,&W2nel);
+        T->SetBranchAddress("EKRx.angle", &anglenel);
       }
 
       Int_t events = T->GetEntries();
@@ -163,11 +167,15 @@ void ev_scan(Int_t kin, TString targ, TString folder, Int_t iter=0){
         event_list << ",";
         event_list << double(W2);
         event_list << ",";
+        event_list << double(angle);
+        event_list << ",";
         event_list << double(xnel);
         event_list << ",";
         event_list << double(Q2nel);
         event_list << ",";
         event_list << double(W2nel);
+        event_list << ",";
+        event_list << double(anglenel);
         event_list << ",";
         event_list << double(clock);
         event_list << ",";

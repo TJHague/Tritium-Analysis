@@ -46,6 +46,14 @@ Double_t He3iso(Double_t x, Double_t norm=1){
   return iso;
 }
 
+Double_t getIsoErr(Double_t bc, Double_t x, Double_t norm=1){
+  Double_t isoerr = 1./TMath::Power(2.+He3iso(x,norm),2.);
+  isoerr *= 3./2.;
+  isoerr *= getf2err(bc);
+  
+  return isoerr;
+}
+
 void iso_apply(TString folder, TString inhist=""){
   string tmp;
   ifstream iso_in(Form("%s/x_for_iso.dat",folder.Data()));
@@ -64,17 +72,29 @@ void iso_apply(TString folder, TString inhist=""){
       iso_in >> avgx;
     }
     if(emciso->GetBinContent(j)!=0){
-      cout << emciso->GetBinCenter(j) << endl;
+      /*cout << emciso->GetBinCenter(j) << endl;
       cout << avgx << endl;
-      cout << He3iso(avgx) << endl;
+      cout << He3iso(avgx) << endl;*/
+
+      Double_t bc = emciso->GetBinCenter(j);
+
       emciso->SetBinContent(j,emciso->GetBinContent(j)*He3iso(avgx,0));
-      emciso->SetBinError(j,emciso->GetBinError(j)*He3iso(avgx,0));
+      //emciso->SetBinError(j,emciso->GetBinError(j)*He3iso(avgx,0));
+      emciso->SetBinError(j,TMath::Sqrt(TMath::Power(emciso->GetBinError(j)*He3iso(avgx,0),2.) + TMath::Power(emciso->GetBinContent(j)*getIsoErr(bc,avgx,0)/He3iso(avgx,0),2.)));
       emcisonorm->SetBinContent(j,emcisonorm->GetBinContent(j)*He3iso(avgx));
-      emcisonorm->SetBinError(j,emcisonorm->GetBinError(j)*He3iso(avgx));
+      //emcisonorm->SetBinError(j,emcisonorm->GetBinError(j)*He3iso(avgx));
+      cout << "Old Error: " << emcisonorm->GetBinError(j) << "    New Error: ";
+      emcisonorm->SetBinError(j,TMath::Sqrt(TMath::Power(emcisonorm->GetBinError(j)*He3iso(avgx),2.) + TMath::Power(emcisonorm->GetBinContent(j)*getIsoErr(bc,avgx)/He3iso(avgx),2.)));
+      cout << emcisonorm->GetBinError(j) << endl;
+      //emcisonorm->SetBinError(j,TMath::Sqrt(TMath::Power(emcisonorm->GetBinError(j)*He3iso(avgx),2.) + TMath::Power(getf2err(emciso->GetBinCenter(j)),2.)));
       emcisobodek->SetBinContent(j,emcisobodek->GetBinContent(j)*He3iso(avgx,2));
-      emcisobodek->SetBinError(j,emcisobodek->GetBinError(j)*He3iso(avgx,2));
+      //emcisobodek->SetBinError(j,emcisobodek->GetBinError(j)*He3iso(avgx,2));
+      emcisobodek->SetBinError(j,TMath::Sqrt(TMath::Power(emcisobodek->GetBinError(j)*He3iso(avgx,2),2.) + TMath::Power(emcisobodek->GetBinContent(j)*getIsoErr(bc,avgx,2)/He3iso(avgx,2),2.)));
+      //emcisobodek->SetBinError(j,TMath::Sqrt(TMath::Power(emcisobodek->GetBinError(j)*He3iso(avgx,2),2.) + TMath::Power(getf2err(emciso->GetBinCenter(j)),2.)));
       emcisowhitlow->SetBinContent(j,emcisowhitlow->GetBinContent(j)*He3iso(avgx,3));
-      emcisowhitlow->SetBinError(j,emcisowhitlow->GetBinError(j)*He3iso(avgx,3));
+      //emcisowhitlow->SetBinError(j,emcisowhitlow->GetBinError(j)*He3iso(avgx,3));
+      emcisowhitlow->SetBinError(j,TMath::Sqrt(TMath::Power(emcisowhitlow->GetBinError(j)*He3iso(avgx,3),2.) + TMath::Power(emcisowhitlow->GetBinContent(j)*getIsoErr(bc,avgx,3)/He3iso(avgx,3),2.)));
+      //emcisowhitlow->SetBinError(j,TMath::Sqrt(TMath::Power(emcisowhitlow->GetBinError(j)*He3iso(avgx,3),2.) + TMath::Power(getf2err(emciso->GetBinCenter(j)),2.)));
     }
     for(int k=0;k<3;k++){
       iso_in >> avgx;

@@ -53,7 +53,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   ****************************************************************************/
   
   //Helium-3 Yield
-  for(Int_t i=0; i<He3vec.size(); i++){
+  for(unsigned int i=0; i<He3vec.size(); i++){
     //cout << "on run " << He3vec[i] << endl;
     TChain* T = LoadRun(He3vec[i],"T");
 
@@ -67,13 +67,17 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     //Double_t p[1] = {0};
     Int_t Iev=0;
     cout <<"ok1" << endl;
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
+    /*T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+    T->SetBranchAddress("LeftBCM.isrenewed",&updated);*/
     T->SetBranchAddress("evLeftdnew",&dnew);
+    cout << "blah ";
     T->SetBranchAddress("evLeftdnew_r",&drate);
+    cout << "blah1 ";
     T->SetBranchAddress("V1495ClockCount",&clock);
+    cout << "blah2 ";
     T->SetBranchAddress("DL.bit2",&T2);
+    cout << "blah3" << endl;
     T->SetBranchAddress("evLeftT2",&T2s);
 
     //PID variables
@@ -82,6 +86,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     T->SetBranchAddress("L.prl2.e",&prl2);
     T->SetBranchAddress("L.tr.p",p);
     T->SetBranchAddress("L.tr.n",&n);
+
 
     //Acceptance variables
     T->SetBranchAddress("L.tr.tg_ph",ph);
@@ -107,13 +112,13 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
         avgI += I;
         Iev++;
       }*/
-      if(drate>0.){
+      if(drate>0.&&drate<100000){//Maximum prevents bad readings from messing up calculation
         avgI += drate*bcm_gain;
         Iev++;
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], 0, 0, arm)==true)&&(EC(z[0], arm)==true)&&(W2cut(W2)==true)&&drate>0.){
+        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], 0, 0, arm)==true)&&(EC(z[0], kin)==true)&&(W2cut(W2)==true)&&drate>0.){
           He3part->addCount(x_bj, Q2);
         }
       }
@@ -152,7 +157,7 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
   }
 
   //Deuterium Yield
-  for(Int_t i=0; i<D2vec.size(); i++){
+  for(unsigned int i=0; i<D2vec.size(); i++){
     TChain* T = LoadRun(D2vec[i],"T");
 
     yieldHistogram *D2part  = new yieldHistogram("Partial Kinematic Deuterium Yield",nbins,low,high);
@@ -163,9 +168,9 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
     Double_t Q, I, updated, T2, T2s, avgI=0, cer, prl1, prl2, x_bj, Q2, n, W2, dnew, drate, clock;
     Double_t z[100]={0}, p[100]={0}, ph[100]={0}, th[100]={0}, dp[100]={0};
     Int_t Iev = 0;
-    T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
+    /*T->SetBranchAddress("LeftBCM.charge_dnew",&Q);
     T->SetBranchAddress("LeftBCM.current_dnew",&I);
-    T->SetBranchAddress("LeftBCM.isrenewed",&updated);
+    T->SetBranchAddress("LeftBCM.isrenewed",&updated);*/
     T->SetBranchAddress("evLeftdnew",&dnew);
     T->SetBranchAddress("evLeftdnew_r",&drate);
     T->SetBranchAddress("V1495ClockCount",&clock);
@@ -201,13 +206,13 @@ void emc(Int_t kin, TString folder, Int_t nbins, Double_t low, Double_t high, In
         avgI += I;
         Iev++;
       }*/
-      if(drate>0.){
+      if(drate>0.&&drate<100000){//Maximum prevents bad readings from messing up calculation
         avgI += drate*bcm_gain;
         Iev++;
       }
       if(T2==1){
         trig_rec++;
-        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], arm)==true)&&(EC(z[0], arm)==true)&(W2cut(W2)==true)&&drate>0.){
+        if((PID(cer, prl1, prl2, p[0], n, arm)==true)&&(ACC(ph[0], th[0], dp[0], arm)==true)&&(EC(z[0], kin)==true)&(W2cut(W2)==true)&&drate>0.){
           D2part->addCount(x_bj, Q2);
         }
       }

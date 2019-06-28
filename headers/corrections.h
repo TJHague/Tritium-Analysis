@@ -249,3 +249,16 @@ Double_t H1ECC(Int_t kin){
   cout << "Something went wrong. Returning no endcap contamination." << endl;
   return 0;
 }
+
+Double_t He3D2ECCerror(Double_t x){
+  double A = -2.54412287;
+  double B = -3.69437788;
+  double err = 0;
+  double ex = -1. * TMath::Exp((A*x) + B);
+
+  err = x*((x*0.16547304) - 0.0450909);
+  err += ((x*(-0.0450909)) + 0.013428);
+  err *= (ex*ex);
+
+  return err;
+}
