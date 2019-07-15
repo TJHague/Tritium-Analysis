@@ -1,0 +1,4 @@
+emc/Python/**/*.csv
+**/*.jpg
+**/*.eps
+**/*.png
