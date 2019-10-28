@@ -78,6 +78,9 @@ void iso_apply(TString folder, TString inhist=""){
 
       Double_t bc = emciso->GetBinCenter(j);
 
+      //Since bin centered now --- Oct 2019
+      avgx = bc;
+
       emciso->SetBinContent(j,emciso->GetBinContent(j)*He3iso(avgx,0));
       //emciso->SetBinError(j,emciso->GetBinError(j)*He3iso(avgx,0));
       emciso->SetBinError(j,TMath::Sqrt(TMath::Power(emciso->GetBinError(j)*He3iso(avgx,0),2.) + TMath::Power(emciso->GetBinContent(j)*getIsoErr(bc,avgx,0)/He3iso(avgx,0),2.)));

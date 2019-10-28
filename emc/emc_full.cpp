@@ -1,7 +1,11 @@
+#include <TFitResult.h>
+#include <TMatrixD.h>
+
 #include "../headers/TRI_Main.h"
 #include "../headers/TRI_Tools.h"
 #include "../headers/rootalias.h"
 #include "../headers/f2r.h"
+#include "../headers/R_Whitlow.h"
 
 #include "../headers/cuts.h"
 #include "../headers/corrections.h"
@@ -35,3 +39,5 @@
 //#include "whitlow_emc.C"
 //#include "whitlow_test.C"
 #include "check_errors.C"
+#include "coulomb_cor.C"
+#include "bcc_fit.C"

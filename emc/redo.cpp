@@ -1,5 +1,5 @@
 {
-  TString folder = "p2_allerr";
+  TString folder = "p2_nocc";
   int bins = 33;
   double min = 0;
   double max = .99;
@@ -138,8 +138,11 @@
   merge_all_new(folder,"emc",out);
   merge_avg(folder,out);
 
+  coulomb_cor(folder);
+  bcc_fit(folder,"_cc");
+
   iso_input(folder);
-  iso_apply(folder);
+  iso_apply(folder,"_cc_bc");
   //iso_new(folder,bins);
   //cout << "uhhh" << endl;
   KP_iso(folder);
