@@ -1,0 +1,7 @@
+emc/Python/**/*.csv
+**/*.jpg
+**/*.eps
+**/*.png
+**/F2*lme
+**/*checkpoint.ipynb
+**/__pycache__/**/*
