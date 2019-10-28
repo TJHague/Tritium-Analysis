@@ -36,7 +36,7 @@ void plot_ECC_ratio(TString target1, TString target2, TString folder){
       bool first = true;
       for(int k=0; k<33; k++){
         double c = raw1[i]->GetBinContent(k);
-        if(c!=0){
+        if(c!=0 && !std::isnan(c)){
           if(!first){
             double d = raw1[i]->GetBinContent(k+1);
             if(d!=0){
@@ -53,7 +53,7 @@ void plot_ECC_ratio(TString target1, TString target2, TString folder){
       first = true;
       for(int k=0; k<33; k++){
         double c = raw2[i]->GetBinContent(k);
-        if(c!=0){
+        if(c!=0 && !std::isnan(c)){
           if(!first){
             double d = raw2[i]->GetBinContent(k+1);
             if(d!=0){
@@ -157,7 +157,7 @@ void plot_ECC_ratio(TString target1, TString target2, TString folder){
     for(int j=0; j<=y; j++){
       double c1 = ratio[j]->GetBinContent(i);
       double e1 = ratio[j]->GetBinError(i);
-      if(c1!=0){
+      if(c1!=0 && !std::isnan(c1)){
         c += c1/(e1*e1);
         e += 1./(e1*e1);
       }
