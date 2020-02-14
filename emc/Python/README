@@ -1,0 +1,12 @@
+This folder is largely a recreation of the folder 1 level up, but using Python instead of C/ROOT.
+
+The primary goal of the included scripts is to calculat the Helium-3 EMC ratio for my thesis, that is the He3/D2 yield ratio. There will be some slight deviations from the C/ROOT calculation, primarily with respect to "order of operations". 
+
+Previously, radiative corrections were applied to each kinematic before they were averaged. In Python, this will be done after all kinematics are averaged together as there are no significant effects that would cause the correction to differ from kinematic to kinematic. This comes with the benefit of easily being able to state the per-bin radiative correction factor on the final result.
+
+--------------------------------------------------
+
+Description of files:
+
+run_skim.py -- Every event is exported from ROOT. This takes those exported events and applies all cuts to them as well as populating a run meta-data DataFrame.
+

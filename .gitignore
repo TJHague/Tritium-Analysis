@@ -5,3 +5,7 @@ emc/Python/**/*.csv
 **/F2*lme
 **/*checkpoint.ipynb
 **/__pycache__/**/*
+emc/Python/**/*.dat
+emc/Python/**/*.xlsx
+emc/Python/Plots/**/*.pdf
+emc/Python/other_emc/**/*
